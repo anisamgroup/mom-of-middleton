@@ -13,11 +13,11 @@ const PKG = 50, LANAI = 50;
 const HOME_NAMES = { pv: 'Patio villa', s1: '1-story home', s2: '2-story home' };
 
 const itemNames = () => ({
-  pv: process.env.SM_ITEM_PV || '* Patio Villa Exterior Cleaning',
+  pv: process.env.SM_ITEM_PV || '* Patio Villa Housewash',
   s1: process.env.SM_ITEM_1S || '1 Story Housewash',
   s2: process.env.SM_ITEM_2S || '2 Story Housewash',
-  pkg: process.env.SM_ITEM_PKG || '*Complete Service Additons',
-  lanai: process.env.SM_ITEM_LANAI || '*Extended Lanai',
+  pkg: process.env.SM_ITEM_PKG || '*Complete Exterior Package',
+  lanai: process.env.SM_ITEM_LANAI || '*Extended Lanai/Patio',
 });
 
 const json = (status, body) => new Response(JSON.stringify(body), {
@@ -47,7 +47,7 @@ const idOf = (obj, key) => obj?.[key] || obj?.id || obj?.ID || obj?.[key.toLower
 const rows = (d) => Array.isArray(d) ? d : (d?.items || d?.data || d?.results || []);
 
 // Names are matched loosely: case, spaces, a leading "*" and the "Additons"/"Additions" typo don't matter.
-const norm = (v) => String(v || '').toLowerCase().replace(/^[\s*]+/, '').replace(/additons/g, 'additions').replace(/\s+/g, ' ').trim();
+const norm = (v) => String(v || '').toLowerCase().replace(/^[\s*]+/, '').replace(/additons/g, 'additions').replace(/\s*\/\s*/g, '/').replace(/\s+/g, ' ').trim();
 let itemCache = null;
 async function findItem(name) {
   if (!itemCache) {

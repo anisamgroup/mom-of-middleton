@@ -421,7 +421,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
         </div>
         <div class="addon">
           <p><b>Add the Complete Exterior Package for $50 total.</b> Driveway, walkway, entry, exterior gutters and back patio/lanai, all five for one add-on.</p>
-          <p class="small">Back patio or lanai that extends beyond the roofline: add $50.</p>
+          <p class="small">Back patio or lanai that extends beyond the roofline: add $50 (one-time cleanings only).</p>
         </div>
       </div>
 
@@ -450,7 +450,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
         <ul class="plan-list">
           <li>Available after your first full cleaning at the regular full-service price: $298 patio villa, $348 1-story home, $448 2-story home.</li>
           <li>12-month minimum agreement with automatic monthly payment. It renews each year unless you cancel with 30 days' notice.</li>
-          <li>Back patio or lanai extending past the roofline: add $50 per visit. Fence cleaning and paver sealing are quoted separately.</li>
+          <li>No extra charge for a lanai past the roofline on any protection plan. Fence cleaning and paver sealing are quoted separately.</li>
         </ul>
       </div>
     </div>
@@ -527,7 +527,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
       </div>
       <div class="faq">
         <details open><summary>What's the difference between soft washing and pressure washing?</summary><p>Pressure washing uses high-pressure water and works well on concrete and pavers. Soft washing uses low pressure and a cleaning solution, and it's the safe way to clean stucco walls and screens. High pressure can damage those surfaces.</p></details>
-        <details><summary>What's included in the Complete Exterior Package?</summary><p>Driveway, walkway, entry, the outside of your gutters, and your back patio or lanai. It's $50 on top of a one-time house wash, and it's included at every visit on every protection plan. A patio or lanai that extends beyond the roofline is $50 more per visit.</p></details>
+        <details><summary>What's included in the Complete Exterior Package?</summary><p>Driveway, walkway, entry, the outside of your gutters, and your back patio or lanai. It's $50 on top of a one-time house wash, and it's included at every visit on every protection plan. On a one-time cleaning, a patio or lanai that extends beyond the roofline is $50 more. On a protection plan there's no extra charge for it.</p></details>
         <details><summary>What isn't included?</summary><p>Interior gutter flushing, vinyl or metal fence cleaning, and paver sealing are priced separately. We don't clean roofs.</p></details>
         <details><summary>How does the protection plan work?</summary><p>After your first full cleaning at the regular price, you pay a flat monthly rate and choose how often we come back: Standard (every 4 months), Enhanced (every 3 months) or Premium (every 2 months). Every visit includes the house wash and the Complete Exterior Package. The agreement runs 12 months and renews automatically unless you cancel with 30 days' notice before it ends. If you sell your home, the plan can transfer to the new owner.</p></details>
         <details><summary>Will cleaning hurt my plants?</summary><p>We wet down and protect plants before we start and rinse them again when we finish.</p></details>
@@ -681,7 +681,7 @@ window.momSubmit=function(p){
     document.getElementById('plans').innerHTML='<span class="qt">Keep it clean all year</span>'+
       '<p>After your first full cleaning, you can join the <b>MOM Home Investment Protection Plan</b>. Each visit includes the house wash and the Complete Exterior Package. For your '+NAMES[h].toLowerCase()+':</p>'+
       '<div class="pl">'+['std','enh','pre'].map(function(k){var p=PLANS[k];return '<div><b>'+p.n.replace(' Protection','')+'</b><span class="pp">'+money(p.r[h])+'/mo</span><small>'+p.f+'</small></div>';}).join('')+'</div>'+
-      (q.lan?'<p class="sub">Lanai past the roofline adds $50 per visit.</p>':'')+
+      (q.lan?'<p class="sub">Good news: on a protection plan, there\'s no extra charge for your lanai.</p>':'')+
       '<p class="sub">Marco will go over the plans with you after your first cleaning.</p>';
   }
   form.addEventListener('change',function(e){

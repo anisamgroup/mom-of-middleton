@@ -1,0 +1,733 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MOM of Middleton</title>
+<meta name="description" content="Exterior cleaning and sealing for Middleton and the Eastport villages of The Villages, FL. House washing, driveways, walkways, gutters and lanais. Call 352-808-2082.">
+<link rel="icon" href="/logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,112,600;0,112,800;0,125,900;1,125,900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<style>[hidden]{display:none!important} html,body{margin:0} img{max-width:100%}</style>
+<style>
+:root{
+  --bg:#F7F6F3;
+  --surface:#FFFFFF;
+  --ink:#17141C;
+  --ink-soft:#57525E;
+  --line:#E1DDE3;
+  --spray:#6A0B9E;
+  --spray-deep:#5A0888;
+  --crimson:#9A0000;
+  --sun:#FFC800;
+  --sun-ink:#1A1400;
+  --mildew:#5E6B47;
+  --paver-a:#E9E2D6;
+  --paver-b:#DDD4C5;
+  --grout:#C9BFAE;
+  --band:#0B0B0C;
+  --band-ink:#F3EFE6;
+  --display:"Archivo","Arial Narrow",Arial,sans-serif;
+  --body:"Atkinson Hyperlegible","Segoe UI",Verdana,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#121014; --surface:#1C1920; --ink:#F1EDF3; --ink-soft:#B3ABBA; --line:#322C38;
+    --spray:#C38BEA; --spray-deep:#D7AEF3; --sun:#FFC800; --sun-ink:#1A1400;
+    --paver-a:#CFC6B7; --paver-b:#BFB5A4; --grout:#A89D8A;
+    --band:#000000; --band-ink:#F3EFE6;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#121014; --surface:#1C1920; --ink:#F1EDF3; --ink-soft:#B3ABBA; --line:#322C38;
+  --spray:#C38BEA; --spray-deep:#D7AEF3; --sun:#FFC800; --sun-ink:#1A1400;
+  --paver-a:#CFC6B7; --paver-b:#BFB5A4; --grout:#A89D8A;
+  --band:#000000; --band-ink:#F3EFE6;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.6;margin:0}
+a{color:var(--spray-deep)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:20px}
+h1,h2,h3{font-family:var(--display);font-stretch:112%;line-height:1.08;text-wrap:balance;margin:0}
+h2{font-size:clamp(1.9rem,4vw,2.7rem);font-weight:900;font-style:italic;font-stretch:125%}
+h3{font-size:1.2rem;font-weight:600}
+p{margin:0}
+.eyebrow{font-family:var(--display);font-weight:600;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--spray-deep)}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--band);border-bottom:4px solid var(--sun)}
+.top nav a.navlink{color:var(--band-ink)!important}.top .phone{color:var(--sun)}
+.brand img{height:64px;width:auto;display:block}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.brand-mark{width:40px;height:40px;flex:none}
+.brand-name{font-family:var(--display);font-weight:900;font-stretch:125%;font-size:1.15rem;letter-spacing:.02em;line-height:1}
+.brand-name small{display:block;font-weight:600;font-stretch:112%;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);margin-top:3px}
+.top nav{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+.top nav a.navlink{color:var(--ink);text-decoration:none;font-size:.95rem}
+.top nav a.navlink:hover{color:var(--spray-deep)}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-weight:800;font-stretch:112%;font-size:1rem;text-decoration:none;border-radius:6px;padding:12px 18px;border:2px solid transparent;cursor:pointer;line-height:1.1}
+.btn-sun{background:var(--sun);color:var(--sun-ink)}
+.btn-sun:hover{filter:brightness(1.05)}
+.btn-line{border-color:var(--ink);color:var(--ink);background:transparent}
+.phone{font-family:var(--display);font-weight:800;font-stretch:112%;color:var(--ink);text-decoration:none;white-space:nowrap}
+@media (max-width:760px){.top nav a.navlink{display:none}}
+
+/* hero */
+.hero{padding-block:56px 56px;background:var(--band);color:var(--band-ink)}
+.hero .eyebrow{color:var(--sun)}
+.hero .lede,.hero .fine,.hero .wash-cap{color:#CFC8D6}
+.hero .btn-line{border-color:var(--band-ink);color:var(--band-ink)}
+.hero h1{color:#fff}
+.tag{display:inline-block;margin-top:22px;background:var(--crimson);color:#fff;font-family:var(--display);font-weight:900;font-style:italic;font-stretch:125%;font-size:1.25rem;padding:8px 16px;border-radius:6px;border:2px solid var(--sun)}
+.hero .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:48px;align-items:center}
+@media (max-width:880px){.hero .wrap{grid-template-columns:1fr;gap:32px}}
+.hero h1{font-size:clamp(2.4rem,6vw,4.3rem);font-weight:900;font-style:italic;font-stretch:125%;letter-spacing:-.01em}
+.hero h1 .only{color:var(--sun);font-style:italic}
+.hero .lede{font-size:1.2rem;color:var(--ink-soft);margin-top:18px;max-width:34ch}
+.hero .ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}
+.hero .fine{margin-top:18px;font-size:.95rem;color:var(--ink-soft)}
+
+/* wash demo */
+.wash{position:relative;border-radius:10px;overflow:hidden;aspect-ratio:4/3;max-width:100%;border:1px solid var(--line);box-shadow:0 18px 40px -24px rgba(10,30,40,.45);user-select:none;touch-action:pan-y}
+.pavers,.grime{position:absolute;inset:0}
+.pavers{
+  background-color:var(--grout);
+  background-image:
+    linear-gradient(90deg,transparent 0 3px,var(--paver-a) 3px 100%),
+    linear-gradient(0deg,transparent 0 3px,transparent 3px);
+  background-size:60px 30px;
+}
+.pavers::before{content:"";position:absolute;inset:0;
+  background-image:
+    repeating-linear-gradient(0deg,var(--grout) 0 3px,transparent 3px 30px),
+    repeating-linear-gradient(90deg,var(--grout) 0 3px,transparent 3px 60px);
+}
+.pavers::after{content:"";position:absolute;inset:0;
+  background-image:repeating-linear-gradient(0deg,transparent 0 30px,transparent 30px 60px),
+  linear-gradient(0deg,rgba(255,255,255,.0),rgba(255,255,255,.18));}
+.rows{position:absolute;inset:0;display:grid;grid-auto-rows:30px;overflow:hidden}
+.rows span{display:block;height:30px;background-image:repeating-linear-gradient(90deg,var(--grout) 0 3px,var(--paver-a) 3px 57px,var(--paver-b) 57px 60px);background-size:120px 100%;border-bottom:3px solid var(--grout)}
+.rows span:nth-child(even){background-position:30px 0}
+.grime{clip-path:inset(0 0 0 var(--cut,55%));transition:clip-path .08s linear}
+.grime .rows span{filter:brightness(.62) sepia(.5) hue-rotate(40deg) saturate(1.4)}
+.grime::after{content:"";position:absolute;inset:0;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.018' numOctaves='4' seed='7'/><feColorMatrix values='0 0 0 0 .18  0 0 0 0 .22  0 0 0 0 .12  0 0 0 1.4 -.45'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>");
+  background-size:300px 300px;mix-blend-mode:multiply;opacity:.95}
+.wand{position:absolute;top:0;bottom:0;left:var(--cut,55%);width:0;pointer-events:none}
+.wand::before{content:"";position:absolute;top:0;bottom:0;left:-2px;width:4px;background:rgba(255,255,255,.9);box-shadow:0 0 18px 6px rgba(160,215,245,.6)}
+.wand-knob{position:absolute;top:50%;left:0;transform:translate(-50%,-50%);width:48px;height:48px;border-radius:50%;background:var(--sun);color:var(--sun-ink);display:grid;place-items:center;font-family:var(--display);font-weight:900;font-size:1.1rem;box-shadow:0 4px 12px rgba(0,0,0,.3)}
+.wash-range{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
+.wash-tag{position:absolute;top:12px;font-family:var(--display);font-weight:800;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;padding:6px 10px;border-radius:4px;pointer-events:none}
+.wash-tag.l{left:12px;background:#fff;color:#16323A}
+.wash-tag.r{right:12px;background:#2B3320;color:#E7EDDA}
+.wash-cap{font-size:.9rem;color:var(--ink-soft);margin-top:10px}
+
+/* strip */
+.strip{background:linear-gradient(180deg,var(--crimson),#6A0B9E);color:#fff}
+.strip span{opacity:.92!important}
+.strip .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding-block:26px}
+@media (max-width:820px){.strip .wrap{grid-template-columns:1fr 1fr}}
+.strip b{display:block;font-family:var(--display);font-weight:800;font-stretch:112%;font-size:1.05rem;color:var(--sun)}
+.strip span{font-size:.92rem;opacity:.85}
+
+section.block{padding-block:80px}
+.head{max-width:680px;display:grid;gap:12px;margin-bottom:40px}
+.head p{color:var(--ink-soft);font-size:1.1rem}
+
+/* services */
+.services{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid var(--ink)}
+@media (max-width:900px){.services{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.services{grid-template-columns:1fr}}
+.svc{padding:26px 24px 30px 0;border-bottom:1px solid var(--line);display:grid;gap:10px;align-content:start}
+.svc:not(:nth-child(3n+1)){padding-left:24px;border-left:1px solid var(--line)}
+@media (max-width:900px){.svc:not(:nth-child(3n+1)){padding-left:0;border-left:0}.svc:nth-child(even){padding-left:24px;border-left:1px solid var(--line)}}
+@media (max-width:560px){.svc:nth-child(even){padding-left:0;border-left:0}}
+.svc svg{width:34px;height:34px;color:var(--spray)}
+.svc p{color:var(--ink-soft);font-size:1rem}
+.svc .how{font-size:.85rem;font-family:var(--display);font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--spray-deep)}
+
+/* area */
+.area{background:var(--surface);border-block:1px solid var(--line)}
+.area .wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+@media (max-width:860px){.area .wrap{grid-template-columns:1fr;gap:32px}}
+.area-list{display:grid;gap:0;margin:0;padding:0;list-style:none;border-top:2px solid var(--ink)}
+.area-list li{display:flex;justify-content:space-between;gap:16px;padding:16px 0;border-bottom:1px solid var(--line);align-items:baseline;flex-wrap:wrap}
+.area-list b{font-family:var(--display);font-weight:800;font-stretch:112%;font-size:1.2rem}
+.area-list span{color:var(--ink-soft);font-size:.98rem}
+.why{display:grid;gap:22px}
+.why div{display:grid;gap:4px}
+.why h3{font-size:1.15rem}
+.why p{color:var(--ink-soft)}
+
+/* process */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;counter-reset:s;list-style:none;margin:0;padding:0}
+@media (max-width:900px){.steps{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.steps{grid-template-columns:1fr}}
+.steps li{counter-increment:s;display:grid;gap:8px;align-content:start;border-top:2px solid var(--ink);padding-top:16px}
+.steps li::before{content:counter(s);font-family:var(--display);font-weight:900;font-stretch:125%;font-size:2.4rem;line-height:1;color:var(--spray)}
+.steps p{color:var(--ink-soft);font-size:1rem}
+
+/* marco */
+.marco{background:var(--band);color:var(--band-ink)}
+.marco .wrap{display:grid;grid-template-columns:1.2fr 1fr;gap:56px;align-items:center}
+@media (max-width:860px){.marco .wrap{grid-template-columns:1fr;gap:32px}}
+.marco .eyebrow{color:var(--sun)}
+.marco{border-top:4px solid var(--sun)}
+.marco h2{color:#fff}
+.marco p{opacity:.9;margin-top:16px;max-width:56ch}
+.record{display:grid;gap:14px}
+.rec{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 20px;border:1px solid rgba(255,255,255,.18);border-radius:8px;text-decoration:none;color:inherit}
+.rec:hover{border-color:var(--sun)}
+.rec b{font-family:var(--display);font-weight:800;font-stretch:112%;font-size:1.05rem;color:#fff}
+.rec small{display:block;opacity:.75;font-size:.85rem}
+.stars{font-family:var(--display);font-weight:900;font-size:1.6rem;color:var(--sun);white-space:nowrap;font-variant-numeric:tabular-nums}
+.record .note{font-size:.85rem;opacity:.7}
+
+
+/* pricing */
+.price-block{border-top:2px solid var(--ink);padding-top:24px;display:grid;gap:20px}
+.price-block+.price-block{margin-top:56px}
+.price-title{font-family:var(--display);font-weight:900;font-style:italic;font-stretch:125%;font-size:1.5rem}
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media (max-width:700px){.tiers{grid-template-columns:1fr}}
+.tier{background:var(--band);color:#fff;border:2px solid var(--sun);border-radius:10px;overflow:hidden;display:grid;text-align:center;padding-bottom:16px}
+.tier-name{background:var(--crimson);font-family:var(--display);font-weight:800;font-stretch:112%;letter-spacing:.08em;text-transform:uppercase;font-size:.95rem;padding:10px}
+.amt{font-family:var(--display);font-weight:900;font-stretch:125%;font-size:3.2rem;line-height:1.1;color:var(--sun);margin-top:12px;font-variant-numeric:tabular-nums}
+.amt sup{font-size:.45em;vertical-align:.9em}
+.unit{font-size:.95rem;color:#E8E2EC}
+.plan .tier{background:#000}
+.plan .tier-name{background:var(--sun);color:var(--sun-ink)}
+.plan .amt{color:#fff}
+.addon{background:var(--sun);color:var(--sun-ink);border-radius:10px;padding:18px 20px;display:grid;gap:6px}
+.addon b{font-family:var(--display);font-weight:800;font-stretch:112%}
+.addon .small{font-size:.92rem}
+.villa-note{font-size:.95rem;color:var(--ink-soft);margin-top:-6px}
+.villa-note b{color:var(--ink)}
+.matrix-wrap{overflow-x:auto;border-radius:10px;border:2px solid var(--sun)}
+.matrix{width:100%;min-width:560px;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.matrix th,.matrix td{padding:14px 12px;text-align:center;border-bottom:1px solid var(--line)}
+.matrix thead th{background:var(--sun);color:var(--sun-ink);vertical-align:top;border-left:1px solid rgba(0,0,0,.12)}
+.matrix thead th.corner{background:var(--spray);color:#fff;font-family:var(--display);font-weight:800;font-stretch:112%;text-transform:uppercase;letter-spacing:.06em;vertical-align:middle;border-left:0}
+.matrix .lvl{display:inline-block;background:var(--spray);color:#fff;font-family:var(--display);font-weight:800;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;padding:4px 8px;border-radius:4px}
+.matrix .freq{display:block;font-family:var(--display);font-weight:900;font-stretch:112%;font-size:1.05rem;margin-top:8px}
+.matrix .every{display:block;font-size:.9rem}
+.matrix tbody th{text-align:left;font-family:var(--display);font-weight:800;font-stretch:112%;background:var(--surface);color:var(--ink)}
+.matrix td{background:var(--surface);font-family:var(--display);font-weight:900;font-stretch:112%;font-size:1.7rem;color:var(--spray)}
+.matrix td small{font-size:.55em;font-weight:800}
+.matrix tbody tr:nth-child(even) th,.matrix tbody tr:nth-child(even) td{background:color-mix(in srgb,var(--sun) 10%,var(--surface))}
+.matrix tbody tr:last-child th,.matrix tbody tr:last-child td{border-bottom:0}
+.plan-head{display:grid;gap:8px;max-width:720px}
+.plan-head p{color:var(--ink-soft)}
+.plan-list{margin:0;padding-left:1.2em;display:grid;gap:8px;color:var(--ink-soft);max-width:760px}
+.quote{margin:24px 0 0;border-left:4px solid var(--sun);padding-left:18px}
+.quote p{margin:0;font-size:1.15rem;font-style:italic;color:#fff;opacity:1}
+.quote cite{display:block;margin-top:6px;font-style:normal;font-size:.9rem;opacity:.75}
+.stars{font-size:1.2rem!important}
+
+/* faq */
+.faq{max-width:820px;border-top:2px solid var(--ink)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer;list-style:none;padding:20px 40px 20px 0;position:relative;font-family:var(--display);font-weight:600;font-stretch:112%;font-size:1.15rem}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:4px;top:14px;font-size:1.8rem;font-weight:400;color:var(--spray)}
+.faq details[open] summary::after{content:"–"}
+.faq details p{padding:0 0 22px;color:var(--ink-soft);max-width:65ch}
+
+/* contact */
+.contact .wrap{display:grid;grid-template-columns:1fr 1.1fr;gap:56px;align-items:start}
+@media (max-width:860px){.contact .wrap{grid-template-columns:1fr;gap:32px}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:28px}
+.cinfo{display:grid;gap:18px;margin-top:28px}
+.cinfo div{display:grid;gap:2px}
+.cinfo small{font-family:var(--display);font-weight:600;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+.cinfo .big{font-family:var(--display);font-weight:900;font-stretch:112%;font-size:1.9rem;color:var(--ink);text-decoration:none;font-variant-numeric:tabular-nums}
+.cinfo .val{font-size:1.1rem;user-select:all}
+form{display:grid;gap:16px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:520px){.row2{grid-template-columns:1fr}}
+label{display:grid;gap:6px;font-size:.95rem;font-weight:700}
+input,select,textarea{font:inherit;font-size:1rem;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:12px 12px;width:100%}
+textarea{min-height:96px;resize:vertical}
+fieldset{border:0;padding:0;margin:0;display:grid;gap:8px}
+legend{font-size:.95rem;font-weight:700;margin-bottom:8px}
+.checks{display:flex;flex-wrap:wrap;gap:8px}
+.checks label{display:inline-flex;align-items:center;gap:8px;font-weight:400;border:1px solid var(--line);border-radius:999px;padding:6px 14px;cursor:pointer;background:var(--bg)}
+.checks input{width:auto;accent-color:var(--spray)}
+.done{border:2px solid var(--spray);border-radius:8px;padding:18px;display:grid;gap:10px}
+.done pre{white-space:pre-wrap;font-family:var(--body);font-size:.95rem;background:var(--bg);border-radius:6px;padding:12px;margin:0;max-height:220px;overflow:auto}
+.done .acts{display:flex;gap:10px;flex-wrap:wrap}
+
+
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg label,.opt{display:flex;align-items:center;gap:10px;font-weight:700;border:2px solid var(--line);border-radius:8px;padding:10px 14px;cursor:pointer;background:var(--bg)}
+.seg input,.opt input{width:auto;accent-color:var(--spray);margin:0}
+.seg label:has(input:checked),.opt:has(input:checked){border-color:var(--spray);background:color-mix(in srgb,var(--spray) 8%,var(--bg))}
+.opts{display:grid;gap:8px}
+.opt{justify-content:space-between;font-weight:400}
+.opt span.l{display:flex;align-items:center;gap:10px}
+.opt b{font-family:var(--display);font-weight:800;font-stretch:112%}
+.opt small{display:block;color:var(--ink-soft);font-size:.85rem}
+.opt .p{font-family:var(--display);font-weight:900;font-stretch:112%;color:var(--spray);white-space:nowrap;font-variant-numeric:tabular-nums}
+.quote{background:var(--band);color:#fff;border-radius:10px;padding:18px 20px;display:grid;gap:6px;border:2px solid var(--sun)}
+.quote .qt{font-family:var(--display);font-weight:800;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--sun)}
+.quote .row{display:flex;justify-content:space-between;gap:12px;font-variant-numeric:tabular-nums}
+.quote .tot{font-family:var(--display);font-weight:900;font-stretch:112%;font-size:1.5rem;color:var(--sun);border-top:1px solid rgba(255,255,255,.25);padding-top:8px;margin-top:4px}
+.quote .sub{font-size:.88rem;opacity:.8}
+.plans{border:2px dashed var(--spray);border-radius:10px;padding:16px 18px;display:grid;gap:8px}
+.plans .qt{font-family:var(--display);font-weight:800;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--spray-deep)}
+.plans p{font-size:.95rem}
+.plans .pl{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+@media (max-width:480px){.plans .pl{grid-template-columns:1fr}}
+.plans .pl div{background:var(--bg);border-radius:8px;padding:10px;display:grid;gap:2px;text-align:center}
+.plans .pp{font-family:var(--display);font-weight:900;font-stretch:112%;font-size:1.3rem;color:var(--spray);font-variant-numeric:tabular-nums}
+.plans small{font-size:.8rem;color:var(--ink-soft)}
+.plans .sub{font-size:.85rem;color:var(--ink-soft)}
+.fineprint{font-size:.85rem;color:var(--ink-soft)}
+footer{border-top:1px solid var(--line);padding-block:36px;font-size:.92rem;color:var(--ink-soft)}
+footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+
+
+
+
+
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="MOM of Middleton home">
+      <img src="/logo.jpg" alt="MOM Exterior cleaning &amp; Sealing" width="72" height="52">
+    </a>
+    <nav aria-label="Main">
+      <a class="navlink" href="#services">Services</a>
+      <a class="navlink" href="#pricing">Pricing</a>
+      <a class="navlink" href="#area">Service area</a>
+      <a class="navlink" href="#faq">FAQ</a>
+      <a class="phone" href="tel:+13528082082">352-808-2082</a>
+      <a class="btn btn-sun" href="#estimate">Get my price</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">Exterior cleaning &amp; sealing · The Villages, FL</p>
+        <h1 style="margin-top:14px">Middleton &amp; Eastport. <span class="only">Only.</span></h1>
+        <p class="lede">House washing, driveways, walkways, gutters and lanais, cleaned by a local crew that works only in your part of The Villages. Flat prices by home type.</p>
+        <div class="ctas">
+          <a class="btn btn-sun" href="#pricing">See prices</a>
+          <a class="btn btn-line" href="tel:+13528082082">Call 352-808-2082</a>
+        </div>
+        <p class="fine">Marco Vianello, General Manager, answers the phone himself.</p>
+        <span class="tag">Dirty House? Call MOM!</span>
+      </div>
+      <div>
+        <div class="wash" id="wash" style="--cut:55%">
+          <div class="pavers"><div class="rows" aria-hidden="true"></div></div>
+          <div class="grime"><div class="rows" aria-hidden="true"></div></div>
+          <div class="wand"><div class="wand-knob" aria-hidden="true">⇆</div></div>
+          <span class="wash-tag l">Clean</span>
+          <span class="wash-tag r">Mildew</span>
+          <input class="wash-range" id="wash-range" type="range" min="0" max="100" value="55" aria-label="Drag to wash the pavers">
+        </div>
+        <p class="wash-cap">Drag across the pavers. Florida humidity grows mildew on concrete in a single season.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip">
+    <div class="wrap">
+      <div><b>Local only</b><span>Middleton and the Eastport villages</span></div>
+      <div><b>Flat, published prices</b><span>By home type, no surprises</span></div>
+      <div><b>Low pressure on stucco</b><span>Soft washing that won't damage paint or texture</span></div>
+      <div><b>3, 4 or 6 cleanings a year</b><span>With the MOM Home Investment Protection Plan</span></div>
+    </div>
+  </div>
+
+  <section class="block" id="services">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Services</p>
+        <h2>The whole outside of your home</h2>
+        <p>Every house wash can include the Complete Exterior Package: driveway, walkway, entry, exterior gutters and back patio or lanai. Stucco is soft washed at low pressure. Concrete and pavers get a surface cleaner and a full rinse.</p>
+      </div>
+      <div class="services">
+        <article class="svc">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="9" width="22" height="18"/><rect x="10" y="14" width="5" height="5"/><rect x="18" y="14" width="5" height="5"/><path d="M14 27v-5h4v5"/></svg>
+          <h3>House wash</h3>
+          <p>Stucco walls, soffits and trim cleaned at low pressure, so paint and texture stay intact.</p>
+          <span class="how">Soft wash</span>
+        </article>
+        <article class="svc">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M11 4 5 28M21 4l6 24"/><path d="M16 6v4M16 14v4M16 22v4"/></svg>
+          <h3>Driveway</h3>
+          <p>Mildew, rust, tire marks and dirt lifted from concrete and pavers, with an even finish and no swirl marks.</p>
+          <span class="how">Surface cleaner</span>
+        </article>
+        <article class="svc">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 4 5 28h22L23 4z"/><path d="M7 16h18M8 10h16M6 22h20M16 4v24"/></svg>
+          <h3>Walkway &amp; entry</h3>
+          <p>The path to your front door and the entry itself, the first thing guests see.</p>
+          <span class="how">Surface cleaner</span>
+        </article>
+        <article class="svc">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 10h26l-3 5H6z"/><path d="M24 15v12"/><path d="M8 20c0 2 1 3 2 3s2-1 2-3-2-4-2-4-2 2-2 4z"/></svg>
+          <h3>Exterior gutters</h3>
+          <p>The outside face of the gutters brightened. Interior gutter flushing is available and priced separately.</p>
+          <span class="how">By hand</span>
+        </article>
+        <article class="svc">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 27V12l12-7 12 7v15"/><path d="M4 12h24M10 12v15M16 5v22M22 12v15"/></svg>
+          <h3>Back patio &amp; lanai</h3>
+          <p>The patio or lanai floor, screens and frames washed so it's ready to use again.</p>
+          <span class="how">Low pressure</span>
+        </article>
+        <article class="svc">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M4 22h24v6H4z"/><path d="M10 22V10h12v12"/><path d="M13 6h6v4h-6z"/><path d="M8 17l-3 5M24 17l3 5"/></svg>
+          <h3>Paver sealing</h3>
+          <p>After cleaning, sealer locks in joint sand, brings back paver color and slows mildew and stains from coming back. Quoted separately. Ask Marco for a price.</p>
+          <span class="how">Quoted separately</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block pricing" id="pricing">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Pricing</p>
+        <h2>Prices by home type</h2>
+        <p>No surprise bills. Choose a one-time cleaning, or keep your home clean all year with the MOM Home Investment Protection Plan.</p>
+      </div>
+
+      <div class="price-block">
+        <h3 class="price-title">One-time cleaning</h3>
+        <div class="tiers">
+          <div class="tier"><span class="tier-name">Patio villa</span><span class="amt">$248</span><span class="unit">House wash</span></div>
+          <div class="tier"><span class="tier-name">1-story home</span><span class="amt">$298</span><span class="unit">House wash</span></div>
+          <div class="tier"><span class="tier-name">2-story home</span><span class="amt">$398</span><span class="unit">House wash</span></div>
+        </div>
+        <div class="addon">
+          <p><b>Add the Complete Exterior Package for $50 total.</b> Driveway, walkway, entry, exterior gutters and back patio/lanai, all five for one add-on.</p>
+          <p class="small">Back patio or lanai that extends beyond the roofline: add $50.</p>
+        </div>
+      </div>
+
+      <div class="price-block plan">
+        <div class="plan-head">
+          <h3 class="price-title">MOM Home Investment Protection Plan</h3>
+          <p>After your first full cleaning, choose how often we come back. Every visit includes the house wash and the Complete Exterior Package: driveway, walkway, entry, exterior gutters and back patio/lanai.</p>
+        </div>
+        <div class="matrix-wrap">
+          <table class="matrix">
+            <thead>
+              <tr>
+                <th scope="col" class="corner">Home type</th>
+                <th scope="col"><span class="lvl">Standard Protection</span><span class="freq">3 cleanings a year</span><span class="every">Every 4 months</span></th>
+                <th scope="col"><span class="lvl">Enhanced Protection</span><span class="freq">4 cleanings a year</span><span class="every">Every 3 months</span></th>
+                <th scope="col"><span class="lvl">Premium Protection</span><span class="freq">6 cleanings a year</span><span class="every">Every 2 months</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Patio villa</th><td>$62.50<small>/mo</small></td><td>$79<small>/mo</small></td><td>$109<small>/mo</small></td></tr>
+              <tr><th scope="row">1-story home</th><td>$79<small>/mo</small></td><td>$99<small>/mo</small></td><td>$139<small>/mo</small></td></tr>
+              <tr><th scope="row">2-story home</th><td>$99<small>/mo</small></td><td>$125<small>/mo</small></td><td>$175<small>/mo</small></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <ul class="plan-list">
+          <li>Available after your first full cleaning at the regular full-service price: $298 patio villa, $348 1-story home, $448 2-story home.</li>
+          <li>12-month minimum agreement with automatic monthly payment. It renews each year unless you cancel with 30 days' notice.</li>
+          <li>Back patio or lanai extending past the roofline: add $50 per visit. Fence cleaning and paver sealing are quoted separately.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block area" id="area">
+    <div class="wrap">
+      <div>
+        <div class="head" style="margin-bottom:28px">
+          <p class="eyebrow">Service area</p>
+          <h2>We stay close to home</h2>
+          <p>MOM works only in Middleton and the nearby Eastport villages of The Villages. We don't drive across the state between jobs.</p>
+        </div>
+        <ul class="area-list">
+          <li><b>Middleton</b><span>Homes, patio villas and neighborhood businesses</span></li>
+          <li><b>Eastport</b><span>The newest villages of The Villages</span></li>
+          <li><b>Nearby</b><span>Just outside the line? Call and ask.</span></li>
+        </ul>
+      </div>
+      <div class="why">
+        <div><h3>On time, because we're nearby</h3><p>Short drives mean we show up when we say we will, and we can come back quickly if something needs a touch-up.</p></div>
+        <div><h3>Your home keeps its curb appeal</h3><p>Florida humidity puts mildew back on walls and driveways within months. Regular cleaning keeps your home looking cared for and protects what you paid for it.</p></div>
+        <div><h3>Neighbors, not a call center</h3><p>You deal with the same small team every visit, and Marco answers the phone himself.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="process">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">How it works</p>
+        <h2>From phone call to clean house</h2>
+      </div>
+      <ol class="steps">
+        <li><h3>Call or text Marco</h3><p>Tell us your home type and what you'd like cleaned. You'll get the price on the call.</p></li>
+        <li><h3>First complete cleaning</h3><p>House wash plus the Complete Exterior Package, with plants and fixtures protected.</p></li>
+        <li><h3>Walk it together</h3><p>We walk the job with you before we leave. If anything is missed, we fix it.</p></li>
+        <li><h3>Stay on schedule</h3><p>On the protection plan, we come back every 4, 3 or 2 months, so your home stays clean all year.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="block marco" id="about">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">Who runs MOM</p>
+        <h2>Marco Vianello, General Manager</h2>
+        <p>Before moving to The Villages, Marco owned Get It Clean Miami. He cleaned homes, driveways, pool decks, sidewalks, parking garages and commercial buildings across Miami, Coral Gables, Pinecrest, Kendall and Palmetto Bay.</p>
+        <p>On his <a href="https://www.facebook.com/getitcleanmiami/reels/" target="_blank" rel="noopener" style="color:var(--sun)">#MondaysWithMarco videos</a> he explains soft washing versus pressure washing, how often a property should be cleaned, and why the rainy season is a good time to clean. He brought the same methods and standards to Middleton.</p>
+        <blockquote class="quote">
+          <p>“Call them, you will be glad you did, and their customer service is great.”</p>
+          <cite>Elvi M., Facebook review of Get It Clean Miami</cite>
+        </blockquote>
+      </div>
+      <div class="record">
+        <a class="rec" href="https://www.facebook.com/getitcleanmiami/reviews" target="_blank" rel="noopener">
+          <span><b>Get It Clean Miami on Facebook</b><small>24 reviews</small></span>
+          <span class="stars">100% recommend</span>
+        </a>
+        <a class="rec" href="https://www.yelp.com/biz/get-it-clean-miami-miami" target="_blank" rel="noopener">
+          <span><b>Get It Clean Miami on Yelp</b><small>Customer reviews</small></span>
+          <span class="stars">5.0 ★</span>
+        </a>
+        <p class="note">Reviews of Marco's previous company, Get It Clean Miami.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="faq">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Questions</p>
+        <h2>Before you call</h2>
+      </div>
+      <div class="faq">
+        <details open><summary>What's the difference between soft washing and pressure washing?</summary><p>Pressure washing uses high-pressure water and works well on concrete and pavers. Soft washing uses low pressure and a cleaning solution, and it's the safe way to clean stucco walls and screens. High pressure can damage those surfaces.</p></details>
+        <details><summary>What's included in the Complete Exterior Package?</summary><p>Driveway, walkway, entry, the outside of your gutters, and your back patio or lanai. It's $50 on top of a one-time house wash, and it's included at every visit on every protection plan. A patio or lanai that extends beyond the roofline is $50 more per visit.</p></details>
+        <details><summary>What isn't included?</summary><p>Interior gutter flushing, vinyl or metal fence cleaning, and paver sealing are priced separately. We don't clean roofs.</p></details>
+        <details><summary>How does the protection plan work?</summary><p>After your first full cleaning at the regular price, you pay a flat monthly rate and choose how often we come back: Standard (every 4 months), Enhanced (every 3 months) or Premium (every 2 months). Every visit includes the house wash and the Complete Exterior Package. The agreement runs 12 months and renews automatically unless you cancel with 30 days' notice before it ends. If you sell your home, the plan can transfer to the new owner.</p></details>
+        <details><summary>Will cleaning hurt my plants?</summary><p>We wet down and protect plants before we start and rinse them again when we finish.</p></details>
+        <details><summary>Do you work outside Middleton and Eastport?</summary><p>We focus on Middleton and the Eastport villages so we can stay on schedule. If you're close by, call us and we'll tell you honestly whether we can help.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="block contact area" id="estimate">
+    <div class="wrap">
+      <div>
+        <div class="head" style="margin-bottom:0">
+          <p class="eyebrow">Instant price</p>
+          <h2>Get your price now</h2>
+          <p>Pick your home type and cleaning to see your price right away. Send the request and Marco will confirm your date. Prefer to talk? Call or text anytime.</p>
+        </div>
+        <div class="cinfo">
+          <div><small>Phone / text</small><a class="big" href="tel:+13528082082">352-808-2082</a></div>
+          <div><small>Email</small><span class="val">momofmiddleton@gmail.com</span></div>
+          <div><small>Facebook &amp; Instagram</small><span class="val">@momofmiddleton</span></div>
+          <div><small>Mailing address</small><span class="val">2113 Everglades Lane #1067<br>The Villages, FL 32163</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <form id="est" novalidate>
+          <fieldset>
+            <legend>1. Your home</legend>
+            <div class="seg" role="radiogroup">
+              <label><input type="radio" name="htype" id="h-pv" value="pv"> Patio villa</label>
+              <label><input type="radio" name="htype" id="h-1" value="s1" checked> 1-story home</label>
+              <label><input type="radio" name="htype" id="h-2" value="s2"> 2-story home</label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>2. Does your back patio or lanai extend past the roofline?</legend>
+            <div class="seg" role="radiogroup">
+              <label><input type="radio" name="lanai" id="l-no" value="no" checked> No</label>
+              <label><input type="radio" name="lanai" id="l-yes" value="yes"> Yes</label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>3. Choose your first cleaning</legend>
+            <div class="opts" id="opts"></div>
+          </fieldset>
+
+          <div class="quote" id="quote" aria-live="polite"></div>
+          <div class="plans" id="plans"></div>
+
+          <fieldset>
+            <legend>4. Your details</legend>
+            <div class="row2">
+              <label for="f-name">Full name<input id="f-name" name="name" autocomplete="name" required></label>
+              <label for="f-phone">Mobile phone<input id="f-phone" name="phone" type="tel" autocomplete="tel" required></label>
+            </div>
+            <label for="f-email">Email<input id="f-email" name="email" type="email" autocomplete="email" required></label>
+            <label for="f-addr">Street address<input id="f-addr" name="addr" autocomplete="street-address" required></label>
+            <div class="row2">
+              <label for="f-city">City<input id="f-city" name="city" autocomplete="address-level2" value="The Villages"></label>
+              <label for="f-zip">ZIP<input id="f-zip" name="zip" autocomplete="postal-code" inputmode="numeric" required></label>
+            </div>
+            <label for="f-note">Anything else? (optional)<textarea id="f-note" name="note" placeholder="Gate code, best time to reach you, interest in paver sealing or fence cleaning…"></textarea></label>
+          </fieldset>
+          <p id="f-err" role="alert" style="color:#B3261E;font-size:.95rem" hidden></p>
+          <button class="btn btn-sun" type="submit" style="justify-self:start">Request this cleaning</button>
+          <p class="fineprint">Prices are for standard homes in Middleton and Eastport. Marco confirms your price and date before any work starts.</p>
+        </form>
+        <div class="done" id="sent" hidden>
+          <b style="font-family:var(--display);font-size:1.3rem">Thank you, <span id="sent-name"></span>!</b>
+          <p>Your request for <b id="sent-total"></b> is in. Marco will send your written estimate by email and text shortly, and contact you to set a date.</p>
+          <p style="font-size:.95rem;color:var(--ink-soft)">Questions? Call or text 352-808-2082.</p>
+        </div>
+        <div class="done" id="done" hidden>
+          <b>Your request is ready to send.</b>
+          <p style="font-size:.95rem;color:var(--ink-soft)">Email it to momofmiddleton@gmail.com, or text it to 352-808-2082.</p>
+          <pre id="msg"></pre>
+          <div class="acts">
+            <a class="btn btn-sun" id="mail" href="#">Open in email</a>
+            <button class="btn btn-line" type="button" id="copy">Copy message</button>
+            <button class="btn btn-line" type="button" id="edit">Edit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span><b style="color:var(--ink)">MOM of Middleton</b> · Exterior cleaning &amp; sealing for Middleton &amp; Eastport, The Villages, FL</span>
+    <span>352-808-2082 · momofmiddleton@gmail.com · @momofmiddleton</span>
+  </div>
+</footer>
+
+<form name="estimate" data-netlify="true" netlify-honeypot="company" hidden>
+<input name="name"><input name="phone"><input name="email"><input name="address"><input name="city"><input name="zip">
+<input name="homeType"><input name="lanai"><input name="service"><input name="total"><textarea name="summary"></textarea><input name="company">
+</form>
+<script>
+window.momSubmit=function(p){
+  // 1) Backup copy: Netlify Forms emails Marco every request.
+  var fd=new URLSearchParams({'form-name':'estimate',name:p.name,phone:p.phone,email:p.email,address:p.address,city:p.city,zip:p.zip,
+    homeType:p.homeType,lanai:p.lanai?'yes':'no',service:p.service,total:String(p.total),summary:p.summary});
+  var backup=fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:fd.toString()});
+  // 2) Create the account + estimate in ServiceMonster.
+  var sm=fetch('/.netlify/functions/estimate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(p)})
+    .then(function(r){return r.json().then(function(j){if(!r.ok)throw j;return j;});});
+  return Promise.allSettled([backup,sm]).then(function(res){
+    if(res[0].status==='fulfilled'&&res[0].value.ok||res[1].status==='fulfilled')return res[1].value||{};
+    throw new Error('send failed');
+  });
+};
+</script>
+<script>
+(function(){
+  // paver rows
+  document.querySelectorAll('.rows').forEach(function(r){
+    for(var i=0;i<16;i++){r.appendChild(document.createElement('span'));}
+  });
+  var wash=document.getElementById('wash'), range=document.getElementById('wash-range');
+  function set(v){wash.style.setProperty('--cut',v+'%');}
+  range.addEventListener('input',function(){set(range.value);});
+
+  var form=document.getElementById('est'), done=document.getElementById('done'), err=document.getElementById('f-err');
+  var NAMES={pv:'Patio villa',s1:'1-story home',s2:'2-story home'};
+  var HOUSE={pv:248,s1:298,s2:398}, FULL={pv:298,s1:348,s2:448};
+  var PLANS={std:{n:'Standard Protection',f:'3 cleanings a year, every 4 months',r:{pv:62.5,s1:79,s2:99}},
+             enh:{n:'Enhanced Protection',f:'4 cleanings a year, every 3 months',r:{pv:79,s1:99,s2:125}},
+             pre:{n:'Premium Protection',f:'6 cleanings a year, every 2 months',r:{pv:109,s1:139,s2:175}}};
+  var choice='full';
+  function $(n){var el=form.querySelector('input[name="'+n+'"]:checked');return el?el.value:null;}
+  function money(v){return '$'+(v%1?v.toFixed(2):v);}
+  function renderOpts(){
+    var h=$('htype'), box=document.getElementById('opts');
+    var items=[['wash','House wash only','Walls, soffits and trim of the house',money(HOUSE[h])],
+               ['full','House wash + Complete Exterior Package','Adds driveway, walkway, entry, exterior gutters and back patio/lanai for $50',money(HOUSE[h]+50)]];
+    box.innerHTML=items.map(function(it){return '<label class="opt"><span class="l"><input type="radio" name="svc" id="svc-'+it[0]+'" value="'+it[0]+'"'+(it[0]===choice?' checked':'')+'><span><b>'+it[1]+'</b><small>'+it[2]+'</small></span></span><span class="p">'+it[3]+'</span></label>';}).join('');
+  }
+  function calc(){
+    var h=$('htype'), lan=$('lanai')==='yes', c=$('svc')||choice, L=[], total, summary;
+    L.push(['House wash, '+NAMES[h],HOUSE[h]]);
+    if(c==='full'){L.push(['Complete Exterior Package',50]);if(lan)L.push(['Lanai past the roofline',50]);
+      total=HOUSE[h]+50+(lan?50:0);summary='House wash + Complete Exterior Package';}
+    else{total=HOUSE[h];summary='House wash only';}
+    return {h:h,lan:lan,c:c,lines:L,total:total,summary:summary};
+  }
+  function render(){
+    var q=calc(), h=q.h;
+    document.getElementById('quote').innerHTML='<span class="qt">Your price</span>'+
+      q.lines.map(function(l){return '<div class="row"><span>'+l[0]+'</span><span>'+money(l[1])+'</span></div>';}).join('')+
+      '<div class="row tot"><span>Total</span><span>'+money(q.total)+'</span></div>';
+    document.getElementById('plans').innerHTML='<span class="qt">Keep it clean all year</span>'+
+      '<p>After your first full cleaning, you can join the <b>MOM Home Investment Protection Plan</b>. Each visit includes the house wash and the Complete Exterior Package. For your '+NAMES[h].toLowerCase()+':</p>'+
+      '<div class="pl">'+['std','enh','pre'].map(function(k){var p=PLANS[k];return '<div><b>'+p.n.replace(' Protection','')+'</b><span class="pp">'+money(p.r[h])+'/mo</span><small>'+p.f+'</small></div>';}).join('')+'</div>'+
+      (q.lan?'<p class="sub">Lanai past the roofline adds $50 per visit.</p>':'')+
+      '<p class="sub">Marco will go over the plans with you after your first cleaning.</p>';
+  }
+  form.addEventListener('change',function(e){
+    if(e.target.name==='svc')choice=e.target.value;
+    if(e.target.name==='htype'){choice=$('svc')||choice;renderOpts();}
+    render();
+  });
+  renderOpts();render();
+  var msgText='';
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var need=[['name','your full name'],['phone','a mobile phone number'],['email','an email address'],['addr','your street address'],['zip','your ZIP code']];
+    var miss=need.filter(function(n){return !form[n[0]].value.trim();}).map(function(n){return n[1];});
+    if(miss.length){err.textContent='Please add '+miss.join(', ')+'.';err.hidden=false;return;}
+    err.hidden=true;
+    var q=calc();
+    msgText='Cleaning request for MOM of Middleton\n\nName: '+form.name.value.trim()+'\nPhone: '+form.phone.value.trim()+'\nEmail: '+form.email.value.trim()+
+      '\nAddress: '+form.addr.value.trim()+', '+form.city.value.trim()+' '+form.zip.value.trim()+
+      '\nHome type: '+NAMES[q.h]+'\nLanai past roofline: '+(q.lan?'Yes':'No')+'\nService: '+q.summary+
+      '\n'+q.lines.map(function(l){return '  '+l[0]+': '+money(l[1]);}).join('\n')+
+      '\nTotal: '+money(q.total)+
+      '\nNotes: '+(form.note.value.trim()||'—');
+    document.getElementById('msg').textContent=msgText;
+    document.getElementById('mail').href='mailto:momofmiddleton@gmail.com?subject='+encodeURIComponent('Cleaning request – '+form.name.value.trim())+'&body='+encodeURIComponent(msgText);
+    var payload={name:form.name.value.trim(),phone:form.phone.value.trim(),email:form.email.value.trim(),address:form.addr.value.trim(),
+      city:form.city.value.trim(),zip:form.zip.value.trim(),homeType:q.h,lanai:q.lan,service:q.c,note:form.note.value.trim(),total:q.total,summary:msgText};
+    function showManual(){form.hidden=true; done.hidden=false;}
+    if(typeof window.momSubmit==='function'){
+      var btn=form.querySelector('button[type=submit]'); btn.disabled=true; btn.textContent='Sending…';
+      window.momSubmit(payload).then(function(r){
+        form.hidden=true; var ok=document.getElementById('sent'); ok.hidden=false;
+        document.getElementById('sent-name').textContent=payload.name.split(' ')[0];
+        document.getElementById('sent-total').textContent=money(q.total);
+      }).catch(function(){btn.disabled=false; btn.textContent='Request this cleaning'; showManual();});
+    } else showManual();
+  });
+  document.getElementById('edit').addEventListener('click',function(){done.hidden=true;form.hidden=false;});
+  document.getElementById('copy').addEventListener('click',function(){
+    var b=this;
+    try{
+      navigator.clipboard.writeText(msgText).then(function(){b.textContent='Copied';},function(){sel();});
+    }catch(e){sel();}
+    function sel(){var r=document.createRange();r.selectNodeContents(document.getElementById('msg'));var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Selected. Press copy';}
+  });
+})();
+</script>
+
+</body>
+</html>

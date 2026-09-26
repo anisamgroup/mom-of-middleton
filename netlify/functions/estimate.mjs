@@ -17,7 +17,7 @@ const itemNames = () => ({
   s1: process.env.SM_ITEM_1S || '1 Story Housewash',
   s2: process.env.SM_ITEM_2S || '2 Story Housewash',
   pkg: process.env.SM_ITEM_PKG || '*Complete Service Additons',
-  lanai: process.env.SM_ITEM_LANAI || '*Extended back patio',
+  lanai: process.env.SM_ITEM_LANAI || '*Extended Lanai',
 });
 
 const json = (status, body) => new Response(JSON.stringify(body), {
@@ -46,15 +46,20 @@ const idOf = (obj, key) => obj?.[key] || obj?.id || obj?.ID || obj?.[key.toLower
   (Array.isArray(obj?.items) && obj.items[0]?.[key]) || null;
 const rows = (d) => Array.isArray(d) ? d : (d?.items || d?.data || d?.results || []);
 
+// Names are matched loosely: case, spaces, a leading "*" and the "Additons"/"Additions" typo don't matter.
+const norm = (v) => String(v || '').toLowerCase().replace(/^[\s*]+/, '').replace(/additons/g, 'additions').replace(/\s+/g, ' ').trim();
+let itemCache = null;
 async function findItem(name) {
-  const q = `/items?wField=itemName&wValue=${encodeURIComponent(name)}&limit=5`;
-  let list = [];
-  try { list = rows(await sm('GET', q)); } catch { /* field name may differ */ }
-  if (!list.length) {
-    const all = rows(await sm('GET', '/items?limit=500'));
-    list = all.filter((i) => [i.itemName, i.name, i.description].some((v) => (v || '').trim() === name.trim()));
+  if (!itemCache) {
+    itemCache = [];
+    for (let page = 0; page < 10; page++) {
+      const batch = rows(await sm('GET', `/items?limit=100&pageIndex=${page}`));
+      itemCache.push(...batch);
+      if (batch.length < 100) break;
+    }
   }
-  const item = list[0];
+  const want = norm(name);
+  const item = itemCache.find((i) => [i.itemName, i.name].some((v) => norm(v) === want));
   if (!item) throw new Error(`Service "${name}" not found in ServiceMonster`);
   return { id: item.itemID || item.id, name };
 }

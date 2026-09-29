@@ -596,7 +596,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
         </form>
         <div class="done" id="sent" hidden>
           <b style="font-family:var(--display);font-size:1.3rem">Thank you, <span id="sent-name"></span>!</b>
-          <p>Your request for <b id="sent-total"></b> is in. Marco will send your written estimate by email and text shortly, and contact you to set a date.</p>
+          <p>Your request for <b id="sent-total"></b> is in. <span id="sent-msg">Marco will send your written estimate by email and text shortly, and contact you to set a date.</span></p>
           <p style="font-size:.95rem;color:var(--ink-soft)">Questions? Call or text 352-808-2082.</p>
         </div>
         <div class="done" id="done" hidden>
@@ -715,6 +715,7 @@ window.momSubmit=function(p){
         form.hidden=true; var ok=document.getElementById('sent'); ok.hidden=false;
         document.getElementById('sent-name').textContent=payload.name.split(' ')[0];
         document.getElementById('sent-total').textContent=money(q.total);
+        if(r&&r.emailed)document.getElementById('sent-msg').textContent='Your written estimate is on its way to '+payload.email+' (check spam if you don\'t see it). Marco will contact you to set a date.';
       }).catch(function(){btn.disabled=false; btn.textContent='Request this cleaning'; showManual();});
     } else showManual();
   });

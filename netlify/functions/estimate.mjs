@@ -1,4 +1,5 @@
-// Creates a ServiceMonster account + estimate from the website's price form.
+// Website price form: emails the customer their estimate (Resend) and, when API
+// credentials are set, also creates the account + estimate in ServiceMonster.
 // Credentials live only in Netlify environment variables (never in the page):
 //   SM_USERNAME, SM_PASSWORD  – ServiceMonster API user (Settings > API Users, "Super User")
 // Optional overrides:
@@ -64,6 +65,75 @@ async function findItem(name) {
   return { id: item.itemID || item.id, name };
 }
 
+// ---- Estimate emails (Resend). Works with or without the ServiceMonster API. ----
+//   RESEND_API_KEY – from resend.com (free plan)
+//   FROM_EMAIL     – e.g. "MOM of Middleton <estimates@momofmiddleton.com>" (domain verified in Resend)
+//   OWNER_EMAIL    – where new-request notices go (default momofmiddleton@gmail.com)
+const PLAN_RATES = { pv: [62.5, 79, 109], s1: [79, 99, 139], s2: [99, 125, 175] };
+const LINE_TEXT = {
+  pv: ['Patio Villa House Wash', 'Removal of all dirt, mold and mildew from exterior walls, windows and sills, plus cobwebs and bugs (except wasp nests). We soft wash: low-pressure water with professional cleaning agents that kill mold and help your paint last longer.'],
+  s1: ['1-Story House Wash', null], s2: ['2-Story House Wash', null],
+  pkg: ['Complete Exterior Package', 'Driveway, walkway, entry, back patio, exterior gutters, oxidation streaks (tiger stripes) and screen lanai. Removes dirt, mold, mildew and most bugs.'],
+  lanai: ['Extended Lanai/Patio', 'Lanai/patio area extending past the roofline.'],
+};
+LINE_TEXT.s1[1] = LINE_TEXT.s2[1] = LINE_TEXT.pv[1];
+const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const usd = (n) => '$' + (n % 1 ? n.toFixed(2) : n);
+
+function estimateHtml(d, lines, total, no) {
+  const td = 'padding:10px 6px;border-bottom:1px solid #E1DDE3;vertical-align:top;font-size:14px';
+  const rowsHtml = lines.map((l) => `<tr><td style="${td}"><b>${LINE_TEXT[l.key][0]}</b><br><span style="color:#57525E;font-size:13px">${LINE_TEXT[l.key][1]}</span></td><td style="${td};text-align:right;white-space:nowrap">${usd(l.price)}</td></tr>`).join('');
+  const p = PLAN_RATES[d.homeType];
+  const date = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'America/New_York' });
+  return `<div style="font-family:Helvetica,Arial,sans-serif;color:#17141C;max-width:620px;margin:0 auto">
+<div style="border-top:6px solid #6A0B9E;padding:18px 0 8px"><h2 style="margin:0">Your MOM of Middleton Estimate</h2>
+<div style="color:#57525E;font-size:13px">Estimate No. ${no} &middot; ${date}</div></div>
+<p>Hi ${esc(d.name.split(' ')[0])}, thanks for reaching out! Here is your estimate for <b>${esc(d.address)}, ${esc(d.city)}</b> (${HOME_NAMES[d.homeType].toLowerCase()}).</p>
+<table style="width:100%;border-collapse:collapse">${rowsHtml}
+<tr><td style="padding:14px 6px;font-weight:bold;font-size:17px">Total</td><td style="padding:14px 6px;text-align:right;font-weight:bold;font-size:17px">${usd(total)}</td></tr></table>
+<p><b>To book, just reply to this email or call/text 352-808-2082.</b> Payment is due when the job is complete. Marco confirms your price and date before any work starts.</p>
+<h3 style="margin:24px 0 6px">After your first cleaning: Home Investment Protection Plan</h3>
+<p style="font-size:14px;margin:0 0 6px">Each visit includes the house wash and the Complete Exterior Package:</p>
+<table style="border-collapse:collapse;font-size:14px">
+<tr><td style="padding:3px 18px 3px 0">3 cleanings a year</td><td style="text-align:right"><b>${usd(p[0])}/mo</b></td></tr>
+<tr><td style="padding:3px 18px 3px 0">4 cleanings a year</td><td style="text-align:right"><b>${usd(p[1])}/mo</b></td></tr>
+<tr><td style="padding:3px 18px 3px 0">6 cleanings a year</td><td style="text-align:right"><b>${usd(p[2])}/mo</b></td></tr></table>
+${d.lanai ? '<p style="font-size:13px;color:#57525E">Lanai past the roofline adds $50 per visit.</p>' : ''}
+<div style="margin-top:22px;font-size:12px;color:#57525E;line-height:1.5">
+<p><b>Before your visit:</b> Water plants and grass near the areas we're cleaning at least 1 hour before we arrive and for 3 days after; some browning may occur. Move cars, furniture, rugs, potted plants and hanging baskets away from the service areas. Watch for our instruction email (check spam).</p>
+<p><b>Waiver of liability:</b> By approving this estimate, verbally or otherwise, you release and hold harmless MOM of Middleton and its employees and agents from claims arising from the services, including property or plant damage, discoloration or fading of surfaces, damage to light fixtures, outlets or key sockets, personal injury, and events beyond our control. You accept the risks of exterior cleaning, are responsible for insuring your own property, and are responsible for any permits or law-enforcement personnel the job requires.</p>
+<p>MOM of Middleton &middot; 2113 Everglades Lane #1067, The Villages, FL 32163 &middot; 352-808-2082 &middot; momofmiddleton@gmail.com</p></div></div>`;
+}
+
+function leadHtml(d, total, no, customerHtml) {
+  const r = (k, v) => `<tr><td style="padding:3px 12px 3px 0;color:#57525E">${k}</td><td><b>${esc(v)}</b></td></tr>`;
+  return `<div style="font-family:Helvetica,Arial,sans-serif"><h2 style="margin:0 0 10px">New website estimate: ${usd(total)}</h2>
+<table style="font-size:15px">${r('Name', d.name)}${r('Phone', d.phone)}${r('Email', d.email)}${r('Address', `${d.address}, ${d.city}, FL ${d.zip}`)}
+${r('Home', HOME_NAMES[d.homeType])}${r('Service', d.service === 'full' ? 'House wash + Complete Exterior Package' : 'House wash only')}
+${r('Lanai past roofline', d.lanai ? 'Yes' : 'No')}${r('Notes', d.note || '-')}${r('Estimate No.', no)}</table>
+<p style="color:#57525E">The customer already got the estimate below. Reply to this email to reach them. When they book, copy these details into ServiceMonster.</p><hr>${customerHtml}</div>`;
+}
+
+async function sendEmail(to, subject, html, replyTo) {
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ from: process.env.FROM_EMAIL, to: [to], subject, html, reply_to: replyTo }),
+  });
+  if (!res.ok) throw new Error(`Resend ${res.status}: ${(await res.text()).slice(0, 300)}`);
+}
+
+async function emailEstimate(d, lines, total) {
+  if (!process.env.RESEND_API_KEY || !process.env.FROM_EMAIL) return false;
+  const owner = process.env.OWNER_EMAIL || 'momofmiddleton@gmail.com';
+  const no = 'W' + Date.now().toString().slice(-6);
+  const html = estimateHtml(d, lines, total, no);
+  await sendEmail(d.email, `Your MOM of Middleton estimate: ${usd(total)}`, html, owner);
+  try { await sendEmail(owner, `New estimate: ${d.name}, ${HOME_NAMES[d.homeType]}, ${usd(total)}`, leadHtml(d, total, no, html), d.email); }
+  catch (e) { console.error('Owner email failed:', e.message); }
+  return true;
+}
+
 function splitName(full) {
   const parts = full.trim().split(/\s+/);
   const last = parts.length > 1 ? parts.pop() : '';
@@ -96,7 +166,15 @@ export default async (req) => {
   }
   const total = lines.reduce((t, l) => t + l.price, 0);
 
-  if (process.env.SM_DRY_RUN === '1') return json(200, { ok: true, dryRun: true, total, lines });
+  // 1) Email the estimate to the customer (and a lead notice to MOM).
+  let emailed = false;
+  try { emailed = await emailEstimate(d, lines, total); } catch (e) { console.error('Estimate email failed:', e.message); }
+
+  // 2) ServiceMonster: only when API credentials are set (needs the Grow plan or higher).
+  const smOn = process.env.SM_USERNAME && process.env.SM_PASSWORD;
+  if (!smOn || process.env.SM_DRY_RUN === '1') {
+    return emailed ? json(200, { ok: true, emailed, total }) : json(502, { ok: false, error: 'Could not send estimate' });
+  }
 
   try {
     const { first, last } = splitName(d.name);
@@ -136,10 +214,10 @@ export default async (req) => {
       const item = await findItem(names[l.key]);
       await sm('POST', '/lineitems', { orderID, itemID: item.id, price: l.price, quantity: 1, rowIndex: i });
     }
-    return json(200, { ok: true, total });
+    return json(200, { ok: true, emailed, total });
   } catch (e) {
     console.error('ServiceMonster error:', e.message);
-    return json(502, { ok: false, error: 'Could not create estimate' });
+    return emailed ? json(200, { ok: true, emailed, total }) : json(502, { ok: false, error: 'Could not create estimate' });
   }
 };
 

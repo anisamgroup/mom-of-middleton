@@ -582,7 +582,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
               <label for="f-name">Full name<input id="f-name" name="name" autocomplete="name" required></label>
               <label for="f-phone">Mobile phone<input id="f-phone" name="phone" type="tel" autocomplete="tel" required></label>
             </div>
-            <label for="f-email">Email<input id="f-email" name="email" type="email" autocomplete="email" required></label>
+            <div class="row2">
+              <label for="f-email">Email<input id="f-email" name="email" type="email" autocomplete="email" required></label>
+              <label for="f-email2">Second email (optional)<input id="f-email2" name="email2" type="email" autocomplete="off" placeholder="Spouse or family"></label>
+            </div>
             <label for="f-addr">Street address<input id="f-addr" name="addr" autocomplete="street-address" required></label>
             <div class="row2">
               <label for="f-city">City<input id="f-city" name="city" autocomplete="address-level2" value="The Villages"></label>
@@ -628,7 +631,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
 <script>
 window.momSubmit=function(p){
   // 1) Backup copy: Netlify Forms emails Marco every request.
-  var fd=new URLSearchParams({'form-name':'estimate',name:p.name,phone:p.phone,email:p.email,address:p.address,city:p.city,zip:p.zip,
+  var fd=new URLSearchParams({'form-name':'estimate',name:p.name,phone:p.phone,email:p.email+(p.email2?', '+p.email2:''),address:p.address,city:p.city,zip:p.zip,
     homeType:p.homeType,lanai:p.lanai?'yes':'no',service:p.service,total:String(p.total),summary:p.summary});
   var backup=fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:fd.toString()});
   // 2) Email the estimate to the customer and the request to MOM (Resend).
@@ -696,9 +699,12 @@ window.momSubmit=function(p){
     var need=[['name','your full name'],['phone','a mobile phone number'],['email','an email address'],['addr','your street address'],['zip','your ZIP code']];
     var miss=need.filter(function(n){return !form[n[0]].value.trim();}).map(function(n){return n[1];});
     if(miss.length){err.textContent='Please add '+miss.join(', ')+'.';err.hidden=false;return;}
+    var emailOk=/^[^\s@,;]+@[^\s@,;]+\.[^\s@,;]+$/;
+    if(!emailOk.test(form.email.value.trim())){err.textContent='Please check your email address. Enter one address, like name@example.com. You can add a second email in the next box.';err.hidden=false;form.email.focus();return;}
+    if(form.email2.value.trim()&&!emailOk.test(form.email2.value.trim())){err.textContent='Please check the second email address, or leave it empty.';err.hidden=false;form.email2.focus();return;}
     err.hidden=true;
     var q=calc();
-    msgText='Cleaning request for MOM of Middleton\n\nName: '+form.name.value.trim()+'\nPhone: '+form.phone.value.trim()+'\nEmail: '+form.email.value.trim()+
+    msgText='Cleaning request for MOM of Middleton\n\nName: '+form.name.value.trim()+'\nPhone: '+form.phone.value.trim()+'\nEmail: '+form.email.value.trim()+(form.email2.value.trim()?', '+form.email2.value.trim():'')+
       '\nAddress: '+form.addr.value.trim()+', '+form.city.value.trim()+' '+form.zip.value.trim()+
       '\nHome type: '+NAMES[q.h]+'\nLanai past roofline: '+(q.lan?'Yes':'No')+'\nService: '+q.summary+
       '\n'+q.lines.map(function(l){return '  '+l[0]+': '+money(l[1]);}).join('\n')+
@@ -706,7 +712,7 @@ window.momSubmit=function(p){
       '\nNotes: '+(form.note.value.trim()||'—');
     document.getElementById('msg').textContent=msgText;
     document.getElementById('mail').href='mailto:momofmiddleton@gmail.com?subject='+encodeURIComponent('Cleaning request – '+form.name.value.trim())+'&body='+encodeURIComponent(msgText);
-    var payload={name:form.name.value.trim(),phone:form.phone.value.trim(),email:form.email.value.trim(),address:form.addr.value.trim(),
+    var payload={name:form.name.value.trim(),phone:form.phone.value.trim(),email:form.email.value.trim(),email2:form.email2.value.trim(),address:form.addr.value.trim(),
       city:form.city.value.trim(),zip:form.zip.value.trim(),homeType:q.h,lanai:q.lan,service:q.c,note:form.note.value.trim(),total:q.total,summary:msgText};
     function showManual(){form.hidden=true; done.hidden=false;}
     if(typeof window.momSubmit==='function'){
@@ -715,7 +721,7 @@ window.momSubmit=function(p){
         form.hidden=true; var ok=document.getElementById('sent'); ok.hidden=false;
         document.getElementById('sent-name').textContent=payload.name.split(' ')[0];
         document.getElementById('sent-total').textContent=money(q.total);
-        if(r&&r.emailed){document.getElementById('sent-email').textContent=payload.email;}else{document.getElementById('sent-mail').textContent='Marco will send your written estimate shortly.';}
+        if(r&&r.emailed){document.getElementById('sent-email').textContent=(r.emails&&r.emails.length?r.emails:[payload.email]).join(' and ');}else{document.getElementById('sent-mail').textContent='Marco will send your written estimate shortly.';}
       }).catch(function(){btn.disabled=false; btn.textContent='Request this cleaning'; showManual();});
     } else showManual();
   });

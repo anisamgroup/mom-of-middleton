@@ -138,7 +138,7 @@ function customerEmail(d, q, no) {
 function officeEmail(d, q, no, customerSent) {
   const service = d.service === 'full' ? 'House wash + Complete Exterior Package' : 'House wash only';
   const fields = [
-    ['Name', d.name], ['Mobile', d.phone], ['Email', d.email],
+    ['Name', d.name], ['Mobile', d.phone], ['Email', d.email], ...(d.badEmails?.length ? [['Unusable email typed', d.badEmails.join(', ')]] : []),
     ['Address', `${d.address}, ${d.city}, FL ${d.zip}`],
     ['Home type', HOME_NAMES[d.homeType]], ['Lanai past roofline', d.lanai ? 'Yes' : 'No'],
     ['Service', service], ...q.lines.map((l) => [`  ${l.label}`, money(l.price)]),
@@ -166,7 +166,7 @@ async function sendEmail({ to, replyTo, subject, html, text }) {
     headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
       from: process.env.EMAIL_FROM || process.env.FROM_EMAIL || 'MOM of Middleton <estimates@momofmiddleton.com>',
-      to: [to], reply_to: replyTo, subject, html, text,
+      to: Array.isArray(to) ? to : [to], reply_to: replyTo, subject, html, text,
     }),
   });
   if (!res.ok) throw new Error(`Resend ${res.status}: ${(await res.text()).slice(0, 300)}`);
@@ -181,14 +181,20 @@ export default async (req) => {
   try { p = await req.json(); } catch { return json(400, { error: 'Bad request' }); }
 
   const d = {
-    name: clean(p.name, 100), phone: clean(p.phone, 30), email: clean(p.email, 120),
+    name: clean(p.name, 100), phone: clean(p.phone, 30), email: clean(p.email, 120), email2: clean(p.email2, 120),
     address: clean(p.address, 150), city: clean(p.city || 'The Villages', 60) || 'The Villages', zip: clean(p.zip, 10),
     homeType: p.homeType, lanai: !!p.lanai, service: p.service === 'full' ? 'full' : 'wash', note: cleanNote(p.note),
   };
   const missing = ['name', 'phone', 'email', 'address', 'zip'].filter((k) => !d[k]);
-  if (missing.length || !PRICES[d.homeType] || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)) {
+  if (missing.length || !PRICES[d.homeType]) {
     return json(400, { error: 'Missing or invalid fields', missing });
   }
+  // Up to two customer emails. A bad address never stops the office notice.
+  const isEmail = (v) => /^[^\s@,;]+@[^\s@,;]+\.[^\s@,;]+$/.test(v);
+  const given = [d.email, d.email2].flatMap((v) => String(v || '').split(/[,;\s]+/)).filter(Boolean);
+  d.emails = [...new Set(given.filter(isEmail).map((v) => v.toLowerCase()))].slice(0, 2);
+  d.badEmails = given.filter((v) => !isEmail(v));
+  d.email = d.emails.join(', ') || d.email;
 
   // Price on the server so the page can't change it.
   const lines = [{ key: d.homeType, label: `House wash, ${HOME_NAMES[d.homeType]}`, price: PRICES[d.homeType] }];
@@ -205,13 +211,14 @@ export default async (req) => {
 
   let customerSent = false;
   try {
-    await sendEmail({ to: d.email, replyTo: office, ...customerEmail(d, q, no) });
+    if (!d.emails.length) throw new Error('No valid customer email: ' + d.badEmails.join(', '));
+    await sendEmail({ to: d.emails, replyTo: office, ...customerEmail(d, q, no) });
     customerSent = true;
   } catch (e) { console.error('Customer email failed:', e.message); }
 
   let officeSent = false;
   try {
-    await sendEmail({ to: office, replyTo: d.email, ...officeEmail(d, q, no, customerSent) });
+    await sendEmail({ to: office, replyTo: d.emails.length ? d.emails : undefined, ...officeEmail(d, q, no, customerSent) });
     officeSent = true;
   } catch (e) { console.error('Office email failed:', e.message); }
 
@@ -220,5 +227,5 @@ export default async (req) => {
   }
 
   if (!customerSent && !officeSent) return json(502, { ok: false, error: 'Could not send estimate' });
-  return json(200, { ok: true, total: q.total, estimateNo: no, emailed: customerSent });
+  return json(200, { ok: true, total: q.total, estimateNo: no, emailed: customerSent, emails: d.emails });
 };

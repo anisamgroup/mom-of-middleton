@@ -588,7 +588,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
             </div>
             <label for="f-addr">Street address<input id="f-addr" name="addr" autocomplete="street-address" required></label>
             <div class="row2">
-              <label for="f-city">City<input id="f-city" name="city" autocomplete="address-level2" value="The Villages"></label>
+              <label for="f-city">City<input id="f-city" name="city" autocomplete="address-level2" placeholder="The Villages"></label>
               <label for="f-zip">ZIP<input id="f-zip" name="zip" autocomplete="postal-code" inputmode="numeric" required></label>
             </div>
             <label for="f-note">Anything else? (optional)<textarea id="f-note" name="note" placeholder="Gate code, best time to reach you, interest in paver sealing or fence cleaning…"></textarea></label>
@@ -705,7 +705,7 @@ window.momSubmit=function(p){
     err.hidden=true;
     var q=calc();
     msgText='Cleaning request for MOM of Middleton\n\nName: '+form.name.value.trim()+'\nPhone: '+form.phone.value.trim()+'\nEmail: '+form.email.value.trim()+(form.email2.value.trim()?', '+form.email2.value.trim():'')+
-      '\nAddress: '+form.addr.value.trim()+', '+form.city.value.trim()+' '+form.zip.value.trim()+
+      '\nAddress: '+form.addr.value.trim()+', '+(form.city.value.trim()||'The Villages')+' '+form.zip.value.trim()+
       '\nHome type: '+NAMES[q.h]+'\nLanai past roofline: '+(q.lan?'Yes':'No')+'\nService: '+q.summary+
       '\n'+q.lines.map(function(l){return '  '+l[0]+': '+money(l[1]);}).join('\n')+
       '\nTotal: '+money(q.total)+
@@ -713,7 +713,7 @@ window.momSubmit=function(p){
     document.getElementById('msg').textContent=msgText;
     document.getElementById('mail').href='mailto:momofmiddleton@gmail.com?subject='+encodeURIComponent('Cleaning request – '+form.name.value.trim())+'&body='+encodeURIComponent(msgText);
     var payload={name:form.name.value.trim(),phone:form.phone.value.trim(),email:form.email.value.trim(),email2:form.email2.value.trim(),address:form.addr.value.trim(),
-      city:form.city.value.trim(),zip:form.zip.value.trim(),homeType:q.h,lanai:q.lan,service:q.c,note:form.note.value.trim(),total:q.total,summary:msgText};
+      city:(form.city.value.trim()||'The Villages'),zip:form.zip.value.trim(),homeType:q.h,lanai:q.lan,service:q.c,note:form.note.value.trim(),total:q.total,summary:msgText};
     function showManual(){form.hidden=true; done.hidden=false;}
     if(typeof window.momSubmit==='function'){
       var btn=form.querySelector('button[type=submit]'); btn.disabled=true; btn.textContent='Sending…';

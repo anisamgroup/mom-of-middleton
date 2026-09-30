@@ -12,7 +12,7 @@
 | Variable | What |
 |---|---|
 | `RESEND_API_KEY` | Resend API key, "Sending access" (Resend account momofmiddleton; domain momofmiddleton.com verified Sept 30, 2026) |
-| `EMAIL_FROM` | Optional. Default `MOM of Middleton <estimates@momofmiddleton.com>` (no mailbox needed) |
-| `OFFICE_EMAIL` | Optional. Default `momofmiddleton@gmail.com` |
+| `EMAIL_FROM` (or `FROM_EMAIL`) | Optional. Default `MOM of Middleton <estimates@momofmiddleton.com>` (no mailbox needed) |
+| `OFFICE_EMAIL` (or `OWNER_EMAIL`) | Optional. Default `momofmiddleton@gmail.com` |
 | `DRY_RUN` | `1` = price only, send nothing |
 | `SM_ENABLED`, `SM_USERNAME`, `SM_PASSWORD`, `SM_ITEM_*` | Only if ServiceMonster API access is added later |

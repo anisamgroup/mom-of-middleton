@@ -7,8 +7,8 @@
 // Netlify environment variables (entered in Netlify, never committed):
 //   RESEND_API_KEY  – Resend API key (Sending access), domain momofmiddleton.com verified in Resend
 // Optional:
-//   EMAIL_FROM      – sender (default "MOM of Middleton <estimates@momofmiddleton.com>")
-//   OFFICE_EMAIL    – where new requests and customer replies go (default momofmiddleton@gmail.com)
+//   EMAIL_FROM (or FROM_EMAIL)   – sender (default "MOM of Middleton <estimates@momofmiddleton.com>")
+//   OFFICE_EMAIL (or OWNER_EMAIL) – where new requests and customer replies go (default momofmiddleton@gmail.com)
 //   DRY_RUN=1       – validate and price only, send nothing
 //
 // ServiceMonster (switched off): if MOM later gets ServiceMonster API access, set SM_ENABLED=1
@@ -27,6 +27,14 @@ const PLANS = [
   { name: 'Premium Protection', freq: '6 cleanings a year, every 2 months', rate: { pv: 109, s1: 139, s2: 175 } },
 ];
 const PHONE = '352-808-2082';
+const WASH_TEXT = 'Removal of all dirt, mold and mildew from exterior walls, windows and sills, plus cobwebs and bugs (except wasp nests). We soft wash: low-pressure water with professional cleaning agents that kill mold and help your paint last longer.';
+const LINE_TEXT = {
+  pv: WASH_TEXT, s1: WASH_TEXT, s2: WASH_TEXT,
+  pkg: 'Driveway, walkway, entry, back patio, exterior gutters, oxidation streaks (tiger stripes) and screen lanai. Removes dirt, mold, mildew and most bugs.',
+  lanai: 'Lanai/patio area extending past the roofline.',
+};
+const BEFORE_VISIT = "Water plants and grass near the areas we're cleaning at least 1 hour before we arrive and for 3 days after; some browning may occur. Move cars, furniture, rugs, potted plants and hanging baskets away from the service areas.";
+const WAIVER = 'By approving this estimate, verbally or otherwise, you release and hold harmless MOM of Middleton and its employees and agents from claims arising from the services, including property or plant damage, discoloration or fading of surfaces, damage to light fixtures, outlets or key sockets, personal injury, and events beyond our control. You accept the risks of exterior cleaning, are responsible for insuring your own property, and are responsible for any permits or law-enforcement personnel the job requires.';
 
 const json = (status, body) => new Response(JSON.stringify(body), {
   status, headers: { 'Content-Type': 'application/json' },
@@ -73,14 +81,11 @@ ${inner}
 
 function customerEmail(d, q, no) {
   const first = d.name.split(' ')[0];
-  const rows = q.lines.map((l) => `<tr><td style="padding:8px 0;border-bottom:1px solid ${C.line};">${esc(l.label)}</td><td align="right" style="padding:8px 0;border-bottom:1px solid ${C.line};">${money(l.price)}</td></tr>`).join('');
+  const rows = q.lines.map((l) => `<tr><td style="padding:10px 12px 10px 0;border-bottom:1px solid ${C.line};"><b>${esc(l.label)}</b><br><span style="font-size:13px;line-height:1.45;color:${C.soft};">${LINE_TEXT[l.key]}</span></td><td align="right" valign="top" style="padding:10px 0;border-bottom:1px solid ${C.line};white-space:nowrap;">${money(l.price)}</td></tr>`).join('');
   const plans = PLANS.map((p) => `<tr><td style="padding:10px 0;border-top:1px solid ${C.line};">
     <div style="font-weight:700;font-size:15px;">${p.name}</div>
     <div style="font-size:12px;color:${C.soft};">${p.freq}</div></td>
     <td align="right" valign="middle" style="padding:10px 0;border-top:1px solid ${C.line};font-weight:900;font-size:18px;color:${C.spray};white-space:nowrap;">${money(p.rate[d.homeType])}/mo</td></tr>`).join('');
-  const included = d.service === 'full'
-    ? 'Soft wash of the walls, soffits and trim, plus the Complete Exterior Package: driveway, walkway, entry, the outside of your gutters, and your back patio or lanai. We wet down and protect your plants before we start.'
-    : 'Soft wash of the walls, soffits and trim of your home. We wet down and protect your plants before we start.';
 
   const html = shell(`
 <tr><td style="padding:28px 24px 8px;">
@@ -94,9 +99,8 @@ function customerEmail(d, q, no) {
     <tr><td style="padding:12px 0 4px;font-weight:700;font-size:17px;">Total</td><td align="right" style="padding:12px 0 4px;font-weight:900;font-size:20px;color:${C.crimson};">${money(q.total)}</td></tr>
   </table>
 </td></tr>
-<tr><td style="padding:12px 24px;">
-  <div style="font-weight:700;font-size:15px;margin-bottom:4px;">What's included</div>
-  <p style="margin:0;font-size:14px;line-height:1.5;color:${C.soft};">${included}</p>
+<tr><td style="padding:12px 24px 4px;">
+  <p style="margin:0;font-size:15px;line-height:1.5;"><b>To book, just reply to this email or call or text ${PHONE}.</b> Payment is due when the job is complete.</p>
 </td></tr>
 <tr><td style="padding:12px 24px 4px;">
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:2px dashed ${C.spray};border-radius:10px;"><tr><td style="padding:16px;">
@@ -108,21 +112,24 @@ function customerEmail(d, q, no) {
   </td></tr></table>
 </td></tr>
 <tr><td style="padding:16px 24px 24px;">
-  <p style="margin:0 0 8px;font-size:14px;line-height:1.5;">Questions? Just reply to this email, or call or text Marco at <a href="tel:+13528082082" style="color:${C.spray};font-weight:700;">${PHONE}</a>.</p>
-  <p style="margin:0;font-size:12px;line-height:1.5;color:${C.soft};">Prices are for standard homes in Middleton and Eastport. Marco confirms your price and date before any work starts. Fence cleaning and paver sealing are quoted separately.</p>
+  <p style="margin:0 0 10px;font-size:14px;line-height:1.5;">Questions? Reply to this email, or call or text Marco at <a href="tel:+13528082082" style="color:${C.spray};font-weight:700;">${PHONE}</a>.</p>
+  <p style="margin:0 0 8px;font-size:12px;line-height:1.5;color:${C.soft};">Prices are for standard homes in Middleton and Eastport. Marco confirms your price and date before any work starts. Fence cleaning and paver sealing are quoted separately.</p>
+  <p style="margin:0 0 8px;font-size:12px;line-height:1.5;color:${C.soft};"><b>Before your visit:</b> ${esc(BEFORE_VISIT)} Watch for our instruction email (check spam).</p>
+  <p style="margin:0;font-size:12px;line-height:1.5;color:${C.soft};"><b>Waiver of liability:</b> ${WAIVER}</p>
 </td></tr>`, `${no} · ${longDate()}`);
 
   const text = [
     `Thank you, ${first}!`, '',
     `Your MOM of Middleton estimate (${no}) for your ${HOME_NAMES[d.homeType].toLowerCase()} at ${d.address}, ${d.city}:`, '',
-    ...q.lines.map((l) => `  ${l.label}: ${money(l.price)}`),
+    ...q.lines.map((l) => `  ${l.label}: ${money(l.price)}\n    ${LINE_TEXT[l.key]}`),
     `  Total: ${money(q.total)}`, '',
-    `What's included: ${included}`, '',
+    `To book, just reply to this email or call or text ${PHONE}. Payment is due when the job is complete.`, '',
     `Keep it clean all year: after your first full cleaning (${money(FULL[d.homeType])} for your home), you can join the MOM Home Investment Protection Plan. Every visit includes the house wash and the Complete Exterior Package.`,
     ...PLANS.map((p) => `  ${p.name}: ${money(p.rate[d.homeType])}/mo (${p.freq})`),
     d.lanai ? 'On a protection plan, there is no extra charge for your lanai.' : '',
     '', `Marco will call or text you at ${d.phone} to set a date. Questions? Reply to this email or call/text ${PHONE}.`,
-    'Prices are for standard homes in Middleton and Eastport. Marco confirms your price and date before any work starts.',
+    'Prices are for standard homes in Middleton and Eastport. Marco confirms your price and date before any work starts.', '',
+    `Before your visit: ${BEFORE_VISIT}`, '', `Waiver of liability: ${WAIVER}`,
   ].filter((l, i, a) => l !== '' || a[i - 1] !== '').join('\n');
 
   return { subject: `Your MOM of Middleton estimate: ${money(q.total)}`, html, text };
@@ -144,7 +151,7 @@ function officeEmail(d, q, no, customerSent) {
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="font-size:14px;">
     ${fields.map(([k, v]) => `<tr><td valign="top" style="padding:6px 12px 6px 0;color:${C.soft};white-space:nowrap;border-bottom:1px solid ${C.line};">${esc(k.trim())}</td><td style="padding:6px 0;border-bottom:1px solid ${C.line};">${esc(v).replace(/\n/g, '<br>')}</td></tr>`).join('')}
   </table>
-  <p style="margin:14px 0 0;font-size:13px;color:${C.soft};">${customerSent ? `The customer was emailed their estimate at ${esc(d.email)}.` : `<b style="color:${C.crimson};">The estimate email to the customer did not go through.</b> Please call or text them.`} Reply to this email to answer the customer directly.</p>
+  <p style="margin:14px 0 0;font-size:13px;color:${C.soft};">${customerSent ? `The customer was emailed their estimate at ${esc(d.email)}.` : `<b style="color:${C.crimson};">The estimate email to the customer did not go through.</b> Please call or text them.`} Reply to this email to answer the customer directly. When they book, copy these details into ServiceMonster.</p>
 </td></tr>`, `${no} · ${longDate()}`);
   const text = [`New website estimate request (${no})`, '', ...fields.map(([k, v]) => `${k}: ${v}`), '',
     customerSent ? `The customer was emailed their estimate at ${d.email}.` : 'The estimate email to the customer did NOT go through. Please call or text them.'].join('\n');
@@ -158,7 +165,7 @@ async function sendEmail({ to, replyTo, subject, html, text }) {
     method: 'POST',
     headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      from: process.env.EMAIL_FROM || 'MOM of Middleton <estimates@momofmiddleton.com>',
+      from: process.env.EMAIL_FROM || process.env.FROM_EMAIL || 'MOM of Middleton <estimates@momofmiddleton.com>',
       to: [to], reply_to: replyTo, subject, html, text,
     }),
   });
@@ -194,7 +201,7 @@ export default async (req) => {
 
   if (process.env.DRY_RUN === '1') return json(200, { ok: true, dryRun: true, estimateNo: no, total: q.total, lines });
 
-  const office = process.env.OFFICE_EMAIL || 'momofmiddleton@gmail.com';
+  const office = process.env.OFFICE_EMAIL || process.env.OWNER_EMAIL || 'momofmiddleton@gmail.com';
 
   let customerSent = false;
   try {

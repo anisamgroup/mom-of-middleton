@@ -1,15 +1,18 @@
 # MOM of Middleton website
 
 - `index.html` – the site (built from the shared page source by `build.py`).
-- `netlify/functions/estimate.mjs` – takes the price-form request, emails the customer their estimate (and Marco a lead notice) through Resend, and, if ServiceMonster API credentials are set, also creates the customer + estimate in ServiceMonster.
-- Every request is also saved in Netlify Forms (form name `estimate`) as a backup; turn on email notifications for it in Netlify.
+- `netlify/functions/estimate.mjs` – takes the price-form request, prices it on the server, and sends two emails through Resend:
+  1. to the customer: their estimate (price, what's included, Protection Plan rates for their home), reply-to momofmiddleton@gmail.com
+  2. to momofmiddleton@gmail.com: the customer's details, reply-to the customer
+  Each estimate gets a number like `MOM-EST-260930-4971`.
+- `netlify/lib/servicemonster.mjs` – ServiceMonster account + estimate creation. **Switched off** (needs a ServiceMonster plan with API access). Turn on with `SM_ENABLED=1`.
+- Every request is also saved in Netlify Forms (form name `estimate`) as a backup.
 
-## Netlify environment variables (entered by Marco, never committed)
+## Netlify environment variables (entered in Netlify, never committed)
 | Variable | What |
 |---|---|
-| `RESEND_API_KEY` | From resend.com (free plan); sends the estimate emails |
-| `FROM_EMAIL` | e.g. `MOM of Middleton <estimates@momofmiddleton.com>` (domain verified in Resend) |
-| `OWNER_EMAIL` | Where new-request notices go (default momofmiddleton@gmail.com) |
-| `SM_USERNAME` / `SM_PASSWORD` | Optional. ServiceMonster API user (needs the Grow plan). Leave unset until then |
-| `SM_ITEM_LANAI` etc. | Only if a ServiceMonster service name changes |
-| `SM_DRY_RUN` | `1` = test without writing to ServiceMonster |
+| `RESEND_API_KEY` | Resend API key, "Sending access" (Resend account momofmiddleton; domain momofmiddleton.com verified Sept 30, 2026) |
+| `EMAIL_FROM` (or `FROM_EMAIL`) | Optional. Default `MOM of Middleton <estimates@momofmiddleton.com>` (no mailbox needed) |
+| `OFFICE_EMAIL` (or `OWNER_EMAIL`) | Optional. Default `momofmiddleton@gmail.com` |
+| `DRY_RUN` | `1` = price only, send nothing |
+| `SM_ENABLED`, `SM_USERNAME`, `SM_PASSWORD`, `SM_ITEM_*` | Only if ServiceMonster API access is added later |

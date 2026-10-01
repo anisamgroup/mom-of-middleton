@@ -17,7 +17,24 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,112,600;0,112,800;0,125,900;1,125,900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
-<style>[hidden]{display:none!important} html,body{margin:0} img{max-width:100%}</style>
+<style>[hidden]{display:none!important} html,body{margin:0} img{max-width:100%}
+/* reviews */
+.reviews{background:var(--bg)}
+.rv-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:16px 24px;margin-bottom:28px}
+.rv-score{display:flex;align-items:center;gap:12px}
+.rv-score b{font-family:var(--display);font-weight:900;font-stretch:112%;font-size:2.6rem;line-height:1}
+.rv-score span{color:#E8A400;font-size:1.3rem;letter-spacing:2px}
+.rv-score small{display:block;color:var(--ink-soft);font-size:.9rem}
+.rv-grid{columns:3 280px;column-gap:18px}
+.rv{break-inside:avoid;margin:0 0 18px;background:var(--surface);border:1px solid var(--line,#E1DDE3);border-top:4px solid var(--sun);border-radius:10px;padding:18px 20px}
+.rv-stars{color:#E8A400;letter-spacing:2px}
+.rv blockquote{margin:8px 0 10px;font-size:1rem;line-height:1.55;color:var(--ink)}
+.rv figcaption{font-weight:700;font-size:.92rem}.rv figcaption span{font-weight:400;color:var(--ink-soft)}
+.rv-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+.rv-home{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+@media (max-width:860px){.rv-home{grid-template-columns:1fr}}
+.rv-home .rv{margin:0}
+</style>
 <style>
 :root{
   --bg:#F7F6F3;
@@ -367,6 +384,20 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
         <li><h3>Walk it together</h3><p>We walk the job with you before we leave. If anything is missed, we fix it.</p></li>
         <li><h3>Stay on schedule</h3><p>On the protection plan, we come back every 4, 3 or 2 months, so your home stays clean all year.</p></li>
       </ol>
+    </div>
+  </section>
+  <section class="block reviews" id="reviews">
+    <div class="wrap">
+      <div class="rv-head">
+        <div><p class="eyebrow">Reviews</p><h2>What your neighbors say</h2></div>
+        <div class="rv-score"><b>5.0</b><div><span>★★★★★</span><small>Google rating</small></div></div>
+      </div>
+      <div class="rv-home">
+        <figure class="rv"><div class="rv-stars" aria-label="5 out of 5 stars">★★★★★</div><blockquote>“Marco did an incredible job on our house! It looks beautiful! Very professional and paid great attention to detail. …”</blockquote><figcaption>Mindy J. · <span>Google review</span></figcaption></figure>
+        <figure class="rv"><div class="rv-stars" aria-label="5 out of 5 stars">★★★★★</div><blockquote>“Marco from MOM of Middleton did a great job on our house. It was filthy and now it looks like new! He does exterior of house, lanai and driveway and price is reasonable.”</blockquote><figcaption>Wendy B. · <span>Google review</span></figcaption></figure>
+        <figure class="rv"><div class="rv-stars" aria-label="5 out of 5 stars">★★★★★</div><blockquote>“Amazing job done by Marco! My house looks brand new again! Communication was great, they were able to get me scheduled in pretty quickly and the work was the best. Top notch service and highly recommend!!”</blockquote><figcaption>C.C. · <span>Google review</span></figcaption></figure>
+      </div>
+      <div class="rv-cta"><a class="btn btn-sun" href="/about/#reviews">More reviews →</a></div>
     </div>
   </section>
   <section class="block marco meet" id="about">

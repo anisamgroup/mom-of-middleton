@@ -77,6 +77,8 @@ p{margin:0}
 .btn-line{border-color:var(--ink);color:var(--ink);background:transparent}
 .phone{font-family:var(--display);font-weight:800;font-stretch:112%;color:var(--ink);text-decoration:none;white-space:nowrap}
 @media (max-width:760px){.top nav a.navlink{display:none}}
+.mnav{display:none}
+@media (max-width:760px){.top nav.mnav{display:flex;flex-wrap:nowrap;gap:6px;overflow-x:auto;scrollbar-width:none;padding:0 16px 10px;background:var(--band)}.mnav::-webkit-scrollbar{display:none}.mnav a{flex:none;color:var(--band-ink);text-decoration:none;font-size:.95rem;padding:5px 11px;border:1px solid rgba(255,255,255,.22);border-radius:999px;white-space:nowrap}.mnav a.on{background:var(--sun);color:var(--sun-ink);border-color:var(--sun);font-weight:700}}
 
 /* hero */
 .hero{padding-block:56px 56px;background:var(--band);color:var(--band-ink)}
@@ -315,6 +317,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
       <a class="btn btn-sun" href="/get-my-price/">Get my price</a>
     </nav>
   </div>
+  <nav class="mnav" aria-label="Pages"><a href="/">Home</a><a href="/services/">Services</a><a href="/pricing/" class="on" aria-current="page">Pricing</a><a href="/service-area/">Service area</a><a href="/faq/">FAQ</a></nav>
 </header>
 
 <main id="top">

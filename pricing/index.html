@@ -206,7 +206,17 @@ section.block{padding-block:80px}
 .plan .tier{background:#000}
 .plan .tier-name{background:var(--sun);color:var(--sun-ink)}
 .plan .amt{color:#fff}
-.addon{background:var(--sun);color:var(--sun-ink);border-radius:10px;padding:18px 20px;display:grid;gap:6px}
+.addon{background:var(--sun);color:var(--sun-ink);border-radius:12px;padding:22px 24px;display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center;box-shadow:0 0 0 4px var(--band),0 0 0 6px var(--sun)}
+@media (max-width:620px){.addon{grid-template-columns:1fr;gap:14px;text-align:left}}
+.addon-amt{background:var(--band);color:var(--sun);border-radius:10px;padding:14px 20px;display:grid;justify-items:center;line-height:1;transform:rotate(-3deg)}
+.addon-amt b{font-family:var(--display);font-weight:900;font-style:italic;font-stretch:125%;font-size:clamp(3rem,7vw,4.4rem);color:var(--sun)}
+.addon-amt span{font-family:var(--display);font-weight:800;text-transform:uppercase;letter-spacing:.14em;font-size:.8rem;color:#fff;padding:4px 0}
+.addon-body{display:grid;gap:8px}
+.addon-h{font-family:var(--display);font-weight:900;font-style:italic;font-stretch:125%;font-size:clamp(1.4rem,3vw,1.9rem);line-height:1.1}
+.addon-list{list-style:none;margin:2px 0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.addon-list li{background:var(--band);color:#fff;border-radius:999px;padding:5px 12px 5px 10px;font-size:.95rem;font-weight:700}
+.addon-list li::before{content:"✓ ";color:var(--sun)}
+.addon-btn{justify-self:start;background:var(--band);color:var(--sun);margin-top:4px}
 .addon b{font-family:var(--display);font-weight:800;font-stretch:112%}
 .addon .small{font-size:.92rem}
 .villa-note{font-size:.95rem;color:var(--ink-soft);margin-top:-6px}
@@ -337,8 +347,14 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
           <div class="tier"><span class="tier-name">2-story home</span><span class="amt">$398</span><span class="unit">House wash</span></div>
         </div>
         <div class="addon">
-          <p><b>Add the Complete Exterior Package for $50 total.</b> Driveway, walkway, entry, exterior gutters and back patio/lanai, all five for one add-on.</p>
-          <p class="small">Back patio or lanai that extends beyond the roofline: add $50 (one-time cleanings only).</p>
+          <div class="addon-amt"><span>Only</span><b>+$50</b><span>total</span></div>
+          <div class="addon-body">
+            <p class="addon-h">Add the Complete Exterior Package</p>
+            <p>Five more areas cleaned with your house wash, all for one $50 add-on:</p>
+            <ul class="addon-list"><li>Driveway</li><li>Walkway</li><li>Entry</li><li>Exterior gutters</li><li>Back patio / lanai</li></ul>
+            <p class="small">Back patio or lanai that extends beyond the roofline: add $50 (one-time cleanings only).</p>
+            <a class="btn addon-btn" href="/get-my-price/">Get my price now →</a>
+          </div>
         </div>
       </div>
 

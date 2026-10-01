@@ -1,0 +1,601 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sign Up: Protection Plan | MOM of Middleton</title>
+<meta name="description" content="Sign up for the MOM Home Investment Protection Plan online.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="/logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,112,600;0,112,800;0,125,900;1,125,900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<style>[hidden]{display:none!important} html,body{margin:0} img{max-width:100%}
+/* plan signup */
+.ps{max-width:860px}
+.ps-grid{display:grid;gap:22px}
+.ps-grid > *,.ps fieldset{min-width:0}
+.ps-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px}
+.ps-card h2{font-size:clamp(1.3rem,2.6vw,1.6rem);margin-bottom:12px}
+.ps-step{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--band);color:var(--sun);font-family:var(--display);font-weight:900;font-style:normal;margin-right:10px;vertical-align:3px;font-size:1rem}
+.ps-plans{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media (max-width:640px){.ps-plans{grid-template-columns:1fr}}
+.ps-plans label{display:grid;gap:4px;border:2px solid var(--line);border-radius:10px;padding:14px;cursor:pointer;background:var(--bg);font-weight:400}
+.ps-plans label:has(input:checked){border-color:var(--spray);background:color-mix(in srgb,var(--spray) 8%,var(--bg))}
+.ps-plans input{width:auto;accent-color:var(--spray);margin:0 0 4px}
+.ps-plans b{font-family:var(--display);font-weight:900;font-stretch:112%;font-size:1.1rem}
+.ps-plans .pp{font-family:var(--display);font-weight:900;font-size:1.6rem;color:var(--spray);font-variant-numeric:tabular-nums}
+.ps-plans small{color:var(--ink-soft)}
+.ps-sum{background:var(--band);color:#fff;border-radius:12px;padding:16px 18px;display:grid;gap:4px;margin-top:14px}
+.ps-sum .k{font-family:var(--display);font-weight:800;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--sun)}
+.ps-sum .big{font-family:var(--display);font-weight:900;font-size:1.6rem;color:var(--sun);font-variant-numeric:tabular-nums}
+.ps-sum small{color:#CFC8D6}
+.ps-doc{max-height:420px;overflow-y:auto;border:1px solid var(--line);border-radius:10px;padding:16px 18px;background:var(--bg);font-size:.95rem;line-height:1.55}
+.ps-doc h3{font-size:1.05rem;margin:16px 0 6px;font-style:normal}
+.ps-doc h3:first-child{margin-top:0}
+.ps-doc ul{margin:6px 0;padding-left:1.2em}
+.ps-doc table{border-collapse:collapse;width:100%;font-size:.9rem;margin:8px 0}
+.ps-doc th,.ps-doc td{border:1px solid var(--line);padding:6px;text-align:center}
+.ps-doc .fill{background:color-mix(in srgb,var(--sun) 35%,transparent);padding:0 4px;border-radius:3px;font-weight:700}
+.ps-check{display:flex;gap:12px;align-items:flex-start;font-weight:400;border:2px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--bg);cursor:pointer}
+.ps-check input{width:22px;height:22px;flex:none;accent-color:var(--spray);margin-top:2px}
+.ps-check:has(input:checked){border-color:var(--spray)}
+.sigwrap{position:relative;border:2px dashed var(--spray);border-radius:10px;background:#fff;touch-action:none}
+.sigwrap canvas{display:block;width:100%;height:180px;cursor:crosshair}
+.sigwrap .hint{position:absolute;left:16px;bottom:12px;color:#9A94A0;font-size:.9rem;pointer-events:none}
+.sigline{position:absolute;left:16px;right:16px;bottom:38px;border-bottom:1px solid #C9C3CF;pointer-events:none}
+.ps-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.ps-err{color:#B3261E;font-weight:700}
+.ps-done{background:var(--surface);border:2px solid var(--sun);border-radius:14px;padding:26px;display:grid;gap:10px}
+.ps-done h2{font-size:1.8rem}
+</style>
+<style>
+:root{
+  --bg:#F7F6F3;
+  --surface:#FFFFFF;
+  --ink:#17141C;
+  --ink-soft:#57525E;
+  --line:#E1DDE3;
+  --spray:#6A0B9E;
+  --spray-deep:#5A0888;
+  --crimson:#9A0000;
+  --sun:#FFC800;
+  --sun-ink:#1A1400;
+  --mildew:#5E6B47;
+  --paver-a:#E9E2D6;
+  --paver-b:#DDD4C5;
+  --grout:#C9BFAE;
+  --band:#0B0B0C;
+  --band-ink:#F3EFE6;
+  --display:"Archivo","Arial Narrow",Arial,sans-serif;
+  --body:"Atkinson Hyperlegible","Segoe UI",Verdana,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#121014; --surface:#1C1920; --ink:#F1EDF3; --ink-soft:#B3ABBA; --line:#322C38;
+    --spray:#C38BEA; --spray-deep:#D7AEF3; --sun:#FFC800; --sun-ink:#1A1400;
+    --paver-a:#CFC6B7; --paver-b:#BFB5A4; --grout:#A89D8A;
+    --band:#000000; --band-ink:#F3EFE6;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#121014; --surface:#1C1920; --ink:#F1EDF3; --ink-soft:#B3ABBA; --line:#322C38;
+  --spray:#C38BEA; --spray-deep:#D7AEF3; --sun:#FFC800; --sun-ink:#1A1400;
+  --paver-a:#CFC6B7; --paver-b:#BFB5A4; --grout:#A89D8A;
+  --band:#000000; --band-ink:#F3EFE6;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.6;margin:0}
+a{color:var(--spray-deep)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:20px}
+h1,h2,h3{font-family:var(--display);font-stretch:112%;line-height:1.08;text-wrap:balance;margin:0}
+h2,h1.h2{font-size:clamp(1.9rem,4vw,2.7rem);font-weight:900;font-style:italic;font-stretch:125%}
+h3{font-size:1.2rem;font-weight:600}
+p{margin:0}
+.eyebrow{font-family:var(--display);font-weight:600;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--spray-deep)}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--band);border-bottom:4px solid var(--sun)}
+.top nav a.navlink{color:var(--band-ink)!important}.top .phone{color:var(--sun)}
+.brand img{height:64px;width:auto;display:block}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.brand-mark{width:40px;height:40px;flex:none}
+.brand-name{font-family:var(--display);font-weight:900;font-stretch:125%;font-size:1.15rem;letter-spacing:.02em;line-height:1}
+.brand-name small{display:block;font-weight:600;font-stretch:112%;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);margin-top:3px}
+.top nav{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+.top nav a.navlink{color:var(--ink);text-decoration:none;font-size:.95rem}
+.top nav a.navlink:hover{color:var(--spray-deep)}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-weight:800;font-stretch:112%;font-size:1rem;text-decoration:none;border-radius:6px;padding:12px 18px;border:2px solid transparent;cursor:pointer;line-height:1.1}
+.btn-sun{background:var(--sun);color:var(--sun-ink)}
+.btn-sun:hover{filter:brightness(1.05)}
+.btn-line{border-color:var(--ink);color:var(--ink);background:transparent}
+.phone{font-family:var(--display);font-weight:800;font-stretch:112%;color:var(--ink);text-decoration:none;white-space:nowrap}
+@media (max-width:760px){.top nav a.navlink{display:none}}
+.top nav.mnav{display:none}
+@media (max-width:760px){.top{position:static}}
+@media (max-width:760px){.top nav.mnav{display:flex;flex-wrap:nowrap;gap:6px;overflow-x:auto;scrollbar-width:none;padding:0 16px 10px;background:var(--band)}.mnav::-webkit-scrollbar{display:none}.mnav a{flex:none;color:var(--band-ink);text-decoration:none;font-size:.95rem;padding:5px 11px;border:1px solid rgba(255,255,255,.22);border-radius:999px;white-space:nowrap}.mnav a.on{background:var(--sun);color:var(--sun-ink);border-color:var(--sun);font-weight:700}}
+
+/* hero */
+.hero{padding-block:56px 56px;background:var(--band);color:var(--band-ink)}
+.hero .eyebrow{color:var(--sun)}
+.hero .lede,.hero .fine,.hero .wash-cap{color:#CFC8D6}
+.hero .btn-line{border-color:var(--band-ink);color:var(--band-ink)}
+.hero h1{color:#fff}
+.tag{display:inline-block;margin-top:22px;background:var(--crimson);color:#fff;font-family:var(--display);font-weight:900;font-style:italic;font-stretch:125%;font-size:1.25rem;padding:8px 16px;border-radius:6px;border:2px solid var(--sun)}
+.hero .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:48px;align-items:center}
+@media (max-width:880px){.hero .wrap{grid-template-columns:1fr;gap:32px}}
+.hero h1{font-size:clamp(2.4rem,6vw,4.3rem);font-weight:900;font-style:italic;font-stretch:125%;letter-spacing:-.01em}
+.hero h1 .only{color:var(--sun);font-style:italic}
+.hero .lede{font-size:1.2rem;color:var(--ink-soft);margin-top:18px;max-width:34ch}
+.hero .ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}
+.hero .fine{margin-top:18px;font-size:.95rem;color:var(--ink-soft)}
+
+/* wash demo */
+.wash{position:relative;border-radius:10px;overflow:hidden;aspect-ratio:4/3;max-width:100%;border:1px solid var(--line);box-shadow:0 18px 40px -24px rgba(10,30,40,.45);user-select:none;touch-action:pan-y}
+.pavers,.grime{position:absolute;inset:0}
+.pavers{
+  background-color:var(--grout);
+  background-image:
+    linear-gradient(90deg,transparent 0 3px,var(--paver-a) 3px 100%),
+    linear-gradient(0deg,transparent 0 3px,transparent 3px);
+  background-size:60px 30px;
+}
+.pavers::before{content:"";position:absolute;inset:0;
+  background-image:
+    repeating-linear-gradient(0deg,var(--grout) 0 3px,transparent 3px 30px),
+    repeating-linear-gradient(90deg,var(--grout) 0 3px,transparent 3px 60px);
+}
+.pavers::after{content:"";position:absolute;inset:0;
+  background-image:repeating-linear-gradient(0deg,transparent 0 30px,transparent 30px 60px),
+  linear-gradient(0deg,rgba(255,255,255,.0),rgba(255,255,255,.18));}
+.rows{position:absolute;inset:0;display:grid;grid-auto-rows:30px;overflow:hidden}
+.rows span{display:block;height:30px;background-image:repeating-linear-gradient(90deg,var(--grout) 0 3px,var(--paver-a) 3px 57px,var(--paver-b) 57px 60px);background-size:120px 100%;border-bottom:3px solid var(--grout)}
+.rows span:nth-child(even){background-position:30px 0}
+.grime{clip-path:inset(0 0 0 var(--cut,55%));transition:clip-path .08s linear}
+.grime .rows span{filter:brightness(.62) sepia(.5) hue-rotate(40deg) saturate(1.4)}
+.grime::after{content:"";position:absolute;inset:0;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.018' numOctaves='4' seed='7'/><feColorMatrix values='0 0 0 0 .18  0 0 0 0 .22  0 0 0 0 .12  0 0 0 1.4 -.45'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>");
+  background-size:300px 300px;mix-blend-mode:multiply;opacity:.95}
+.wand{position:absolute;top:0;bottom:0;left:var(--cut,55%);width:0;pointer-events:none}
+.wand::before{content:"";position:absolute;top:0;bottom:0;left:-2px;width:4px;background:rgba(255,255,255,.9);box-shadow:0 0 18px 6px rgba(160,215,245,.6)}
+.wand-knob{position:absolute;top:50%;left:0;transform:translate(-50%,-50%);width:48px;height:48px;border-radius:50%;background:var(--sun);color:var(--sun-ink);display:grid;place-items:center;font-family:var(--display);font-weight:900;font-size:1.1rem;box-shadow:0 4px 12px rgba(0,0,0,.3)}
+.wash-range{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
+.wash-tag{position:absolute;top:12px;font-family:var(--display);font-weight:800;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;padding:6px 10px;border-radius:4px;pointer-events:none}
+.wash-tag.l{left:12px;background:#fff;color:#16323A}
+.wash-tag.r{right:12px;background:#2B3320;color:#E7EDDA}
+.wash-cap{font-size:.9rem;color:var(--ink-soft);margin-top:10px}
+
+/* strip */
+.strip{background:linear-gradient(180deg,var(--crimson),#6A0B9E);color:#fff}
+.strip span{opacity:.92!important}
+.strip .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding-block:26px}
+@media (max-width:820px){.strip .wrap{grid-template-columns:1fr 1fr}}
+.strip b{display:block;font-family:var(--display);font-weight:800;font-stretch:112%;font-size:1.05rem;color:var(--sun)}
+.strip span{font-size:.92rem;opacity:.85}
+
+section.block{padding-block:80px}
+.head{max-width:680px;display:grid;gap:12px;margin-bottom:40px}
+.head p{color:var(--ink-soft);font-size:1.1rem}
+
+/* services */
+.services{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid var(--ink)}
+@media (max-width:900px){.services{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.services{grid-template-columns:1fr}}
+.svc{padding:26px 24px 30px 0;border-bottom:1px solid var(--line);display:grid;gap:10px;align-content:start}
+.svc:not(:nth-child(3n+1)){padding-left:24px;border-left:1px solid var(--line)}
+@media (max-width:900px){.svc:not(:nth-child(3n+1)){padding-left:0;border-left:0}.svc:nth-child(even){padding-left:24px;border-left:1px solid var(--line)}}
+@media (max-width:560px){.svc:nth-child(even){padding-left:0;border-left:0}}
+.svc svg{width:34px;height:34px;color:var(--spray)}
+.svc p{color:var(--ink-soft);font-size:1rem}
+.svc .how{font-size:.85rem;font-family:var(--display);font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--spray-deep)}
+
+/* area */
+.area{background:var(--surface);border-block:1px solid var(--line)}
+.area .wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+@media (max-width:860px){.area .wrap{grid-template-columns:1fr;gap:32px}}
+.area-list{display:grid;gap:0;margin:0;padding:0;list-style:none;border-top:2px solid var(--ink)}
+.area-list li{display:flex;justify-content:space-between;gap:16px;padding:16px 0;border-bottom:1px solid var(--line);align-items:baseline;flex-wrap:wrap}
+.area-list b{font-family:var(--display);font-weight:800;font-stretch:112%;font-size:1.2rem}
+.area-list span{color:var(--ink-soft);font-size:.98rem}
+.why{display:grid;gap:22px}
+.why div{display:grid;gap:4px}
+.why h3{font-size:1.15rem}
+.why p{color:var(--ink-soft)}
+
+/* process */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;counter-reset:s;list-style:none;margin:0;padding:0}
+@media (max-width:900px){.steps{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.steps{grid-template-columns:1fr}}
+.steps li{counter-increment:s;display:grid;gap:8px;align-content:start;border-top:2px solid var(--ink);padding-top:16px}
+.steps li::before{content:counter(s);font-family:var(--display);font-weight:900;font-stretch:125%;font-size:2.4rem;line-height:1;color:var(--spray)}
+.steps p{color:var(--ink-soft);font-size:1rem}
+
+/* marco */
+.marco{background:var(--band);color:var(--band-ink)}
+.marco .wrap{display:grid;grid-template-columns:1.2fr 1fr;gap:56px;align-items:center}
+@media (max-width:860px){.marco .wrap{grid-template-columns:1fr;gap:32px}}
+.marco .eyebrow{color:var(--sun)}
+.marco{border-top:4px solid var(--sun)}
+.marco h2{color:#fff}
+.marco p{opacity:.9;margin-top:16px;max-width:56ch}
+.record{display:grid;gap:14px}
+.rec{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 20px;border:1px solid rgba(255,255,255,.18);border-radius:8px;text-decoration:none;color:inherit}
+.rec:hover{border-color:var(--sun)}
+.rec b{font-family:var(--display);font-weight:800;font-stretch:112%;font-size:1.05rem;color:#fff}
+.rec small{display:block;opacity:.75;font-size:.85rem}
+.stars{font-family:var(--display);font-weight:900;font-size:1.6rem;color:var(--sun);white-space:nowrap;font-variant-numeric:tabular-nums}
+.record .note{font-size:.85rem;opacity:.7}
+
+
+/* pricing */
+.price-block{border-top:2px solid var(--ink);padding-top:24px;display:grid;gap:20px}
+.price-block+.price-block{margin-top:56px}
+.price-title{font-family:var(--display);font-weight:900;font-style:italic;font-stretch:125%;font-size:1.5rem}
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media (max-width:700px){.tiers{grid-template-columns:1fr}}
+.tier{background:var(--band);color:#fff;border:2px solid var(--sun);border-radius:10px;overflow:hidden;display:grid;text-align:center;padding-bottom:16px}
+.tier-name{background:var(--crimson);font-family:var(--display);font-weight:800;font-stretch:112%;letter-spacing:.08em;text-transform:uppercase;font-size:.95rem;padding:10px}
+.amt{font-family:var(--display);font-weight:900;font-stretch:125%;font-size:3.2rem;line-height:1.1;color:var(--sun);margin-top:12px;font-variant-numeric:tabular-nums}
+.amt sup{font-size:.45em;vertical-align:.9em}
+.unit{font-size:.95rem;color:#E8E2EC}
+.plan .tier{background:#000}
+.plan .tier-name{background:var(--sun);color:var(--sun-ink)}
+.plan .amt{color:#fff}
+.addon{background:var(--sun);color:var(--sun-ink);border-radius:10px;padding:18px 20px;display:grid;gap:6px}
+.addon b{font-family:var(--display);font-weight:800;font-stretch:112%}
+.addon .small{font-size:.92rem}
+.villa-note{font-size:.95rem;color:var(--ink-soft);margin-top:-6px}
+.villa-note b{color:var(--ink)}
+.matrix-wrap{overflow-x:auto;border-radius:10px;border:2px solid var(--sun)}
+.matrix{width:100%;min-width:560px;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.matrix th,.matrix td{padding:14px 12px;text-align:center;border-bottom:1px solid var(--line)}
+.matrix thead th{background:var(--sun);color:var(--sun-ink);vertical-align:top;border-left:1px solid rgba(0,0,0,.12)}
+.matrix thead th.corner{background:var(--spray);color:#fff;font-family:var(--display);font-weight:800;font-stretch:112%;text-transform:uppercase;letter-spacing:.06em;vertical-align:middle;border-left:0}
+.matrix .lvl{display:inline-block;background:var(--spray);color:#fff;font-family:var(--display);font-weight:800;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;padding:4px 8px;border-radius:4px}
+.matrix .freq{display:block;font-family:var(--display);font-weight:900;font-stretch:112%;font-size:1.05rem;margin-top:8px}
+.matrix .every{display:block;font-size:.9rem}
+.matrix tbody th{text-align:left;font-family:var(--display);font-weight:800;font-stretch:112%;background:var(--surface);color:var(--ink)}
+.matrix td{background:var(--surface);font-family:var(--display);font-weight:900;font-stretch:112%;font-size:1.7rem;color:var(--spray)}
+.matrix td small{font-size:.55em;font-weight:800}
+.matrix tbody tr:nth-child(even) th,.matrix tbody tr:nth-child(even) td{background:color-mix(in srgb,var(--sun) 10%,var(--surface))}
+.matrix tbody tr:last-child th,.matrix tbody tr:last-child td{border-bottom:0}
+.plan-head{display:grid;gap:8px;max-width:720px}
+.plan-head p{color:var(--ink-soft)}
+.plan-list{margin:0;padding-left:1.2em;display:grid;gap:8px;color:var(--ink-soft);max-width:760px}
+.quote{margin:24px 0 0;border-left:4px solid var(--sun);padding-left:18px}
+.quote p{margin:0;font-size:1.15rem;font-style:italic;color:#fff;opacity:1}
+.quote cite{display:block;margin-top:6px;font-style:normal;font-size:.9rem;opacity:.75}
+.stars{font-size:1.2rem!important}
+
+/* faq */
+.faq{max-width:820px;border-top:2px solid var(--ink)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer;list-style:none;padding:20px 40px 20px 0;position:relative;font-family:var(--display);font-weight:600;font-stretch:112%;font-size:1.15rem}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:4px;top:14px;font-size:1.8rem;font-weight:400;color:var(--spray)}
+.faq details[open] summary::after{content:"–"}
+.faq details p{padding:0 0 22px;color:var(--ink-soft);max-width:65ch}
+
+/* contact */
+.contact .wrap{display:grid;grid-template-columns:1fr 1.1fr;gap:56px;align-items:start}
+@media (max-width:860px){.contact .wrap{grid-template-columns:1fr;gap:32px}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:28px}
+.cinfo{display:grid;gap:18px;margin-top:28px}
+.cinfo div{display:grid;gap:2px}
+.cinfo small{font-family:var(--display);font-weight:600;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+.cinfo .big{font-family:var(--display);font-weight:900;font-stretch:112%;font-size:1.9rem;color:var(--ink);text-decoration:none;font-variant-numeric:tabular-nums}
+.cinfo .val{font-size:1.1rem;user-select:all}
+form{display:grid;gap:16px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:520px){.row2{grid-template-columns:1fr}}
+label{display:grid;gap:6px;font-size:.95rem;font-weight:700}
+input,select,textarea{font:inherit;font-size:1rem;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:12px 12px;width:100%}
+textarea{min-height:96px;resize:vertical}
+fieldset{border:0;padding:0;margin:0;display:grid;gap:8px}
+legend{font-size:.95rem;font-weight:700;margin-bottom:8px}
+.checks{display:flex;flex-wrap:wrap;gap:8px}
+.checks label{display:inline-flex;align-items:center;gap:8px;font-weight:400;border:1px solid var(--line);border-radius:999px;padding:6px 14px;cursor:pointer;background:var(--bg)}
+.checks input{width:auto;accent-color:var(--spray)}
+.done{border:2px solid var(--spray);border-radius:8px;padding:18px;display:grid;gap:10px}
+.done pre{white-space:pre-wrap;font-family:var(--body);font-size:.95rem;background:var(--bg);border-radius:6px;padding:12px;margin:0;max-height:220px;overflow:auto}
+.done .acts{display:flex;gap:10px;flex-wrap:wrap}
+
+
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg label,.opt{display:flex;align-items:center;gap:10px;font-weight:700;border:2px solid var(--line);border-radius:8px;padding:10px 14px;cursor:pointer;background:var(--bg)}
+.seg input,.opt input{width:auto;accent-color:var(--spray);margin:0}
+.seg label:has(input:checked),.opt:has(input:checked){border-color:var(--spray);background:color-mix(in srgb,var(--spray) 8%,var(--bg))}
+.opts{display:grid;gap:8px}
+.opt{justify-content:space-between;font-weight:400}
+.opt span.l{display:flex;align-items:center;gap:10px}
+.opt b{font-family:var(--display);font-weight:800;font-stretch:112%}
+.opt small{display:block;color:var(--ink-soft);font-size:.85rem}
+.opt .p{font-family:var(--display);font-weight:900;font-stretch:112%;color:var(--spray);white-space:nowrap;font-variant-numeric:tabular-nums}
+.quote{background:var(--band);color:#fff;border-radius:10px;padding:18px 20px;display:grid;gap:6px;border:2px solid var(--sun)}
+.quote .qt{font-family:var(--display);font-weight:800;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--sun)}
+.quote .row{display:flex;justify-content:space-between;gap:12px;font-variant-numeric:tabular-nums}
+.quote .tot{font-family:var(--display);font-weight:900;font-stretch:112%;font-size:1.5rem;color:var(--sun);border-top:1px solid rgba(255,255,255,.25);padding-top:8px;margin-top:4px}
+.quote .sub{font-size:.88rem;opacity:.8}
+.plans{border:2px dashed var(--spray);border-radius:10px;padding:16px 18px;display:grid;gap:8px}
+.plans .qt{font-family:var(--display);font-weight:800;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--spray-deep)}
+.plans p{font-size:.95rem}
+.plans .pl{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+@media (max-width:480px){.plans .pl{grid-template-columns:1fr}}
+.plans .pl div{background:var(--bg);border-radius:8px;padding:10px;display:grid;gap:2px;text-align:center}
+.plans .pp{font-family:var(--display);font-weight:900;font-stretch:112%;font-size:1.3rem;color:var(--spray);font-variant-numeric:tabular-nums}
+.plans small{font-size:.8rem;color:var(--ink-soft)}
+.plans .sub{font-size:.85rem;color:var(--ink-soft)}
+.fineprint{font-size:.85rem;color:var(--ink-soft)}
+footer{border-top:1px solid var(--line);padding-block:36px;font-size:.92rem;color:var(--ink-soft)}
+footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+
+
+
+
+
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="MOM of Middleton home">
+      <img src="/logo.jpg" alt="MOM Exterior cleaning &amp; Sealing" width="72" height="52">
+    </a>
+    <nav aria-label="Main">
+      <a class="navlink" href="/services/">Services</a>
+      <a class="navlink" href="/pricing/">Pricing</a>
+      <a class="navlink" href="/service-area/">Service area</a>
+      <a class="navlink" href="/faq/">FAQ</a>
+      <a class="phone" href="tel:+13528082082">352-808-2082</a>
+      <a class="btn btn-sun" href="/get-my-price/">Get my price</a>
+    </nav>
+  </div>
+  <nav class="mnav" aria-label="Pages"><a href="/">Home</a><a href="/services/">Services</a><a href="/pricing/">Pricing</a><a href="/service-area/">Service area</a><a href="/faq/">FAQ</a></nav>
+</header>
+
+<main id="top">
+  <section class="block">
+    <div class="wrap ps">
+      <div class="head">
+        <p class="eyebrow">MOM Home Investment Protection Plan</p>
+        <h1 class="h2">Sign up for your Protection Plan</h1>
+        <p>Choose your home and plan, fill in your details, read the agreement and sign with your finger or mouse. Takes about 3 minutes. You'll get a signed copy by email.</p>
+      </div>
+      <form id="ps" class="ps-grid" novalidate>
+        <div class="ps-card">
+          <h2><span class="ps-step">1</span>Your home &amp; plan</h2>
+          <fieldset>
+            <legend>Home type</legend>
+            <div class="seg" role="radiogroup">
+              <label><input type="radio" name="home" value="pv"> Patio villa</label>
+              <label><input type="radio" name="home" value="s1" checked> 1-story home</label>
+              <label><input type="radio" name="home" value="s2"> 2-story home</label>
+            </div>
+          </fieldset>
+          <fieldset style="margin-top:14px">
+            <legend>Plan level</legend>
+            <div class="ps-plans">
+              <label><input type="radio" name="plan" value="std"><b>Standard</b><small>3 cleanings a year · every 4 months</small><span class="pp" data-p="std"></span></label>
+              <label><input type="radio" name="plan" value="enh"><b>Enhanced</b><small>4 cleanings a year · every 3 months</small><span class="pp" data-p="enh"></span></label>
+              <label><input type="radio" name="plan" value="pre" checked><b>Premium</b><small>6 cleanings a year · every 2 months</small><span class="pp" data-p="pre"></span></label>
+            </div>
+          </fieldset>
+          <div class="ps-sum" aria-live="polite">
+            <span class="k">Your plan</span>
+            <span><b id="sum-plan"></b> · <span id="sum-home"></span></span>
+            <span class="big"><span id="sum-rate"></span>/month</span>
+            <small>Starts after your first full-service cleaning (<span id="sum-full"></span>). Every visit includes the house wash and the Complete Exterior Package.</small>
+          </div>
+        </div>
+
+        <div class="ps-card">
+          <h2><span class="ps-step">2</span>Your details</h2>
+          <div class="ps-grid" style="gap:14px">
+            <div class="row2">
+              <label for="p-name">Full name<input id="p-name" name="name" autocomplete="name" required></label>
+              <label for="p-phone">Mobile phone<input id="p-phone" name="phone" type="tel" autocomplete="tel" required></label>
+            </div>
+            <label for="p-email">Email (your signed copy goes here)<input id="p-email" name="email" type="email" autocomplete="email" required></label>
+            <label for="p-addr">Street address of the home<input id="p-addr" name="address" autocomplete="street-address" required></label>
+            <div class="row2">
+              <label for="p-city">City<input id="p-city" name="city" autocomplete="address-level2" value="The Villages"></label>
+              <label for="p-zip">ZIP<input id="p-zip" name="zip" autocomplete="postal-code" inputmode="numeric" required></label>
+            </div>
+          </div>
+        </div>
+
+        <div class="ps-card">
+          <h2><span class="ps-step">3</span>Read the agreement</h2>
+          <div class="ps-doc" tabindex="0" aria-label="Agreement text">
+            <h3>MOM Home Investment Protection Plan · 12-Month Service Agreement</h3>
+            <p>This Service Agreement (“Agreement”) is entered into between MOM of Middleton (“MOM,” “we,” “us”) and the customer identified below (“Customer,” “you”), and governs enrollment in the MOM Home Investment Protection Plan (the “Plan”).</p>
+            <h3>1. Customer &amp; Property Information</h3>
+            <p>Customer: <span class="fill" data-f="name">your name</span> · Property: <span class="fill" data-f="addr">your address</span> · Home type: <span class="fill" data-f="home"></span></p>
+            <h3>2. Program &amp; Pricing</h3>
+            <p>MOM will first perform a complete initial house wash and Complete Exterior Package cleaning (driveway, walkway, entry, gutters, and back patio/lanai) at the applicable Full-Service Regular Price. Beginning the following service cycle, Customer enrolls in the Plan level selected below at the corresponding monthly rate.</p>
+            <div style="overflow-x:auto"><table>
+              <tr><th>Home Type</th><th>Full-Service Price</th><th>Standard<br>3 visits/yr (every 4 mo)</th><th>Enhanced<br>4 visits/yr (every 3 mo)</th><th>Premium<br>6 visits/yr (every 2 mo)</th></tr>
+              <tr><td>Patio Villa</td><td>$298</td><td>$62.50 / mo</td><td>$79 / mo</td><td>$109 / mo</td></tr>
+              <tr><td>1-Story</td><td>$348</td><td>$79 / mo</td><td>$99 / mo</td><td>$139 / mo</td></tr>
+              <tr><td>2-Story</td><td>$448</td><td>$99 / mo</td><td>$125 / mo</td><td>$175 / mo</td></tr>
+            </table></div>
+            <p>Plan Level Selected: <span class="fill" data-f="plan"></span></p>
+            <ul>
+              <li>Service is automatically performed at the frequency of the Plan level selected above (Standard: every 4 months, 3 visits per year; Enhanced: every 3 months, 4 visits per year; Premium: every 2 months, 6 visits per year). Every visit includes the Complete Exterior Package (driveway, walkway, entry, exterior gutters, back patio/lanai) at every visit.</li>
+              <li>Customer may request a change of Plan level; changes take effect at the start of the next service window, at the monthly rate for the new level.</li>
+              <li>No additional charge applies to Plan visits for a back patio/lanai that extends beyond the roofline.</li>
+              <li>Payment is due monthly via automatic payment on the method provided by Customer at enrollment.</li>
+            </ul>
+            <h3>3. Term &amp; Automatic Renewal</h3>
+            <p>This Agreement begins on the Effective Date below and continues for an initial term of twelve (12) consecutive months (the “Initial Term”). Upon completion of the Initial Term, this Agreement automatically renews for an additional twelve (12) month term (each, a “Renewal Term”) under the same terms, unless either party provides written notice of cancellation at least thirty (30) days before the Initial Term or then-current Renewal Term ends.</p>
+            <h3>4. Early Cancellation</h3>
+            <p>Customer agrees to remain enrolled in the Plan for the full 12-month term then in effect. Because MOM prices this program below its standard Full-Service rate on the expectation of a full year of service, early cancellation before completion of the then-current 12-month term is permitted only in the following circumstances:</p>
+            <ul>
+              <li>Documented hardship (e.g., divorce, death, medical hardship, or similar significant life circumstance), approved in writing at MOM of Middleton’s sole discretion on a case-by-case basis.</li>
+              <li>Mutual written agreement between Customer and MOM.</li>
+            </ul>
+            <p>The sale or transfer of the property is not, by itself, a qualifying reason for early cancellation; in that circumstance, Section 5 (Transfer on Sale) applies instead.</p>
+            <p>If Customer cancels for any other reason before completing the then-current 12-month term, Customer agrees to pay an Early Termination Fee equal to the difference between the Full-Service Regular Price for each completed service visit and the discounted Plan rate actually paid for those visits, reflecting the savings already received under the program. This fee will be invoiced upon cancellation.</p>
+            <h3>5. Transfer on Sale</h3>
+            <p>If Customer sells or otherwise transfers ownership of the property during the Initial Term, Customer may assign the remainder of this Agreement to the new owner, subject to MOM’s approval (not to be unreasonably withheld). MOM will honor the remaining service schedule and rate for the new owner through the end of the Initial Term. Customer must notify MOM in writing at least fourteen (14) days before the closing/transfer date to arrange the assignment.</p>
+            <h3>6. What’s Included</h3>
+            <p>Each maintenance visit includes house wash and the Complete Exterior Package: driveway, walkway, entry, exterior gutters, and back patio/lanai. This includes cleaning of the exterior surface of the gutters only.</p>
+            <p>The following separate services are not included and are billed separately if requested:</p>
+            <ul><li>Interior gutter flushing / water flow-through cleaning</li><li>Fence cleaning</li><li>Paver sealing</li></ul>
+            <h3>7. Access &amp; Scheduling</h3>
+            <p>MOM will contact Customer to schedule each service visit within the applicable service window for the selected Plan level. Customer agrees to provide reasonable access to the property and to secure pets, vehicles, and outdoor items as needed. If MOM is unable to access the property after reasonable attempts to schedule, that visit may be forfeited, though monthly billing continues per the payment schedule in Section 2. MOM may, at its discretion, offer to reschedule a forfeited visit if Customer provides access before the next scheduled service window.</p>
+            <h3>8. Payment Terms</h3>
+            <p>Monthly payments are due on the same calendar day each month via the payment method Customer provides. A failed or declined payment may result in a late fee and/or suspension of scheduled service until the account is brought current. Two or more consecutive missed payments may be treated as a cancellation subject to Section 4.</p>
+            <h3>9. General Terms</h3>
+            <ul>
+              <li>This Agreement is governed by the laws of the State of Florida.</li>
+              <li>This Agreement, including any signed proposal or invoice referencing it, constitutes the entire agreement between the parties regarding the Plan.</li>
+              <li>If any provision of this Agreement is found unenforceable, the remaining provisions remain in full effect.</li>
+            </ul>
+            <h3>Acknowledgment</h3>
+            <p>By signing below, Customer acknowledges having read and agreed to the terms of this Agreement, including the 12-month commitment and Early Cancellation terms described in Section 4.</p>
+          </div>
+          <p style="margin-top:10px;font-size:.92rem"><a href="/plan/MOM-Protection-Plan-Agreement.pdf" target="_blank" rel="noopener">Open the agreement as a PDF</a></p>
+        </div>
+
+        <div class="ps-card">
+          <h2><span class="ps-step">4</span>Sign</h2>
+          <div class="ps-grid" style="gap:12px">
+            <label class="ps-check"><input type="checkbox" id="p-terms"> <span>I have read and agree to the MOM Home Investment Protection Plan agreement, including the 12-month commitment and the Early Cancellation terms in Section 4.</span></label>
+            <label class="ps-check"><input type="checkbox" id="p-esign"> <span>I agree to sign this agreement electronically and to receive my signed copy by email. My electronic signature has the same effect as signing on paper.</span></label>
+            <div>
+              <p style="font-weight:700;margin-bottom:6px">Your signature</p>
+              <div class="sigwrap"><canvas id="sig" aria-label="Signature pad: draw your signature"></canvas><span class="sigline"></span><span class="hint" id="sig-hint">Sign here with your finger or mouse</span></div>
+              <button type="button" class="btn btn-line" id="sig-clear" style="margin-top:8px;padding:8px 14px">Clear signature</button>
+            </div>
+            <label for="p-signed">Type your full name<input id="p-signed" autocomplete="name" required></label>
+            <label class="ps-check"><input type="checkbox" id="p-two"> <span><b>Add a second signer</b> (spouse or co-owner). Both of you sign on this device, and both get a signed copy.</span></label>
+            <div id="two" class="ps-grid" style="gap:12px" hidden>
+              <div class="row2">
+                <label for="p2-name">Second signer's full name<input id="p2-name" autocomplete="off"></label>
+                <label for="p2-email">Second signer's email (optional)<input id="p2-email" type="email" autocomplete="off"></label>
+              </div>
+              <div>
+                <p style="font-weight:700;margin-bottom:6px">Second signer's signature</p>
+                <div class="sigwrap"><canvas id="sig2" aria-label="Second signature pad"></canvas><span class="sigline"></span><span class="hint" id="sig2-hint">Second signer signs here</span></div>
+                <button type="button" class="btn btn-line" id="sig2-clear" style="margin-top:8px;padding:8px 14px">Clear signature</button>
+              </div>
+              <p style="font-size:.92rem;color:var(--ink-soft)">By signing, the second signer agrees to the same terms and to sign electronically.</p>
+            </div>
+            <p class="ps-err" id="ps-err" role="alert" hidden></p>
+            <div class="ps-actions">
+              <button class="btn btn-sun" type="submit" id="ps-submit">Sign my agreement</button>
+              <span style="color:var(--ink-soft);font-size:.95rem">Questions first? <a href="tel:+13528082082">Call</a> or <a href="sms:+13528082082">text</a> <span style="white-space:nowrap">352-808-2082</span></span>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="ps-done" id="ps-done" hidden>
+        <h2>Thank you, <span id="d-name"></span>!</h2>
+        <p>Your Protection Plan agreement is signed. <span id="d-mail">We just emailed your signed copy to <b id="d-email"></b> (check spam if you don't see it).</span></p>
+        <p><b>What happens next:</b> Marco will call or text you to schedule your first cleaning and set up your monthly payment.</p>
+        <p style="color:var(--ink-soft);font-size:.92rem">Agreement ID <span id="d-id"></span></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span><b style="color:var(--ink)">MOM of Middleton</b> · Exterior cleaning &amp; sealing for Middleton &amp; Eastport, The Villages, FL</span>
+    <span>352-808-2082 · momofmiddleton@gmail.com · @momofmiddleton</span>
+  </div>
+</footer>
+<form name="plan-signup" data-netlify="true" netlify-honeypot="company" hidden>
+<input name="name"><input name="phone"><input name="email"><input name="address"><input name="city"><input name="zip"><input name="home"><input name="plan"><input name="rate"><input name="agreementId"><input name="company">
+</form>
+<script>
+(function(){
+  var D={"pv": [298, {"std": 62.5, "enh": 79, "pre": 109}], "s1": [348, {"std": 79, "enh": 99, "pre": 139}], "s2": [448, {"std": 99, "enh": 125, "pre": 175}]}, NAMES={pv:'Patio villa',s1:'1-story home',s2:'2-story home'}, PN={std:'Standard Protection',enh:'Enhanced Protection',pre:'Premium Protection'};
+  var form=document.getElementById('ps');
+  function money(v){return '$'+(v%1?v.toFixed(2):v);}
+  function val(n){var e=form.querySelector('input[name="'+n+'"]:checked');return e?e.value:'';}
+  function $(id){return document.getElementById(id);}
+  var q;try{q=new URLSearchParams(location.search)}catch(e){q=null}
+  if(q){var h=q.get('home'),p=q.get('plan');if(D[h])form.querySelector('input[name=home][value='+h+']').checked=true;if(p&&PN[p])form.querySelector('input[name=plan][value='+p+']').checked=true;}
+  function render(){
+    var h=val('home'),p=val('plan');
+    document.querySelectorAll('.pp').forEach(function(s){s.textContent=money(D[h][1][s.dataset.p])+'/mo';});
+    $('sum-plan').textContent=PN[p];$('sum-home').textContent=NAMES[h];$('sum-rate').textContent=money(D[h][1][p]);$('sum-full').textContent=money(D[h][0]);
+    document.querySelector('[data-f=home]').textContent=NAMES[h];
+    document.querySelector('[data-f=plan]').textContent=PN[p]+' – '+money(D[h][1][p])+'/mo';
+    var n=$('p-name').value.trim(),a=$('p-addr').value.trim();
+    document.querySelector('[data-f=name]').textContent=n||'your name';
+    document.querySelector('[data-f=addr]').textContent=a?(a+', '+($('p-city').value.trim()||'The Villages')+' '+$('p-zip').value.trim()):'your address';
+  }
+  form.addEventListener('change',render);form.addEventListener('input',render);
+  var typedTouched=false;$('p-signed').addEventListener('input',function(){typedTouched=true;});
+  $('p-name').addEventListener('input',function(){if(!typedTouched)$('p-signed').value=$('p-name').value;});
+  render();
+
+  // signature pads
+  function Pad(canvasId,hintId,clearId){
+    var c=$(canvasId),ctx=c.getContext('2d'),drawing=false,last=null,self={inked:false};
+    function size(){var r=c.getBoundingClientRect();if(!r.width)return;var dpr=window.devicePixelRatio||1;var img=self.inked?c.toDataURL():null;
+      c.width=Math.round(r.width*dpr);c.height=Math.round(r.height*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);
+      ctx.lineWidth=2.6;ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='#111';ctx.fillStyle='#111';
+      if(img){var im=new Image();im.onload=function(){ctx.drawImage(im,0,0,r.width,r.height);};im.src=img;}}
+    self.size=size;size();window.addEventListener('resize',size);
+    function pt(e){var r=c.getBoundingClientRect();return {x:e.clientX-r.left,y:e.clientY-r.top};}
+    c.addEventListener('pointerdown',function(e){e.preventDefault();c.setPointerCapture(e.pointerId);drawing=true;last=pt(e);ctx.beginPath();ctx.arc(last.x,last.y,1.2,0,7);ctx.fill();});
+    c.addEventListener('pointermove',function(e){if(!drawing)return;var p=pt(e);ctx.beginPath();ctx.moveTo(last.x,last.y);ctx.lineTo(p.x,p.y);ctx.stroke();last=p;if(!self.inked){self.inked=true;$(hintId).hidden=true;}});
+    ['pointerup','pointercancel','pointerleave'].forEach(function(t){c.addEventListener(t,function(){drawing=false;});});
+    $(clearId).addEventListener('click',function(){ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,c.width,c.height);size();self.inked=false;$(hintId).hidden=false;});
+    self.png=function(){var w=c.width,h=c.height,d=ctx.getImageData(0,0,w,h).data,x0=w,y0=h,x1=0,y1=0;
+      for(var y=0;y<h;y++)for(var x=0;x<w;x++){if(d[(y*w+x)*4+3]>0){if(x<x0)x0=x;if(x>x1)x1=x;if(y<y0)y0=y;if(y>y1)y1=y;}}
+      if(x1<=x0||y1<=y0)return '';var pad=8;x0=Math.max(0,x0-pad);y0=Math.max(0,y0-pad);x1=Math.min(w,x1+pad);y1=Math.min(h,y1+pad);
+      var o=document.createElement('canvas');o.width=x1-x0;o.height=y1-y0;o.getContext('2d').drawImage(c,x0,y0,o.width,o.height,0,0,o.width,o.height);return o.toDataURL('image/png');};
+    return self;
+  }
+  var pad1=Pad('sig','sig-hint','sig-clear'),pad2=Pad('sig2','sig2-hint','sig2-clear');
+  $('p-two').addEventListener('change',function(){$('two').hidden=!this.checked;if(this.checked)setTimeout(pad2.size,0);});
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault();var err=$('ps-err');err.hidden=true;
+    function fail(m,el){err.textContent=m;err.hidden=false;if(el)el.focus();}
+    var d={name:$('p-name').value.trim(),phone:$('p-phone').value.trim(),email:$('p-email').value.trim(),address:$('p-addr').value.trim(),
+      city:$('p-city').value.trim()||'The Villages',zip:$('p-zip').value.trim(),home:val('home'),plan:val('plan'),signedName:$('p-signed').value.trim(),
+      agreeTerms:$('p-terms').checked,agreeEsign:$('p-esign').checked};
+    if(!d.name)return fail('Please enter your full name.',$('p-name'));
+    if(!d.phone)return fail('Please enter your mobile phone.',$('p-phone'));
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email))return fail('Please enter a valid email so we can send your signed copy.',$('p-email'));
+    if(!d.address||!d.zip)return fail('Please enter the street address and ZIP of the home.',$('p-addr'));
+    if(!d.agreeTerms||!d.agreeEsign)return fail('Please check both boxes to agree to the terms and to sign electronically.',$('p-terms'));
+    if(!pad1.inked)return fail('Please sign in the signature box.');
+    if(!d.signedName)return fail('Please type your full name under your signature.',$('p-signed'));
+    d.signature=pad1.png();
+    if($('p-two').checked){
+      d.name2=$('p2-name').value.trim();d.email2=$('p2-email').value.trim();
+      if(!d.name2)return fail("Please type the second signer's full name.",$('p2-name'));
+      if(d.email2&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email2))return fail("Please check the second signer's email.",$('p2-email'));
+      if(!pad2.inked)return fail('Please have the second signer sign in their signature box.');
+      d.signature2=pad2.png();
+    }
+    var btn=$('ps-submit');btn.disabled=true;btn.textContent='Signing…';
+    fetch('/.netlify/functions/sign-plan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)})
+      .then(function(r){return r.json().then(function(j){if(!r.ok)throw j;return j;});})
+      .then(function(j){
+        var fd=new URLSearchParams({'form-name':'plan-signup',name:d.name,phone:d.phone,email:d.email,address:d.address,city:d.city,zip:d.zip,home:NAMES[d.home],plan:PN[d.plan],rate:money(D[d.home][1][d.plan])+'/mo',agreementId:j.id||''});
+        fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:fd.toString()}).catch(function(){});
+        form.hidden=true;$('ps-done').hidden=false;$('d-name').textContent=d.name.split(' ')[0];$('d-id').textContent=j.id||'';
+        if(j.emailed)$('d-email').textContent=(j.emails&&j.emails.length?j.emails.join(' and '):d.email);else $('d-mail').textContent='Marco will send your signed copy shortly.';
+        window.scrollTo(0,0);
+      })
+      .catch(function(){btn.disabled=false;btn.textContent='Sign my agreement';fail('Something went wrong and your agreement was not sent. Please try again, or call or text 352-808-2082.');});
+  });
+})();
+</script>
+</body>
+</html>

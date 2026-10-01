@@ -3,13 +3,48 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>MOM of Middleton</title>
-<meta name="description" content="Exterior cleaning and sealing for Middleton and the Eastport villages of The Villages, FL. House washing, driveways, walkways, gutters and lanais. Call 352-808-2082.">
+<title>Prices | MOM of Middleton</title>
+<meta name="description" content="Flat exterior cleaning prices by home type for Middleton and the Eastport villages of The Villages, FL.">
 <link rel="icon" href="/logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,112,600;0,112,800;0,125,900;1,125,900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
-<style>[hidden]{display:none!important} html,body{margin:0} img{max-width:100%}</style>
+<style>[hidden]{display:none!important} html,body{margin:0} img{max-width:100%}
+/* protection plan */
+.plan-hero{display:grid;gap:10px;max-width:760px}
+.plan-kicker{font-family:var(--display);font-weight:800;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--crimson)}
+.plan-hero > p:not(.plan-kicker){color:var(--ink-soft)}
+.perks{list-style:none;margin:4px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.perks li{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 14px 6px 10px;font-size:.95rem;font-weight:700}
+.perks li::before{content:"✓";display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--sun);color:var(--sun-ink);font-size:.75rem;margin-right:8px;vertical-align:1px}
+.htoggle{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:6px}
+.htoggle-l{font-family:var(--display);font-weight:800;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-right:4px}
+.htoggle button{font:inherit;font-weight:700;font-size:.95rem;border:2px solid var(--band);background:transparent;color:var(--ink);border-radius:999px;padding:8px 16px;cursor:pointer}
+.htoggle button[aria-checked="true"]{background:var(--band);color:var(--sun)}
+.pcards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:stretch;margin-top:8px}
+@media (max-width:820px){.pcards{grid-template-columns:1fr}}
+.pcard{position:relative;background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:26px 22px 22px;display:grid;gap:8px;align-content:start;text-align:center}
+.pcard.best{background:var(--band);color:#fff;border-color:var(--sun);box-shadow:0 12px 30px rgba(0,0,0,.18)}
+@media (min-width:821px){.pcard.best{transform:translateY(-8px)}}
+.pbadge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--sun);color:var(--sun-ink);font-family:var(--display);font-weight:800;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;padding:6px 12px;border-radius:999px;white-space:nowrap}
+.pname{font-family:var(--display);font-weight:900;font-style:italic;font-stretch:125%;font-size:1.35rem;line-height:1.1}
+.pfreq{font-size:.95rem;color:var(--ink-soft)}
+.pcard.best .pfreq{color:#CFC8D6}
+.pprice{margin-top:6px;line-height:1}
+.pm{font-family:var(--display);font-weight:900;font-stretch:112%;font-size:3rem;color:var(--spray);font-variant-numeric:tabular-nums}
+.pcard.best .pm{color:var(--sun)}
+.pu{font-weight:700;color:var(--ink-soft);margin-left:2px}
+.pcard.best .pu{color:#CFC8D6}
+.pper{font-size:1rem}
+.pper b{font-variant-numeric:tabular-nums}
+.psave{margin-top:6px;background:color-mix(in srgb,var(--sun) 22%,var(--surface));border-radius:10px;padding:10px 12px;font-weight:700;line-height:1.35}
+.psave span{font-weight:400;font-size:.92rem}
+.pcard.best .psave{background:var(--sun);color:var(--sun-ink)}
+.psave b{font-variant-numeric:tabular-nums}
+.plan-cta{display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px;margin-top:6px}
+.plan-cta > span{color:var(--ink-soft)}
+.plan-list{font-size:.9rem}
+</style>
 <style>
 :root{
   --bg:#F7F6F3;
@@ -92,7 +127,7 @@ p{margin:0}
 @media (max-width:880px){.hero .wrap{grid-template-columns:1fr;gap:32px}}
 .hero h1{font-size:clamp(2.4rem,6vw,4.3rem);font-weight:900;font-style:italic;font-stretch:125%;letter-spacing:-.01em}
 .hero h1 .only{color:var(--sun);font-style:italic}
-.hero .lede{font-size:1.2rem;color:#EEE9F2;margin-top:20px;max-width:36ch;border:2px solid #F5D04A;border-radius:10px;padding:14px 18px}
+.hero .lede{font-size:1.2rem;color:var(--ink-soft);margin-top:18px;max-width:34ch}
 .hero .ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}
 .hero .fine{margin-top:18px;font-size:.95rem;color:var(--ink-soft)}
 
@@ -207,7 +242,17 @@ section.block{padding-block:80px}
 .plan .tier{background:#000}
 .plan .tier-name{background:var(--sun);color:var(--sun-ink)}
 .plan .amt{color:#fff}
-.addon{background:var(--sun);color:var(--sun-ink);border-radius:10px;padding:18px 20px;display:grid;gap:6px}
+.addon{background:var(--sun);color:var(--sun-ink);border-radius:12px;padding:22px 24px;display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center;box-shadow:0 0 0 4px var(--band),0 0 0 6px var(--sun)}
+@media (max-width:620px){.addon{grid-template-columns:1fr;gap:14px;text-align:left}}
+.addon-amt{background:var(--band);color:var(--sun);border-radius:10px;padding:14px 20px;display:grid;justify-items:center;line-height:1;transform:rotate(-3deg)}
+.addon-amt b{font-family:var(--display);font-weight:900;font-style:italic;font-stretch:125%;font-size:clamp(3rem,7vw,4.4rem);color:var(--sun)}
+.addon-amt span{font-family:var(--display);font-weight:800;text-transform:uppercase;letter-spacing:.14em;font-size:.8rem;color:#fff;padding:4px 0}
+.addon-body{display:grid;gap:8px}
+.addon-h{font-family:var(--display);font-weight:900;font-style:italic;font-stretch:125%;font-size:clamp(1.4rem,3vw,1.9rem);line-height:1.1}
+.addon-list{list-style:none;margin:2px 0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.addon-list li{background:var(--band);color:#fff;border-radius:999px;padding:5px 12px 5px 10px;font-size:.95rem;font-weight:700}
+.addon-list li::before{content:"✓ ";color:var(--sun)}
+.addon-btn{justify-self:start;background:var(--band);color:var(--sun);margin-top:4px}
 .addon b{font-family:var(--display);font-weight:800;font-stretch:112%}
 .addon .small{font-size:.92rem}
 .villa-note{font-size:.95rem;color:var(--ink-soft);margin-top:-6px}
@@ -311,87 +356,97 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
     </a>
     <nav aria-label="Main">
       <a class="navlink" href="/services/">Services</a>
-      <a class="navlink" href="/pricing/">Pricing</a>
+      <a class="navlink on" aria-current="page" href="/pricing/">Pricing</a>
       <a class="navlink" href="/service-area/">Service area</a>
       <a class="navlink" href="/faq/">FAQ</a>
       <a class="phone" href="tel:+13528082082">352-808-2082</a>
       <a class="btn btn-sun" href="/get-my-price/">Get my price</a>
     </nav>
   </div>
-  <nav class="mnav" aria-label="Pages"><a href="/" class="on" aria-current="page">Home</a><a href="/services/">Services</a><a href="/pricing/">Pricing</a><a href="/service-area/">Service area</a><a href="/faq/">FAQ</a></nav>
+  <nav class="mnav" aria-label="Pages"><a href="/">Home</a><a href="/services/">Services</a><a href="/pricing/" class="on" aria-current="page">Pricing</a><a href="/service-area/">Service area</a><a href="/faq/">FAQ</a></nav>
 </header>
 
 <main id="top">
-  <section class="hero">
-    <div class="wrap">
-      <div>
-        <p class="eyebrow">Exterior cleaning &amp; sealing · The Villages, FL</p>
-        <h1 style="margin-top:14px">Middleton &amp; Eastport. <span class="only">Only.</span></h1>
-        <p class="lede">House washing, driveways, walkways, gutters and lanais, cleaned by a local crew that works only in your part of The Villages. Flat prices by home type.</p>
-        <div class="ctas">
-          <a class="btn btn-sun" href="/pricing/">See prices</a>
-          <a class="btn btn-line" href="tel:+13528082082">Call 352-808-2082</a>
-        </div>
-        <span class="tag">Dirty House? Call MOM!</span>
-      </div>
-      <div>
-        <div class="wash" id="wash" style="--cut:55%">
-          <div class="pavers"><div class="rows" aria-hidden="true"></div></div>
-          <div class="grime"><div class="rows" aria-hidden="true"></div></div>
-          <div class="wand"><div class="wand-knob" aria-hidden="true">⇆</div></div>
-          <span class="wash-tag l">Clean</span>
-          <span class="wash-tag r">Mildew</span>
-          <input class="wash-range" id="wash-range" type="range" min="0" max="100" value="55" aria-label="Drag to wash the pavers">
-        </div>
-        <p class="wash-cap">Drag across the pavers. Florida humidity grows mildew on concrete in a single season.</p>
-      </div>
-    </div>
-  </section>
-  <div class="strip">
-    <div class="wrap">
-      <div><b>Local only</b><span>Middleton and the Eastport villages</span></div>
-      <div><b>Flat, published prices</b><span>By home type, no surprises</span></div>
-      <div><b>Low pressure on stucco</b><span>Soft washing that won't damage paint or texture</span></div>
-      <div><b>3, 4 or 6 cleanings a year</b><span>With the MOM Home Investment Protection Plan</span></div>
-    </div>
-  </div>
-  <section class="block" id="process">
+  <section class="block pricing" id="pricing">
     <div class="wrap">
       <div class="head">
-        <p class="eyebrow">How it works</p>
-        <h2>From phone call to clean house</h2>
+        <p class="eyebrow">Pricing</p>
+        <h1 class="h2">Prices by home type</h1>
+        <p>No surprise bills. Choose a one-time cleaning, or keep your home clean all year with the MOM Home Investment Protection Plan.</p>
       </div>
-      <ol class="steps">
-        <li><h3>Call or text Marco</h3><p>Tell us your home type and what you'd like cleaned. You'll get the price on the call.</p></li>
-        <li><h3>First complete cleaning</h3><p>House wash plus the Complete Exterior Package, with plants and fixtures protected.</p></li>
-        <li><h3>Walk it together</h3><p>We walk the job with you before we leave. If anything is missed, we fix it.</p></li>
-        <li><h3>Stay on schedule</h3><p>On the protection plan, we come back every 4, 3 or 2 months, so your home stays clean all year.</p></li>
-      </ol>
-    </div>
-  </section>
-  <section class="block marco" id="about">
-    <div class="wrap">
-      <div>
-        <p class="eyebrow">Who runs MOM</p>
-        <h2>Marco Vianello, General Manager</h2>
-        <p>Before moving to The Villages, Marco owned Get It Clean Miami. He cleaned homes, driveways, pool decks, sidewalks, parking garages and commercial buildings across Miami, Coral Gables, Pinecrest, Kendall and Palmetto Bay.</p>
-        <p>On his <a href="https://www.facebook.com/getitcleanmiami/reels/" target="_blank" rel="noopener" style="color:var(--sun)">#MondaysWithMarco videos</a> he explains soft washing versus pressure washing, how often a property should be cleaned, and why the rainy season is a good time to clean. He brought the same methods and standards to Middleton.</p>
-        <blockquote class="quote">
-          <p>“Call them, you will be glad you did, and their customer service is great.”</p>
-          <cite>Elvi M., Facebook review of Get It Clean Miami</cite>
-        </blockquote>
+
+      <div class="price-block">
+        <h3 class="price-title">One-time cleaning</h3>
+        <div class="tiers">
+          <div class="tier"><span class="tier-name">Patio villa</span><span class="amt">$248</span><span class="unit">House wash</span></div>
+          <div class="tier"><span class="tier-name">1-story home</span><span class="amt">$298</span><span class="unit">House wash</span></div>
+          <div class="tier"><span class="tier-name">2-story home</span><span class="amt">$398</span><span class="unit">House wash</span></div>
+        </div>
+        <div class="addon">
+          <div class="addon-amt"><span>Only</span><b>+$50</b><span>total</span></div>
+          <div class="addon-body">
+            <p class="addon-h">Add the Complete Exterior Package</p>
+            <p>Five more areas cleaned with your house wash, all for one $50 add-on:</p>
+            <ul class="addon-list"><li>Driveway</li><li>Walkway</li><li>Entry</li><li>Exterior gutters</li><li>Back patio / lanai</li></ul>
+            <p class="small">Back patio or lanai that extends beyond the roofline: add $50 (one-time cleanings only).</p>
+            <a class="btn addon-btn" href="/get-my-price/">Get my price now →</a>
+          </div>
+        </div>
       </div>
-      <div class="record">
-        <a class="rec" href="https://www.facebook.com/getitcleanmiami/reviews" target="_blank" rel="noopener">
-          <span><b>Get It Clean Miami on Facebook</b><small>24 reviews</small></span>
-          <span class="stars">100% recommend</span>
-        </a>
-        <a class="rec" href="https://www.yelp.com/biz/get-it-clean-miami-miami" target="_blank" rel="noopener">
-          <span><b>Get It Clean Miami on Yelp</b><small>Customer reviews</small></span>
-          <span class="stars">5.0 ★</span>
-        </a>
-        <p class="note">Reviews of Marco's previous company, Get It Clean Miami.</p>
-      </div>
+
+      <div class="price-block plan">
+        <div class="plan-hero">
+          <p class="plan-kicker">Keep it clean all year</p>
+          <h3 class="price-title">MOM Home Investment Protection Plan</h3>
+          <p>After your first full cleaning, we come back on a schedule and every visit costs less than a one-time cleaning. Your home stays clean, and you stop thinking about it.</p>
+          <ul class="perks">
+            <li>House wash + Complete Exterior Package every visit</li>
+            <li>Lanai past the roofline included (normally +$50)</li>
+            <li>One fixed monthly price, no surprise bills</li>
+          </ul>
+        </div>
+        <div class="htoggle" role="radiogroup" aria-label="Your home type">
+          <span class="htoggle-l">Show prices for my</span>
+          <button type="button" role="radio" aria-checked="false" data-h="pv">Patio villa</button>
+          <button type="button" role="radio" aria-checked="true" data-h="s1">1-story home</button>
+          <button type="button" role="radio" aria-checked="false" data-h="s2">2-story home</button>
+        </div>
+        <div class="pcards">
+          <article class="pcard" data-plan="std">
+            
+            <p class="pname">Standard Protection</p>
+            <p class="pfreq"><b>3 cleanings a year</b> · Every 4 months</p>
+            <p class="pprice"><span class="pm">$79</span><span class="pu">/month</span></p>
+            <p class="pper">≈ <b class="pc">$316</b> per cleaning</p>
+            <p class="psave">You save <b class="se">$32</b> every visit<br><span>That's <b class="sy">$96</b> a year</span></p>
+          </article>
+          <article class="pcard" data-plan="enh">
+            
+            <p class="pname">Enhanced Protection</p>
+            <p class="pfreq"><b>4 cleanings a year</b> · Every 3 months</p>
+            <p class="pprice"><span class="pm">$99</span><span class="pu">/month</span></p>
+            <p class="pper">≈ <b class="pc">$297</b> per cleaning</p>
+            <p class="psave">You save <b class="se">$51</b> every visit<br><span>That's <b class="sy">$204</b> a year</span></p>
+          </article>
+          <article class="pcard best" data-plan="pre">
+            <span class="pbadge">Lowest cost per cleaning</span>
+            <p class="pname">Premium Protection</p>
+            <p class="pfreq"><b>6 cleanings a year</b> · Every 2 months</p>
+            <p class="pprice"><span class="pm">$139</span><span class="pu">/month</span></p>
+            <p class="pper">≈ <b class="pc">$278</b> per cleaning</p>
+            <p class="psave">You save <b class="se">$70</b> every visit<br><span>That's <b class="sy">$420</b> a year</span></p>
+          </article>
+        </div>
+        <div class="plan-cta">
+          <a class="btn btn-sun" href="/get-my-price/">Get my price now →</a>
+          <span>Questions about a plan? <a href="tel:+13528082082">Call</a> or <a href="sms:+13528082082">text</a> <span style="white-space:nowrap">352-808-2082</span></span>
+        </div>
+        <ul class="plan-list">
+          <li>Available after your first full cleaning at the regular full-service price: $298 patio villa, $348 1-story home, $448 2-story home.</li>
+          <li>Savings compare each plan visit with a one-time full cleaning at those prices.</li>
+          <li>12-month minimum agreement with automatic monthly payment. It renews each year unless you cancel with 30 days' notice.</li>
+          <li>Fence cleaning and paver sealing are quoted separately.</li>
+        </ul>
     </div>
   </section>
 </main>
@@ -512,6 +567,19 @@ window.momSubmit=function(p){
 })();
 </script>
 
-<script>(function(){var m={"#services":"/services/","#pricing":"/pricing/","#area":"/service-area/","#faq":"/faq/","#estimate":"/get-my-price/"};if(m[location.hash])location.replace(m[location.hash]);})();</script>
+<script>
+(function(){
+  var D={"pv": {"std": [62.5, 250, 48, 144], "enh": [79, 237, 61, 244], "pre": [109, 218, 80, 480]}, "s1": {"std": [79, 316, 32, 96], "enh": [99, 297, 51, 204], "pre": [139, 278, 70, 420]}, "s2": {"std": [99, 396, 52, 156], "enh": [125, 375, 73, 292], "pre": [175, 350, 98, 588]}};
+  var t=document.querySelector('.htoggle');if(!t)return;
+  function money(v){return v%1?'$'+v.toFixed(2):'$'+v;}
+  function show(h){
+    t.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-checked',b.dataset.h===h?'true':'false');});
+    document.querySelectorAll('.pcard').forEach(function(c){var d=D[h][c.dataset.plan];
+      c.querySelector('.pm').textContent=money(d[0]);c.querySelector('.pc').textContent='$'+d[1];
+      c.querySelector('.se').textContent='$'+d[2];c.querySelector('.sy').textContent='$'+d[3];});
+  }
+  t.addEventListener('click',function(e){var b=e.target.closest('button');if(b)show(b.dataset.h);});
+})();
+</script>
 </body>
 </html>

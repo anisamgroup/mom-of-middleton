@@ -9,7 +9,42 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,112,600;0,112,800;0,125,900;1,125,900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
-<style>[hidden]{display:none!important} html,body{margin:0} img{max-width:100%}</style>
+<style>[hidden]{display:none!important} html,body{margin:0} img{max-width:100%}
+/* protection plan */
+.plan-hero{display:grid;gap:10px;max-width:760px}
+.plan-kicker{font-family:var(--display);font-weight:800;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--crimson)}
+.plan-hero > p:not(.plan-kicker){color:var(--ink-soft)}
+.perks{list-style:none;margin:4px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.perks li{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 14px 6px 10px;font-size:.95rem;font-weight:700}
+.perks li::before{content:"✓";display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--sun);color:var(--sun-ink);font-size:.75rem;margin-right:8px;vertical-align:1px}
+.htoggle{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:6px}
+.htoggle-l{font-family:var(--display);font-weight:800;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-right:4px}
+.htoggle button{font:inherit;font-weight:700;font-size:.95rem;border:2px solid var(--band);background:transparent;color:var(--ink);border-radius:999px;padding:8px 16px;cursor:pointer}
+.htoggle button[aria-checked="true"]{background:var(--band);color:var(--sun)}
+.pcards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:stretch;margin-top:8px}
+@media (max-width:820px){.pcards{grid-template-columns:1fr}}
+.pcard{position:relative;background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:26px 22px 22px;display:grid;gap:8px;align-content:start;text-align:center}
+.pcard.best{background:var(--band);color:#fff;border-color:var(--sun);box-shadow:0 12px 30px rgba(0,0,0,.18)}
+@media (min-width:821px){.pcard.best{transform:translateY(-8px)}}
+.pbadge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--sun);color:var(--sun-ink);font-family:var(--display);font-weight:800;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;padding:6px 12px;border-radius:999px;white-space:nowrap}
+.pname{font-family:var(--display);font-weight:900;font-style:italic;font-stretch:125%;font-size:1.35rem;line-height:1.1}
+.pfreq{font-size:.95rem;color:var(--ink-soft)}
+.pcard.best .pfreq{color:#CFC8D6}
+.pprice{margin-top:6px;line-height:1}
+.pm{font-family:var(--display);font-weight:900;font-stretch:112%;font-size:3rem;color:var(--spray);font-variant-numeric:tabular-nums}
+.pcard.best .pm{color:var(--sun)}
+.pu{font-weight:700;color:var(--ink-soft);margin-left:2px}
+.pcard.best .pu{color:#CFC8D6}
+.pper{font-size:1rem}
+.pper b{font-variant-numeric:tabular-nums}
+.psave{margin-top:6px;background:color-mix(in srgb,var(--sun) 22%,var(--surface));border-radius:10px;padding:10px 12px;font-weight:700;line-height:1.35}
+.psave span{font-weight:400;font-size:.92rem}
+.pcard.best .psave{background:var(--sun);color:var(--sun-ink)}
+.psave b{font-variant-numeric:tabular-nums}
+.plan-cta{display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px;margin-top:6px}
+.plan-cta > span{color:var(--ink-soft)}
+.plan-list{font-size:.9rem}
+</style>
 <style>
 :root{
   --bg:#F7F6F3;
@@ -359,33 +394,58 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
       </div>
 
       <div class="price-block plan">
-        <div class="plan-head">
+        <div class="plan-hero">
+          <p class="plan-kicker">Keep it clean all year</p>
           <h3 class="price-title">MOM Home Investment Protection Plan</h3>
-          <p>After your first full cleaning, choose how often we come back. Every visit includes the house wash and the Complete Exterior Package: driveway, walkway, entry, exterior gutters and back patio/lanai.</p>
+          <p>After your first full cleaning, we come back on a schedule and every visit costs less than a one-time cleaning. Your home stays clean, and you stop thinking about it.</p>
+          <ul class="perks">
+            <li>House wash + Complete Exterior Package every visit</li>
+            <li>Lanai past the roofline included (normally +$50)</li>
+            <li>One fixed monthly price, no surprise bills</li>
+          </ul>
         </div>
-        <div class="matrix-wrap">
-          <table class="matrix">
-            <thead>
-              <tr>
-                <th scope="col" class="corner">Home type</th>
-                <th scope="col"><span class="lvl">Standard Protection</span><span class="freq">3 cleanings a year</span><span class="every">Every 4 months</span></th>
-                <th scope="col"><span class="lvl">Enhanced Protection</span><span class="freq">4 cleanings a year</span><span class="every">Every 3 months</span></th>
-                <th scope="col"><span class="lvl">Premium Protection</span><span class="freq">6 cleanings a year</span><span class="every">Every 2 months</span></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><th scope="row">Patio villa</th><td>$62.50<small>/mo</small></td><td>$79<small>/mo</small></td><td>$109<small>/mo</small></td></tr>
-              <tr><th scope="row">1-story home</th><td>$79<small>/mo</small></td><td>$99<small>/mo</small></td><td>$139<small>/mo</small></td></tr>
-              <tr><th scope="row">2-story home</th><td>$99<small>/mo</small></td><td>$125<small>/mo</small></td><td>$175<small>/mo</small></td></tr>
-            </tbody>
-          </table>
+        <div class="htoggle" role="radiogroup" aria-label="Your home type">
+          <span class="htoggle-l">Show prices for my</span>
+          <button type="button" role="radio" aria-checked="false" data-h="pv">Patio villa</button>
+          <button type="button" role="radio" aria-checked="true" data-h="s1">1-story home</button>
+          <button type="button" role="radio" aria-checked="false" data-h="s2">2-story home</button>
+        </div>
+        <div class="pcards">
+          <article class="pcard" data-plan="std">
+            
+            <p class="pname">Standard Protection</p>
+            <p class="pfreq"><b>3 cleanings a year</b> · Every 4 months</p>
+            <p class="pprice"><span class="pm">$79</span><span class="pu">/month</span></p>
+            <p class="pper">≈ <b class="pc">$316</b> per cleaning</p>
+            <p class="psave">You save <b class="se">$32</b> every visit<br><span>That's <b class="sy">$96</b> a year</span></p>
+          </article>
+          <article class="pcard" data-plan="enh">
+            
+            <p class="pname">Enhanced Protection</p>
+            <p class="pfreq"><b>4 cleanings a year</b> · Every 3 months</p>
+            <p class="pprice"><span class="pm">$99</span><span class="pu">/month</span></p>
+            <p class="pper">≈ <b class="pc">$297</b> per cleaning</p>
+            <p class="psave">You save <b class="se">$51</b> every visit<br><span>That's <b class="sy">$204</b> a year</span></p>
+          </article>
+          <article class="pcard best" data-plan="pre">
+            <span class="pbadge">Lowest cost per cleaning</span>
+            <p class="pname">Premium Protection</p>
+            <p class="pfreq"><b>6 cleanings a year</b> · Every 2 months</p>
+            <p class="pprice"><span class="pm">$139</span><span class="pu">/month</span></p>
+            <p class="pper">≈ <b class="pc">$278</b> per cleaning</p>
+            <p class="psave">You save <b class="se">$70</b> every visit<br><span>That's <b class="sy">$420</b> a year</span></p>
+          </article>
+        </div>
+        <div class="plan-cta">
+          <a class="btn btn-sun" href="/get-my-price/">Get my price now →</a>
+          <span>Questions about a plan? <a href="tel:+13528082082">Call</a> or <a href="sms:+13528082082">text</a> <span style="white-space:nowrap">352-808-2082</span></span>
         </div>
         <ul class="plan-list">
           <li>Available after your first full cleaning at the regular full-service price: $298 patio villa, $348 1-story home, $448 2-story home.</li>
+          <li>Savings compare each plan visit with a one-time full cleaning at those prices.</li>
           <li>12-month minimum agreement with automatic monthly payment. It renews each year unless you cancel with 30 days' notice.</li>
-          <li>No extra charge for a lanai past the roofline on any protection plan. Fence cleaning and paver sealing are quoted separately.</li>
+          <li>Fence cleaning and paver sealing are quoted separately.</li>
         </ul>
-      </div>
     </div>
   </section>
 </main>
@@ -506,5 +566,19 @@ window.momSubmit=function(p){
 })();
 </script>
 
+<script>
+(function(){
+  var D={"pv": {"std": [62.5, 250, 48, 144], "enh": [79, 237, 61, 244], "pre": [109, 218, 80, 480]}, "s1": {"std": [79, 316, 32, 96], "enh": [99, 297, 51, 204], "pre": [139, 278, 70, 420]}, "s2": {"std": [99, 396, 52, 156], "enh": [125, 375, 73, 292], "pre": [175, 350, 98, 588]}};
+  var t=document.querySelector('.htoggle');if(!t)return;
+  function money(v){return v%1?'$'+v.toFixed(2):'$'+v;}
+  function show(h){
+    t.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-checked',b.dataset.h===h?'true':'false');});
+    document.querySelectorAll('.pcard').forEach(function(c){var d=D[h][c.dataset.plan];
+      c.querySelector('.pm').textContent=money(d[0]);c.querySelector('.pc').textContent='$'+d[1];
+      c.querySelector('.se').textContent='$'+d[2];c.querySelector('.sy').textContent='$'+d[3];});
+  }
+  t.addEventListener('click',function(e){var b=e.target.closest('button');if(b)show(b.dataset.h);});
+})();
+</script>
 </body>
 </html>

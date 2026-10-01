@@ -5,7 +5,7 @@
 //   1. fills the blank agreement PDF (/plan/MOM-Protection-Plan-Agreement.pdf) with their
 //      details, plan, signature and an e-signature record (date/time, IP, email),
 //   2. emails the signed PDF to the customer and to the office (Resend, same key as estimates).
-// MOM's representative lines are left fillable so Marco can countersign the PDF.
+// MOM's lines are filled in automatically (accepted electronically), so no countersigning is needed.
 // Billing is handled outside the website (first check, then ACH in ServiceMonster).
 
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
@@ -57,6 +57,10 @@ async function buildPdf(blank, d, sigPng, t, sig2Png) {
   }
   set('customer_print_name', d.signedName);
   set('customer_date', t.short);
+  // MOM accepts automatically: the agreement is complete the moment the customer signs.
+  set('mom_representative', 'Accepted electronically by MOM of Middleton');
+  set('mom_print_name', process.env.MOM_REP_NAME || 'Marco Vianello, General Manager');
+  set('mom_date', t.short);
 
   // Signature image over the customer signature line.
   const sigField = form.getTextField('customer_signature');
@@ -224,9 +228,9 @@ export default async (req) => {
       subject: `New Protection Plan signed: ${d.name}, ${pl.name}, ${rate}/mo`,
       html: shell(`<p style="margin:0 0 12px;font-size:20px;font-weight:800;">New Protection Plan signed</p>
 <table role="presentation" cellpadding="6" cellspacing="0" style="width:100%;border-collapse:collapse;font-size:14px;">${rows.map(([k, v]) => `<tr><td style="color:#57525E;border-bottom:1px solid #E1DDE3;">${k}</td><td style="border-bottom:1px solid #E1DDE3;"><b>${esc(v)}</b></td></tr>`).join('')}</table>
-<p style="margin-top:16px;"><b>Next steps:</b> countersign the attached PDF (MOM Representative lines), create the contract in ServiceMonster, collect the first check and set up ACH.</p>
+<p style="margin-top:16px;"><b>Next steps:</b> create the contract in ServiceMonster, schedule the first full cleaning, collect the first check and set up ACH. Nothing to sign: the attached agreement is complete.</p>
 ${customerSent ? '' : '<p style="color:#9A0000;"><b>The copy to the customer did NOT go through.</b> Please send them the attached PDF.</p>'}`),
-      text: [`New Protection Plan signed`, '', ...rows.map(([k, v]) => `${k}: ${v}`), '', 'Next steps: countersign the attached PDF, create the contract in ServiceMonster, collect the first check and set up ACH.', customerSent ? '' : 'The copy to the customer did NOT go through. Please send them the attached PDF.'].join('\n'),
+      text: [`New Protection Plan signed`, '', ...rows.map(([k, v]) => `${k}: ${v}`), '', 'Next steps: create the contract in ServiceMonster, schedule the first full cleaning, collect the first check and set up ACH. Nothing to sign: the attached agreement is complete.', customerSent ? '' : 'The copy to the customer did NOT go through. Please send them the attached PDF.'].join('\n'),
     });
     officeSent = true;
   } catch (e) { console.error('Office email failed:', e.message); }

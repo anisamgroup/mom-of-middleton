@@ -476,6 +476,19 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
               <button type="button" class="btn btn-line" id="sig-clear" style="margin-top:8px;padding:8px 14px">Clear signature</button>
             </div>
             <label for="p-signed">Type your full name<input id="p-signed" autocomplete="name" required></label>
+            <label class="ps-check"><input type="checkbox" id="p-two"> <span><b>Add a second signer</b> (spouse or co-owner). Both of you sign on this device, and both get a signed copy.</span></label>
+            <div id="two" class="ps-grid" style="gap:12px" hidden>
+              <div class="row2">
+                <label for="p2-name">Second signer's full name<input id="p2-name" autocomplete="off"></label>
+                <label for="p2-email">Second signer's email (optional)<input id="p2-email" type="email" autocomplete="off"></label>
+              </div>
+              <div>
+                <p style="font-weight:700;margin-bottom:6px">Second signer's signature</p>
+                <div class="sigwrap"><canvas id="sig2" aria-label="Second signature pad"></canvas><span class="sigline"></span><span class="hint" id="sig2-hint">Second signer signs here</span></div>
+                <button type="button" class="btn btn-line" id="sig2-clear" style="margin-top:8px;padding:8px 14px">Clear signature</button>
+              </div>
+              <p style="font-size:.92rem;color:var(--ink-soft)">By signing, the second signer agrees to the same terms and to sign electronically.</p>
+            </div>
             <p class="ps-err" id="ps-err" role="alert" hidden></p>
             <div class="ps-actions">
               <button class="btn btn-sun" type="submit" id="ps-submit">Sign my agreement</button>
@@ -527,23 +540,27 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
   $('p-name').addEventListener('input',function(){if(!typedTouched)$('p-signed').value=$('p-name').value;});
   render();
 
-  // signature pad
-  var c=$('sig'),ctx=c.getContext('2d'),drawing=false,inked=false,last=null;
-  function size(){var r=c.getBoundingClientRect(),dpr=window.devicePixelRatio||1;var img=inked?c.toDataURL():null;
-    c.width=Math.round(r.width*dpr);c.height=Math.round(r.height*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);
-    ctx.lineWidth=2.6;ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='#111';
-    if(img){var im=new Image();im.onload=function(){ctx.drawImage(im,0,0,r.width,r.height);};im.src=img;}}
-  size();window.addEventListener('resize',size);
-  function pt(e){var r=c.getBoundingClientRect();return {x:e.clientX-r.left,y:e.clientY-r.top};}
-  c.addEventListener('pointerdown',function(e){e.preventDefault();c.setPointerCapture(e.pointerId);drawing=true;last=pt(e);ctx.beginPath();ctx.arc(last.x,last.y,1.2,0,7);ctx.fill();});
-  c.addEventListener('pointermove',function(e){if(!drawing)return;var p=pt(e);ctx.beginPath();ctx.moveTo(last.x,last.y);ctx.lineTo(p.x,p.y);ctx.stroke();last=p;if(!inked){inked=true;$('sig-hint').hidden=true;}});
-  ['pointerup','pointercancel','pointerleave'].forEach(function(t){c.addEventListener(t,function(){drawing=false;});});
-  $('sig-clear').addEventListener('click',function(){ctx.clearRect(0,0,c.width,c.height);inked=false;$('sig-hint').hidden=false;});
-  function sigPng(){ // trim to the drawn area, white background removed (transparent PNG)
-    var w=c.width,h=c.height,d=ctx.getImageData(0,0,w,h).data,x0=w,y0=h,x1=0,y1=0;
-    for(var y=0;y<h;y++)for(var x=0;x<w;x++){if(d[(y*w+x)*4+3]>0){if(x<x0)x0=x;if(x>x1)x1=x;if(y<y0)y0=y;if(y>y1)y1=y;}}
-    if(x1<=x0||y1<=y0)return '';var pad=8;x0=Math.max(0,x0-pad);y0=Math.max(0,y0-pad);x1=Math.min(w,x1+pad);y1=Math.min(h,y1+pad);
-    var o=document.createElement('canvas');o.width=x1-x0;o.height=y1-y0;o.getContext('2d').drawImage(c,x0,y0,o.width,o.height,0,0,o.width,o.height);return o.toDataURL('image/png');}
+  // signature pads
+  function Pad(canvasId,hintId,clearId){
+    var c=$(canvasId),ctx=c.getContext('2d'),drawing=false,last=null,self={inked:false};
+    function size(){var r=c.getBoundingClientRect();if(!r.width)return;var dpr=window.devicePixelRatio||1;var img=self.inked?c.toDataURL():null;
+      c.width=Math.round(r.width*dpr);c.height=Math.round(r.height*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);
+      ctx.lineWidth=2.6;ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='#111';ctx.fillStyle='#111';
+      if(img){var im=new Image();im.onload=function(){ctx.drawImage(im,0,0,r.width,r.height);};im.src=img;}}
+    self.size=size;size();window.addEventListener('resize',size);
+    function pt(e){var r=c.getBoundingClientRect();return {x:e.clientX-r.left,y:e.clientY-r.top};}
+    c.addEventListener('pointerdown',function(e){e.preventDefault();c.setPointerCapture(e.pointerId);drawing=true;last=pt(e);ctx.beginPath();ctx.arc(last.x,last.y,1.2,0,7);ctx.fill();});
+    c.addEventListener('pointermove',function(e){if(!drawing)return;var p=pt(e);ctx.beginPath();ctx.moveTo(last.x,last.y);ctx.lineTo(p.x,p.y);ctx.stroke();last=p;if(!self.inked){self.inked=true;$(hintId).hidden=true;}});
+    ['pointerup','pointercancel','pointerleave'].forEach(function(t){c.addEventListener(t,function(){drawing=false;});});
+    $(clearId).addEventListener('click',function(){ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,c.width,c.height);size();self.inked=false;$(hintId).hidden=false;});
+    self.png=function(){var w=c.width,h=c.height,d=ctx.getImageData(0,0,w,h).data,x0=w,y0=h,x1=0,y1=0;
+      for(var y=0;y<h;y++)for(var x=0;x<w;x++){if(d[(y*w+x)*4+3]>0){if(x<x0)x0=x;if(x>x1)x1=x;if(y<y0)y0=y;if(y>y1)y1=y;}}
+      if(x1<=x0||y1<=y0)return '';var pad=8;x0=Math.max(0,x0-pad);y0=Math.max(0,y0-pad);x1=Math.min(w,x1+pad);y1=Math.min(h,y1+pad);
+      var o=document.createElement('canvas');o.width=x1-x0;o.height=y1-y0;o.getContext('2d').drawImage(c,x0,y0,o.width,o.height,0,0,o.width,o.height);return o.toDataURL('image/png');};
+    return self;
+  }
+  var pad1=Pad('sig','sig-hint','sig-clear'),pad2=Pad('sig2','sig2-hint','sig2-clear');
+  $('p-two').addEventListener('change',function(){$('two').hidden=!this.checked;if(this.checked)setTimeout(pad2.size,0);});
 
   form.addEventListener('submit',function(e){
     e.preventDefault();var err=$('ps-err');err.hidden=true;
@@ -556,9 +573,16 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email))return fail('Please enter a valid email so we can send your signed copy.',$('p-email'));
     if(!d.address||!d.zip)return fail('Please enter the street address and ZIP of the home.',$('p-addr'));
     if(!d.agreeTerms||!d.agreeEsign)return fail('Please check both boxes to agree to the terms and to sign electronically.',$('p-terms'));
-    if(!inked)return fail('Please sign in the signature box.');
+    if(!pad1.inked)return fail('Please sign in the signature box.');
     if(!d.signedName)return fail('Please type your full name under your signature.',$('p-signed'));
-    d.signature=sigPng();
+    d.signature=pad1.png();
+    if($('p-two').checked){
+      d.name2=$('p2-name').value.trim();d.email2=$('p2-email').value.trim();
+      if(!d.name2)return fail("Please type the second signer's full name.",$('p2-name'));
+      if(d.email2&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email2))return fail("Please check the second signer's email.",$('p2-email'));
+      if(!pad2.inked)return fail('Please have the second signer sign in their signature box.');
+      d.signature2=pad2.png();
+    }
     var btn=$('ps-submit');btn.disabled=true;btn.textContent='Signing…';
     fetch('/.netlify/functions/sign-plan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)})
       .then(function(r){return r.json().then(function(j){if(!r.ok)throw j;return j;});})
@@ -566,7 +590,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
         var fd=new URLSearchParams({'form-name':'plan-signup',name:d.name,phone:d.phone,email:d.email,address:d.address,city:d.city,zip:d.zip,home:NAMES[d.home],plan:PN[d.plan],rate:money(D[d.home][1][d.plan])+'/mo',agreementId:j.id||''});
         fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:fd.toString()}).catch(function(){});
         form.hidden=true;$('ps-done').hidden=false;$('d-name').textContent=d.name.split(' ')[0];$('d-id').textContent=j.id||'';
-        if(j.emailed)$('d-email').textContent=d.email;else $('d-mail').textContent='Marco will send your signed copy shortly.';
+        if(j.emailed)$('d-email').textContent=(j.emails&&j.emails.length?j.emails.join(' and '):d.email);else $('d-mail').textContent='Marco will send your signed copy shortly.';
         window.scrollTo(0,0);
       })
       .catch(function(){btn.disabled=false;btn.textContent='Sign my agreement';fail('Something went wrong and your agreement was not sent. Please try again, or call or text 352-808-2082.');});

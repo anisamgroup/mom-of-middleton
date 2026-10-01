@@ -40,7 +40,7 @@ function nowParts() {
 // WinAnsi-safe text for the standard PDF fonts.
 const ansi = (s) => String(s).replace(/[‘’]/g, "'").replace(/[“”]/g, '"').replace(/[–—]/g, '-').replace(/[^\x20-\x7E\xA0-\xFF]/g, '');
 
-async function buildPdf(blank, d, sigPng, t) {
+async function buildPdf(blank, d, sigPng, t, sig2Png) {
   const pdf = await PDFDocument.load(blank);
   const form = pdf.getForm();
   const set = (name, val) => { const f = form.getTextField(name); f.setText(ansi(val)); f.enableReadOnly(); };
@@ -69,21 +69,42 @@ async function buildPdf(blank, d, sigPng, t) {
   form.removeField(sigField); // the field's shaded box would cover the drawn signature
   page.drawImage(img, { x: r.x + 6, y: r.y - 4, width: img.width * scale, height: img.height * scale });
 
-  // E-signature record at the bottom of the signature page.
   const font = await pdf.embedFont(StandardFonts.Helvetica);
   const bold = await pdf.embedFont(StandardFonts.HelveticaBold);
+  const times = await pdf.embedFont(StandardFonts.TimesRoman);
+  const ink = rgb(0.1, 0.1, 0.1), lineCol = rgb(0.55, 0.55, 0.6);
+
+  // Second customer signature (spouse / co-owner), drawn in the open space under the MOM lines.
+  if (sig2Png) {
+    const top = 462, L = 64;
+    page.drawText('Second Customer (spouse / co-owner)', { x: L, y: top, size: 10.5, font: bold, color: ink });
+    page.drawText('Customer Signature:', { x: L, y: top - 44, size: 11, font: times, color: ink });
+    page.drawLine({ start: { x: 160, y: top - 46 }, end: { x: 560, y: top - 46 }, thickness: 0.6, color: lineCol });
+    const img2 = await pdf.embedPng(sig2Png);
+    const sc2 = Math.min(260 / img2.width, 34 / img2.height);
+    page.drawImage(img2, { x: 166, y: top - 44, width: img2.width * sc2, height: img2.height * sc2 });
+    page.drawText('Print Name:', { x: L, y: top - 72, size: 11, font: times, color: ink });
+    page.drawText(ansi(d.name2), { x: 122, y: top - 71, size: 11, font, color: ink });
+    page.drawLine({ start: { x: 118, y: top - 74 }, end: { x: 308, y: top - 74 }, thickness: 0.6, color: lineCol });
+    page.drawText('Date:', { x: 325, y: top - 72, size: 11, font: times, color: ink });
+    page.drawText(t.short, { x: 362, y: top - 71, size: 11, font, color: ink });
+    page.drawLine({ start: { x: 360, y: top - 74 }, end: { x: 445, y: top - 74 }, thickness: 0.6, color: lineCol });
+  }
+
+  // E-signature record at the bottom of the signature page.
   const lines = [
     `Agreement ID: ${t.id}`,
     `Signed electronically by ${d.signedName} (${d.email}) on ${t.stamp}.`,
+    ...(sig2Png ? [`Also signed electronically by ${d.name2}${d.email2 ? ` (${d.email2})` : ''} on the same device at the same time.`] : []),
     `Signed at momofmiddleton.com/plan from IP address ${d.ip || 'unknown'}.`,
     `Plan selected: ${PLAN[d.plan].name} (${PLAN[d.plan].freq}), ${HOME[d.home]}.`,
     `Monthly rate ${money(PLAN[d.plan].rate[d.home])}, starting after the initial full-service cleaning (${money(FULL[d.home])}).`,
-    'Customer agreed to sign electronically and to receive this agreement by email.',
+    `Customer${sig2Png ? 's' : ''} agreed to sign electronically and to receive this agreement by email.`,
   ];
   let y = 150;
   page.drawRectangle({ x: 48, y: y - lines.length * 13 - 10, width: 516, height: lines.length * 13 + 28, borderColor: rgb(0.42, 0.04, 0.62), borderWidth: 1 });
   page.drawText('ELECTRONIC SIGNATURE RECORD', { x: 58, y, size: 9, font: bold, color: rgb(0.42, 0.04, 0.62) });
-  for (const l of lines) { y -= 13; page.drawText(ansi(l), { x: 58, y, size: 8.5, font, color: rgb(0.1, 0.1, 0.1), maxWidth: 496 }); }
+  for (const l of lines) { y -= 13; page.drawText(ansi(l), { x: 58, y, size: 8.5, font, color: ink, maxWidth: 496 }); }
 
   pdf.setTitle(`MOM Home Investment Protection Plan - ${ansi(d.name)}`);
   pdf.setSubject(t.id);
@@ -146,13 +167,23 @@ export default async (req) => {
   if (!p.agreeTerms || !p.agreeEsign) missing.push('agreement');
   const m = /^data:image\/png;base64,([A-Za-z0-9+/=]+)$/.exec(String(p.signature || ''));
   if (!m || m[1].length < 400 || m[1].length > 900000) missing.push('signature');
+  // Optional second signer (spouse / co-owner), signing on the same device.
+  let sig2 = null;
+  if (p.signature2) {
+    d.name2 = clean(p.name2, 100);
+    d.email2 = clean(p.email2, 120).toLowerCase();
+    const m2 = /^data:image\/png;base64,([A-Za-z0-9+/=]+)$/.exec(String(p.signature2));
+    if (!d.name2) missing.push('name2');
+    if (d.email2 && !/^[^\s@,;]+@[^\s@,;]+\.[^\s@,;]+$/.test(d.email2)) missing.push('email2');
+    if (!m2 || m2[1].length < 400 || m2[1].length > 900000) missing.push('signature2'); else sig2 = Buffer.from(m2[1], 'base64');
+  }
   if (missing.length) return json(400, { error: 'Missing or invalid fields', missing });
 
   const t = nowParts();
   const blank = await loadBlank(req);
   if (!blank) return json(500, { error: 'Agreement file not found' });
   let bytes;
-  try { bytes = await buildPdf(blank, d, Buffer.from(m[1], 'base64'), t); }
+  try { bytes = await buildPdf(blank, d, Buffer.from(m[1], 'base64'), t, sig2); }
   catch (e) { console.error('PDF error:', e); return json(500, { error: 'Could not create the agreement' }); }
 
   if (process.env.DRY_RUN === '1') return json(200, { ok: true, dryRun: true, id: t.id, bytes: bytes.length });
@@ -166,9 +197,9 @@ export default async (req) => {
   let customerSent = false, officeSent = false;
   try {
     await sendEmail({
-      to: d.email, replyTo: office, attachments,
+      to: [...new Set([d.email, d.email2].filter(Boolean))], replyTo: office, attachments,
       subject: 'Your signed MOM Home Investment Protection Plan',
-      html: shell(`<p style="margin:0 0 12px;font-size:20px;font-weight:800;">Welcome to the Protection Plan, ${esc(first)}!</p>
+      html: shell(`<p style="margin:0 0 12px;font-size:20px;font-weight:800;">Welcome to the Protection Plan, ${esc(first)}${d.name2 ? ` and ${esc(d.name2.split(' ')[0])}` : ''}!</p>
 <p>Thank you for signing up. Your signed agreement is attached for your records.</p>
 <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;background:#FFF6CC;border-radius:8px;margin:12px 0;"><tr><td style="padding:14px 16px;">
 <b>${esc(pl.name)}</b> · ${esc(pl.freq)}<br>${esc(HOME[d.home])} · <b>${rate} per month</b><br>
@@ -181,7 +212,7 @@ export default async (req) => {
   } catch (e) { console.error('Customer email failed:', e.message); }
 
   try {
-    const rows = [['Customer', d.name], ['Phone', d.phone], ['Email', d.email], ['Address', `${d.address}, ${d.city} ${d.zip}`],
+    const rows = [['Customer', d.name], ...(d.name2 ? [['Second signer', d.name2 + (d.email2 ? ` (${d.email2})` : '')]] : []), ['Phone', d.phone], ['Email', d.email], ['Address', `${d.address}, ${d.city} ${d.zip}`],
       ['Home type', HOME[d.home]], ['Plan', `${pl.name} (${pl.freq})`], ['Monthly rate', rate], ['First full-service cleaning', full],
       ['Signed', t.stamp], ['Agreement ID', t.id]];
     await sendEmail({
@@ -197,5 +228,5 @@ ${customerSent ? '' : '<p style="color:#9A0000;"><b>The copy to the customer did
   } catch (e) { console.error('Office email failed:', e.message); }
 
   if (!customerSent && !officeSent) return json(502, { ok: false, error: 'Could not send the agreement' });
-  return json(200, { ok: true, id: t.id, emailed: customerSent, email: d.email });
+  return json(200, { ok: true, id: t.id, emailed: customerSent, email: d.email, emails: [...new Set([d.email, d.email2].filter(Boolean))] });
 };

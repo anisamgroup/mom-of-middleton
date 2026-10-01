@@ -7,6 +7,11 @@
   Each estimate gets a number like `MOM-EST-260930-4971`.
 - `netlify/lib/servicemonster.mjs` – ServiceMonster account + estimate creation. **Switched off** (needs a ServiceMonster plan with API access). Turn on with `SM_ENABLED=1`.
 - Every request is also saved in Netlify Forms (form name `estimate`) as a backup.
+- `plan/index.html` + `netlify/functions/sign-plan.mjs` – **momofmiddleton.com/plan**: customers pick home type and plan level, read the
+  MOM Home Investment Protection Plan agreement and sign on screen. The function fills `plan/MOM-Protection-Plan-Agreement.pdf`
+  (v3) with their details, plan, drawn signature and an e-signature record, and emails the signed PDF to the customer and the office.
+  MOM Representative lines stay fillable for Marco to countersign. Backup in Netlify Forms (`plan-signup`). Uses `pdf-lib` (package.json).
+  If the agreement wording changes, replace the PDF (same field names) **and** the text on `plan/index.html`.
 
 ## Netlify environment variables (entered in Netlify, never committed)
 | Variable | What |

@@ -15,6 +15,9 @@
 .ps{max-width:860px}
 .ps-grid{display:grid;gap:22px}
 .ps-grid > *,.ps fieldset{min-width:0}
+.namerow{display:grid;grid-template-columns:1fr 120px 1fr;gap:16px}
+@media (max-width:560px){.namerow{grid-template-columns:1fr 1fr}.namerow label:last-child{grid-column:1/-1}}
+.namerow > *{min-width:0}
 .ps-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px}
 .ps-card h2{font-size:clamp(1.3rem,2.6vw,1.6rem);margin-bottom:12px}
 .ps-step{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--band);color:var(--sun);font-family:var(--display);font-weight:900;font-style:normal;margin-right:10px;vertical-align:3px;font-size:1rem}
@@ -398,10 +401,13 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
         <div class="ps-card">
           <h2><span class="ps-step">2</span>Your details</h2>
           <div class="ps-grid" style="gap:14px">
-            <div class="row2">
-              <label for="p-name">Full name<input id="p-name" name="name" autocomplete="name" required></label>
-              <label for="p-phone">Mobile phone<input id="p-phone" name="phone" type="tel" autocomplete="tel" required></label>
+            <div class="namerow">
+              <label for="p-first">First name<input id="p-first" autocomplete="given-name" required></label>
+              <label for="p-mi">Middle initial<input id="p-mi" autocomplete="additional-name" maxlength="1" placeholder="Optional"></label>
+              <label for="p-last">Last name<input id="p-last" autocomplete="family-name" required></label>
             </div>
+            <input type="hidden" id="p-name" name="name">
+            <label for="p-phone">Mobile phone<input id="p-phone" name="phone" type="tel" autocomplete="tel" required></label>
             <label for="p-email">Email (your signed copy goes here)<input id="p-email" name="email" type="email" autocomplete="email" required></label>
             <label for="p-addr">Street address of the home<input id="p-addr" name="address" autocomplete="street-address" required></label>
             <div class="row2">
@@ -535,9 +541,12 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
     document.querySelector('[data-f=name]').textContent=n||'your name';
     document.querySelector('[data-f=addr]').textContent=a?(a+', '+($('p-city').value.trim()||'The Villages')+' '+$('p-zip').value.trim()):'your address';
   }
-  form.addEventListener('change',render);form.addEventListener('input',render);
   var typedTouched=false;$('p-signed').addEventListener('input',function(){typedTouched=true;});
-  $('p-name').addEventListener('input',function(){if(!typedTouched)$('p-signed').value=$('p-name').value;});
+  function fullName(){var f=$('p-first').value.trim(),m=$('p-mi').value.trim().replace(/\./g,'').toUpperCase(),l=$('p-last').value.trim();
+    return [f,m?m+'.':'',l].filter(Boolean).join(' ');}
+  function syncName(){$('p-name').value=fullName();}
+  ['p-first','p-mi','p-last'].forEach(function(id){$(id).addEventListener('input',function(){syncName();if(!typedTouched)$('p-signed').value=$('p-name').value;render();});});
+  form.addEventListener('change',render);form.addEventListener('input',render);
   render();
 
   // signature pads
@@ -565,10 +574,12 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
   form.addEventListener('submit',function(e){
     e.preventDefault();var err=$('ps-err');err.hidden=true;
     function fail(m,el){err.textContent=m;err.hidden=false;if(el)el.focus();}
+    syncName();
     var d={name:$('p-name').value.trim(),phone:$('p-phone').value.trim(),email:$('p-email').value.trim(),address:$('p-addr').value.trim(),
       city:$('p-city').value.trim()||'The Villages',zip:$('p-zip').value.trim(),home:val('home'),plan:val('plan'),signedName:$('p-signed').value.trim(),
       agreeTerms:$('p-terms').checked,agreeEsign:$('p-esign').checked};
-    if(!d.name)return fail('Please enter your full name.',$('p-name'));
+    if(!$('p-first').value.trim())return fail('Please enter your first name.',$('p-first'));
+    if(!$('p-last').value.trim())return fail('Please enter your last name.',$('p-last'));
     if(!d.phone)return fail('Please enter your mobile phone.',$('p-phone'));
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email))return fail('Please enter a valid email so we can send your signed copy.',$('p-email'));
     if(!d.address||!d.zip)return fail('Please enter the street address and ZIP of the home.',$('p-addr'));

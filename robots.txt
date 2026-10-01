@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /plan/
+Disallow: /review/
+Sitemap: https://momofmiddleton.com/sitemap.xml

@@ -148,12 +148,12 @@ function shell(inner) {
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:#fff;border-radius:10px;overflow:hidden;">
 <tr><td style="background:#0B0B0C;padding:14px 18px;border-bottom:4px solid #FFC800;">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
-<td style="vertical-align:middle;width:150px;"><img src="https://momofmiddleton.com/logo.jpg" width="140" alt="MOM of Middleton - Exterior cleaning &amp; Sealing" style="display:block;border:0;width:140px;max-width:140px;height:auto;"></td>
+<td style="vertical-align:middle;width:150px;"><a href="https://momofmiddleton.com/" style="text-decoration:none;"><img src="https://momofmiddleton.com/logo.jpg" width="140" alt="MOM of Middleton - Exterior cleaning &amp; Sealing" style="display:block;border:0;width:140px;max-width:140px;height:auto;"></a></td>
 <td align="right" style="vertical-align:middle;padding-left:10px;"><span style="display:inline-block;background:#9A0000;border:2px solid #FFC800;border-radius:6px;padding:8px 12px;font-family:Arial,Helvetica,sans-serif;font-weight:900;font-style:italic;font-size:18px;line-height:1.2;color:#FFFFFF;">Dirty House? Call MOM!</span></td>
 </tr></table>
 </td></tr>
 <tr><td style="padding:24px;font-size:15px;line-height:1.55;">${inner}</td></tr>
-<tr><td style="padding:16px 24px;border-top:1px solid #E1DDE3;font-size:12px;color:#57525E;">${PHONE} · momofmiddleton@gmail.com · The Villages, FL</td></tr>
+<tr><td style="padding:16px 24px;border-top:1px solid #E1DDE3;font-size:12px;color:#57525E;"><a href="tel:+13528082082" style="color:#57525E;">${PHONE}</a> · momofmiddleton@gmail.com · The Villages, FL</td></tr>
 </table></td></tr></table></body></html>`;
 }
 
@@ -213,7 +213,7 @@ export default async (req) => {
 <b>${esc(pl.name)}</b> · ${esc(pl.freq)}<br>${esc(HOME[d.home])} · <b>${rate} per month</b><br>
 <span style="font-size:13px;color:#57525E;">Starts after your first full-service cleaning (${full}).</span></td></tr></table>
 <p><b>What happens next:</b> Marco will call or text you to schedule your first cleaning and set up your monthly payment.</p>
-<p style="font-size:13px;color:#57525E;">Agreement ID ${t.id}. Questions? Call or text ${PHONE}.</p>`),
+<p style="font-size:13px;color:#57525E;">Agreement ID ${t.id}. Questions? <a href="tel:+13528082082" style="color:#6A0B9E;font-weight:700;">Call</a> or <a href="sms:+13528082082" style="color:#6A0B9E;font-weight:700;">text</a> ${PHONE}.</p>`),
       text: `Welcome to the MOM Home Investment Protection Plan, ${first}!\n\nYour signed agreement is attached.\n${pl.name} (${pl.freq}), ${HOME[d.home]}, ${rate} per month after your first full-service cleaning (${full}).\n\nMarco will call or text you to schedule your first cleaning and set up your monthly payment.\n\nAgreement ID ${t.id}. Questions? Call or text ${PHONE}.`,
     });
     customerSent = true;

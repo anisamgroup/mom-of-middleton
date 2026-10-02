@@ -69,7 +69,7 @@ function shell(inner, footer) {
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:#fff;border-radius:10px;overflow:hidden;${FONT}color:${C.ink};">
 <tr><td style="background:#0B0B0C;padding:14px 18px;border-bottom:4px solid #FFC800;">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
-<td style="vertical-align:middle;width:150px;"><img src="https://momofmiddleton.com/logo.jpg" width="140" alt="MOM of Middleton - Exterior cleaning &amp; Sealing" style="display:block;border:0;width:140px;max-width:140px;height:auto;"></td>
+<td style="vertical-align:middle;width:150px;"><a href="https://momofmiddleton.com/" style="text-decoration:none;"><img src="https://momofmiddleton.com/logo.jpg" width="140" alt="MOM of Middleton - Exterior cleaning &amp; Sealing" style="display:block;border:0;width:140px;max-width:140px;height:auto;"></a></td>
 <td align="right" style="vertical-align:middle;padding-left:10px;"><span style="display:inline-block;background:#9A0000;border:2px solid #FFC800;border-radius:6px;padding:8px 12px;font-family:Arial,Helvetica,sans-serif;font-weight:900;font-style:italic;font-size:18px;line-height:1.2;color:#FFFFFF;">Dirty House? Call MOM!</span></td>
 </tr></table>
 </td></tr>
@@ -115,7 +115,7 @@ function customerEmail(d, q, no) {
 </td></tr>
 <tr><td style="padding:16px 24px 24px;">
   <p style="margin:0 0 10px;font-size:14px;line-height:1.5;">Questions? Reply to this email, or call or text Marco at <a href="tel:+13528082082" style="color:${C.spray};font-weight:700;">${PHONE}</a>.</p>
-  <p style="margin:0 0 8px;font-size:12px;line-height:1.5;color:${C.soft};">Prices are for standard homes in Middleton and Eastport. Marco confirms your price and date before any work starts. Fence cleaning and paver sealing are quoted separately.</p>
+  <p style="margin:0 0 8px;font-size:12px;line-height:1.5;color:${C.soft};">Prices are for standard homes in Middleton and Eastport. Marco confirms your price and date before any work starts. Fence cleaning and paver sealing are quoted separately: <a href="tel:+13528082082" style="color:${C.spray};">call</a> or <a href="sms:+13528082082" style="color:${C.spray};">text</a> ${PHONE} for a quote.</p>
   <p style="margin:0 0 8px;font-size:12px;line-height:1.5;color:${C.soft};"><b>Before your visit:</b> ${esc(BEFORE_VISIT)} Watch for our instruction email (check spam).</p>
   <p style="margin:0;font-size:12px;line-height:1.5;color:${C.soft};"><b>Waiver of liability:</b> ${WAIVER}</p>
 </td></tr>`, `${no} · ${longDate()}`);

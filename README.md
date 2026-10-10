@@ -21,3 +21,13 @@
 | `OFFICE_EMAIL` (or `OWNER_EMAIL`) | Optional. Default `momofmiddleton@gmail.com` |
 | `DRY_RUN` | `1` = price only, send nothing |
 | `SM_ENABLED`, `SM_USERNAME`, `SM_PASSWORD`, `SM_ITEM_*` | Only if ServiceMonster API access is added later |
+
+## Accessibility rule (every change, every page)
+Before publishing any change, check these six basics (target: WCAG 2.1 AA):
+1. Every image that carries information has a real description (alt text); decorative icons are hidden from screen readers (`aria-hidden="true"`).
+2. Text has enough contrast with its background (4.5:1 for normal text, 3:1 for large text).
+3. Every page, link, button and form works with the keyboard alone, with a visible focus outline. Never remove the outline without a replacement.
+4. Every form field has a visible label tied to it (`<label for=…>`).
+5. Every video has captions (`<track kind="captions">`, or captions turned on in the YouTube/Vimeo embed).
+6. Every page footer links to `/accessibility/`, the accessibility statement with phone and email for help. New pages also go in sitemap.xml.
+Run an automated check (axe) on changed pages before pushing; Claude does this automatically.

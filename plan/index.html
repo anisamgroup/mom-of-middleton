@@ -371,7 +371,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
       <div class="head">
         <p class="eyebrow">MOM Home Investment Protection Plan</p>
         <h1 class="h2">Sign up for your Protection Plan</h1>
-        <p>Choose your home and plan, fill in your details, read the agreement and sign with your finger or mouse. Takes about 3 minutes. You'll get a signed copy by email.</p>
+        <p>Choose your home and plan, fill in your details, read the agreement and sign with your finger or mouse (or use your typed name). Takes about 3 minutes. You'll get a signed copy by email.</p>
       </div>
       <form id="ps" class="ps-grid" novalidate>
         <div class="ps-card">
@@ -480,8 +480,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
             <label class="ps-check"><input type="checkbox" id="p-esign"> <span>I agree to sign this agreement electronically and to receive my signed copy by email. My electronic signature has the same effect as signing on paper.</span></label>
             <div>
               <p style="font-weight:700;margin-bottom:6px">Your signature</p>
-              <div class="sigwrap"><canvas id="sig" aria-label="Signature pad: draw your signature"></canvas><span class="sigline"></span><span class="hint" id="sig-hint">Sign here with your finger or mouse</span></div>
+              <div class="sigwrap"><canvas id="sig" role="img" aria-label="Signature pad: draw your signature, or use the typed-name button below"></canvas><span class="sigline"></span><span class="hint" id="sig-hint">Sign here with your finger or mouse</span></div>
               <button type="button" class="btn btn-line" id="sig-clear" style="margin-top:8px;padding:8px 14px">Clear signature</button>
+              <button type="button" class="btn btn-line" id="sig-type" style="margin-top:8px;padding:8px 14px">Can't draw? Use my typed name</button>
             </div>
             <label for="p-signed">Type your full name<input id="p-signed" autocomplete="name" required></label>
             <label class="ps-check"><input type="checkbox" id="p-two"> <span><b>Add a second signer</b> (spouse or co-owner). Both of you sign on this device, and both get a signed copy.</span></label>
@@ -492,8 +493,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
               </div>
               <div>
                 <p style="font-weight:700;margin-bottom:6px">Second signer's signature</p>
-                <div class="sigwrap"><canvas id="sig2" aria-label="Second signature pad"></canvas><span class="sigline"></span><span class="hint" id="sig2-hint">Second signer signs here</span></div>
+                <div class="sigwrap"><canvas id="sig2" role="img" aria-label="Second signature pad: draw, or use the typed-name button below"></canvas><span class="sigline"></span><span class="hint" id="sig2-hint">Second signer signs here</span></div>
                 <button type="button" class="btn btn-line" id="sig2-clear" style="margin-top:8px;padding:8px 14px">Clear signature</button>
+                <button type="button" class="btn btn-line" id="sig2-type" style="margin-top:8px;padding:8px 14px">Can't draw? Use typed name</button>
               </div>
               <p style="font-size:.92rem;color:var(--ink-soft)">By signing, the second signer agrees to the same terms and to sign electronically.</p>
             </div>
@@ -518,7 +520,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
 <footer>
   <div class="wrap">
     <span><b style="color:var(--ink)">MOM of Middleton</b> · Exterior cleaning &amp; sealing for Middleton &amp; Eastport, The Villages, FL</span>
-    <span>352-808-2082 · momofmiddleton@gmail.com · @momofmiddleton</span>
+    <span>352-808-2082 · momofmiddleton@gmail.com · @momofmiddleton · <a href="/accessibility/">Accessibility</a></span>
   </div>
 </footer>
 <form name="plan-signup" data-netlify="true" netlify-honeypot="company" hidden>
@@ -564,6 +566,12 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
     c.addEventListener('pointermove',function(e){if(!drawing)return;var p=pt(e);ctx.beginPath();ctx.moveTo(last.x,last.y);ctx.lineTo(p.x,p.y);ctx.stroke();last=p;if(!self.inked){self.inked=true;$(hintId).hidden=true;}});
     ['pointerup','pointercancel','pointerleave'].forEach(function(t){c.addEventListener(t,function(){drawing=false;});});
     $(clearId).addEventListener('click',function(){ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,c.width,c.height);size();self.inked=false;$(hintId).hidden=false;});
+    // keyboard / screen-reader alternative: render the typed name as the signature
+    self.typed=function(name){name=(name||'').trim();if(!name)return false;var r=c.getBoundingClientRect();
+      ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,c.width,c.height);size();
+      var fs=Math.min(48,r.height*0.32);ctx.font='italic '+fs+'px "Brush Script MT","Segoe Script","Snell Roundhand",cursive';
+      while(ctx.measureText(name).width>r.width-40&&fs>14){fs-=2;ctx.font='italic '+fs+'px "Brush Script MT","Segoe Script","Snell Roundhand",cursive';}
+      ctx.textBaseline='alphabetic';ctx.fillText(name,20,r.height-44);self.inked=true;$(hintId).hidden=true;return true;};
     self.png=function(){var w=c.width,h=c.height,d=ctx.getImageData(0,0,w,h).data,x0=w,y0=h,x1=0,y1=0;
       for(var y=0;y<h;y++)for(var x=0;x<w;x++){if(d[(y*w+x)*4+3]>0){if(x<x0)x0=x;if(x>x1)x1=x;if(y<y0)y0=y;if(y>y1)y1=y;}}
       if(x1<=x0||y1<=y0)return '';var pad=8;x0=Math.max(0,x0-pad);y0=Math.max(0,y0-pad);x1=Math.min(w,x1+pad);y1=Math.min(h,y1+pad);
@@ -571,6 +579,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
     return self;
   }
   var pad1=Pad('sig','sig-hint','sig-clear'),pad2=Pad('sig2','sig2-hint','sig2-clear');
+  $('sig-type').addEventListener('click',function(){syncName();var n=$('p-signed').value.trim()||$('p-name').value.trim();if(!pad1.typed(n)){$('p-signed').focus();}});
+  $('sig2-type').addEventListener('click',function(){if(!pad2.typed($('p2-name').value)){$('p2-name').focus();}});
   $('p-two').addEventListener('change',function(){$('two').hidden=!this.checked;if(this.checked)setTimeout(pad2.size,0);});
 
   form.addEventListener('submit',function(e){
@@ -586,14 +596,14 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email))return fail('Please enter a valid email so we can send your signed copy.',$('p-email'));
     if(!d.address||!d.zip)return fail('Please enter the street address and ZIP of the home.',$('p-addr'));
     if(!d.agreeTerms||!d.agreeEsign)return fail('Please check both boxes to agree to the terms and to sign electronically.',$('p-terms'));
-    if(!pad1.inked)return fail('Please sign in the signature box.');
+    if(!pad1.inked)return fail('Please sign in the signature box, or press "Use my typed name".',$('sig-type'));
     if(!d.signedName)return fail('Please type your full name under your signature.',$('p-signed'));
     d.signature=pad1.png();
     if($('p-two').checked){
       d.name2=$('p2-name').value.trim();d.email2=$('p2-email').value.trim();
       if(!d.name2)return fail("Please type the second signer's full name.",$('p2-name'));
       if(d.email2&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email2))return fail("Please check the second signer's email.",$('p2-email'));
-      if(!pad2.inked)return fail('Please have the second signer sign in their signature box.');
+      if(!pad2.inked)return fail('Please have the second signer sign in their box, or press "Use typed name".',$('sig2-type'));
       d.signature2=pad2.png();
     }
     var btn=$('ps-submit');btn.disabled=true;btn.textContent='Signing…';

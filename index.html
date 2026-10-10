@@ -121,30 +121,15 @@ p{margin:0}
 .hero .ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}
 .hero .fine{margin-top:18px;font-size:.95rem;color:var(--ink-soft)}
 
-/* wash demo */
-.wash{position:relative;border-radius:10px;overflow:hidden;aspect-ratio:4/3;max-width:100%;border:1px solid var(--line);box-shadow:0 18px 40px -24px rgba(10,30,40,.45);user-select:none;touch-action:pan-y}
-.pavers,.grime{position:absolute;inset:0}
-/* vinyl lap siding */
-.pavers{background:#EDEDE8}
-.pavers::after{content:"";position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(100deg,rgba(255,255,255,.35),rgba(255,255,255,0) 45%,rgba(0,0,0,.06));}
-.rows{position:absolute;inset:0;display:grid;grid-auto-rows:34px;overflow:hidden}
-.rows span{display:block;height:34px;background:linear-gradient(180deg,#FFFFFF 0,#F6F6F2 38%,#EAEAE4 78%,#D3D3CC 92%,#A9A9A2 100%);box-shadow:inset 0 2px 0 rgba(0,0,0,.05)}
-.grime{clip-path:inset(0 0 0 var(--cut,55%));transition:clip-path .08s linear}
-.grime .rows span{filter:brightness(.8) sepia(.55) hue-rotate(38deg) saturate(1.6)}
-.grime::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:repeating-linear-gradient(180deg,transparent 0 22px,rgba(40,55,20,.55) 22px 34px)}
-.grime::after{content:"";position:absolute;inset:0;
-  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.018' numOctaves='4' seed='7'/><feColorMatrix values='0 0 0 0 .18  0 0 0 0 .22  0 0 0 0 .12  0 0 0 1.4 -.45'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>");
-  background-size:300px 300px;mix-blend-mode:multiply;opacity:.95;z-index:2}
-.wand{position:absolute;top:0;bottom:0;left:var(--cut,55%);width:0;pointer-events:none}
-.wand::before{content:"";position:absolute;top:0;bottom:0;left:-2px;width:4px;background:rgba(255,255,255,.9);box-shadow:0 0 18px 6px rgba(160,215,245,.6)}
-.wand-knob{position:absolute;top:50%;left:0;transform:translate(-50%,-50%);width:48px;height:48px;border-radius:50%;background:var(--sun);color:var(--sun-ink);display:grid;place-items:center;font-family:var(--display);font-weight:900;font-size:1.1rem;box-shadow:0 4px 12px rgba(0,0,0,.3)}
-.wash-range{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
-.wash-tag{position:absolute;top:12px;font-family:var(--display);font-weight:800;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;padding:6px 10px;border-radius:4px;pointer-events:none}
-.wash-tag.l{left:12px;background:#fff;color:#16323A}
-.wash-tag.r{right:12px;background:#2B3320;color:#E7EDDA}
-.wash-cap{font-size:.9rem;color:var(--ink-soft);margin-top:10px}
+/* before / after photo */
+.ba{margin:0}
+.ba-pair{display:grid;grid-template-columns:1fr 1fr;gap:6px;border-radius:10px;overflow:hidden;border:2px solid var(--sun);box-shadow:0 18px 40px -24px rgba(10,30,40,.45);background:var(--sun)}
+.ba-pair figure{position:relative;margin:0;aspect-ratio:3/4}
+.ba-pair img{display:block;width:100%;height:100%;object-fit:cover}
+.ba-tag{position:absolute;top:12px;left:12px;font-family:var(--display);font-weight:800;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;padding:6px 10px;border-radius:4px}
+.ba-tag.b{background:#2B3320;color:#E7EDDA}
+.ba-tag.a{background:#fff;color:#16323A}
+.wash-cap{font-size:.95rem;color:var(--ink-soft);margin-top:10px}
 
 /* strip */
 .strip{background:linear-gradient(180deg,var(--crimson),#6A0B9E);color:#fff}
@@ -352,15 +337,13 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
         <span class="tag">Dirty House? Call MOM!</span>
       </div>
       <div>
-        <div class="wash" id="wash" style="--cut:55%">
-          <div class="pavers"><div class="rows" aria-hidden="true"></div></div>
-          <div class="grime"><div class="rows" aria-hidden="true"></div></div>
-          <div class="wand"><div class="wand-knob" aria-hidden="true">⇆</div></div>
-          <span class="wash-tag l">Clean</span>
-          <span class="wash-tag r">Mildew</span>
-          <input class="wash-range" id="wash-range" type="range" min="0" max="100" value="55" aria-label="Drag to wash the vinyl siding">
-        </div>
-        <p class="wash-cap">Drag across the siding. Florida humidity grows green mildew on vinyl siding in a single season.</p>
+        <figure class="ba">
+          <div class="ba-pair">
+            <figure><img src="/img/home-before-siding.jpg" width="900" height="1200" fetchpriority="high" alt="Before: white vinyl siding on a house gable covered in dark green mildew streaks"><span class="ba-tag b">Before</span></figure>
+            <figure><img src="/img/home-after-siding.jpg" width="900" height="1200" fetchpriority="high" alt="After: the same gable's vinyl siding clean and bright white after a MOM soft wash"><span class="ba-tag a">After</span></figure>
+          </div>
+          <figcaption class="wash-cap">A real MOM house wash. Florida humidity grows mildew on vinyl siding in a single season; our low-pressure soft wash takes it off without damaging the siding.</figcaption>
+        </figure>
       </div>
     </div>
   </section>
@@ -438,13 +421,6 @@ window.momSubmit=function(p){
 </script>
 <script>
 (function(){
-  // paver rows
-  document.querySelectorAll('.rows').forEach(function(r){
-    for(var i=0;i<16;i++){r.appendChild(document.createElement('span'));}
-  });
-  var wash=document.getElementById('wash'), range=document.getElementById('wash-range');
-  function set(v){wash.style.setProperty('--cut',v+'%');}
-  if(wash&&range)range.addEventListener('input',function(){set(range.value);});
 
   if(!document.getElementById('est'))return;
   var form=document.getElementById('est'), done=document.getElementById('done'), err=document.getElementById('f-err');

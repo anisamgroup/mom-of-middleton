@@ -81,8 +81,15 @@ ${inner}
 </table></td></tr></table></body></html>`;
 }
 
+// First name for "Thank you, Ann!" — empty if the name is blank or a placeholder like "Your Name" or "Test".
+function firstName(name) {
+  const w = String(name || '').trim().split(/\s+/)[0] || '';
+  if (!w || /^(your|name|test|customer|first|n\/a|na|none|x+)$/i.test(w.replace(/[^a-z\/]/gi, ''))) return '';
+  return w.charAt(0).toUpperCase() + w.slice(1);
+}
+
 function customerEmail(d, q, no) {
-  const first = d.name.split(' ')[0];
+  const first = firstName(d.name);
   const rows = q.lines.map((l) => `<tr><td style="padding:10px 12px 10px 0;border-bottom:1px solid ${C.line};"><b>${esc(l.label)}</b><br><span style="font-size:13px;line-height:1.45;color:${C.soft};">${LINE_TEXT[l.key]}</span></td><td align="right" valign="top" style="padding:10px 0;border-bottom:1px solid ${C.line};white-space:nowrap;">${money(l.price)}</td></tr>`).join('');
   const plans = PLANS.map((p) => `<tr><td style="padding:10px 0;border-top:1px solid ${C.line};">
     <div style="font-weight:700;font-size:15px;">${p.name}</div>
@@ -92,7 +99,7 @@ function customerEmail(d, q, no) {
   const html = shell(`
 <tr><td style="padding:28px 24px 8px;">
   <div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:${C.spray};font-weight:700;">Your estimate</div>
-  <h1 style="margin:6px 0 12px;font-size:24px;line-height:1.25;">Thank you, ${esc(first)}!</h1>
+  <h1 style="margin:6px 0 12px;font-size:24px;line-height:1.25;">Thank you${first ? ', ' + esc(first) : ''}!</h1>
   <p style="margin:0 0 8px;font-size:15px;line-height:1.5;">Here is the price for your ${HOME_NAMES[d.homeType].toLowerCase()} at ${esc(d.address)}, ${esc(d.city)}. Marco will call or text you at ${esc(d.phone)} to set a date.</p>
 </td></tr>
 <tr><td style="padding:8px 24px;">
@@ -121,7 +128,7 @@ function customerEmail(d, q, no) {
 </td></tr>`, `${no} · ${longDate()}`);
 
   const text = [
-    `Thank you, ${first}!`, '',
+    `Thank you${first ? ', ' + first : ''}!`, '',
     `Your MOM of Middleton estimate (${no}) for your ${HOME_NAMES[d.homeType].toLowerCase()} at ${d.address}, ${d.city}:`, '',
     ...q.lines.map((l) => `  ${l.label}: ${money(l.price)}\n    ${LINE_TEXT[l.key]}`),
     `  Total: ${money(q.total)}`, '',

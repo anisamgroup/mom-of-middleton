@@ -394,7 +394,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
           <p class="fineprint">Prices are for standard homes in Middleton and Eastport. Marco confirms your price and date before any work starts.</p>
         </form>
         <div class="done" id="sent" hidden>
-          <b style="font-family:var(--display);font-size:1.3rem">Thank you, <span id="sent-name"></span>!</b>
+          <b style="font-family:var(--display);font-size:1.3rem">Thank you<span id="sent-name"></span>!</b>
           <p>Your request for <b id="sent-total"></b> is in. <span id="sent-mail">We just emailed your estimate to <b id="sent-email"></b> (check spam if you don't see it).</span> Marco will call or text you to set a date.</p>
           <p style="font-size:.95rem;color:var(--ink-soft)">Questions? Call or text 352-808-2082.</p>
         </div>
@@ -516,7 +516,7 @@ window.momSubmit=function(p){
       var btn=form.querySelector('button[type=submit]'); btn.disabled=true; btn.textContent='Sending…';
       window.momSubmit(payload).then(function(r){
         form.hidden=true; var ok=document.getElementById('sent'); ok.hidden=false;
-        document.getElementById('sent-name').textContent=payload.name.split(' ')[0];
+        var fw=(payload.name.split(/\s+/)[0]||''); if(/^(your|name|test|customer|first|n\/a|na|none|x+)$/i.test(fw.replace(/[^a-z\/]/gi,''))) fw=''; document.getElementById('sent-name').textContent=fw?', '+fw.charAt(0).toUpperCase()+fw.slice(1):'';
         document.getElementById('sent-total').textContent=money(q.total);
         if(r&&r.emailed){document.getElementById('sent-email').textContent=(r.emails&&r.emails.length?r.emails:[payload.email]).join(' and ');}else{document.getElementById('sent-mail').textContent='Marco will send your written estimate shortly.';}
       }).catch(function(){btn.disabled=false; btn.textContent='Request this cleaning'; showManual();});

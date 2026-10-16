@@ -359,7 +359,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
       <a class="navlink" href="/faq/">FAQ</a>
       <a class="navlink" href="/about/">About us</a>
       <a class="phone" href="tel:+13528082082">352-808-2082</a>
-      <a class="btn btn-sun" href="/get-my-price/">Get my cleaning price</a>
+      <a class="btn btn-sun" href="/get-my-price/">Exterior Cleaning Price</a>
     </nav>
   </div>
   <div class="divbar" role="navigation" aria-label="MOM divisions">
@@ -380,7 +380,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
         <h1 style="margin-top:14px">Middleton &amp; Eastport.</h1>
         <p class="lede">House washing, driveways, walkways, gutters, lanais and fences, cleaned by a local crew that works only in your part of The Villages. Flat prices by home type.</p>
         <div class="ctas">
-          <a class="btn btn-sun" href="/pricing/">See cleaning prices</a>
+          <a class="btn btn-sun" href="/pricing/">See Exterior Cleaning prices</a>
           <a class="btn btn-line" href="tel:+13528082082">Call 352-808-2082</a>
         </div>
         <span class="tag">Dirty House? Call MOM!</span>
@@ -409,8 +409,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
             <p>Soft washing for your house, plus driveway, walkway, entry, gutters and lanai. Flat prices by home type, and the Protection Plan to keep it clean all year.</p>
             <p class="area"><b>Where:</b> Middleton and the Eastport villages</p>
             <div class="ctas">
-              <a class="btn btn-sun" href="/get-my-price/">Get my cleaning price</a>
-              <a class="btn btn-ghost" href="/pricing/">See cleaning prices</a>
+              <a class="btn btn-sun" href="/get-my-price/">Exterior Cleaning Price</a>
+              <a class="btn btn-ghost" href="/pricing/">See Exterior Cleaning prices</a>
             </div>
           </div>
         </article>
@@ -421,7 +421,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
             <p>New paver driveways, patios, walkways and pool decks, sealed by MOM. Pick your style, color and pattern; we measure in person and give you a free estimate.</p>
             <p class="area"><b>Where:</b> all of The Villages and Middleton</p>
             <div class="ctas">
-              <a class="btn btn-sun" href="/pavers/#estimate">Free paver estimate</a>
+              <a class="btn btn-sun" href="/pavers/#estimate">Pavers Free Estimate</a>
               <a class="btn btn-ghost" href="/pavers/">See paver styles</a>
             </div>
           </div>
@@ -573,7 +573,7 @@ window.momSubmit=function(p){
         form.hidden=true; var ok=document.getElementById('sent'); ok.hidden=false;
         document.getElementById('sent-name').textContent=payload.name.split(' ')[0];
         document.getElementById('sent-total').textContent=money(q.total);
-        if(r&&r.emailed){document.getElementById('sent-email').textContent=(r.emails&&r.emails.length?r.emails:[payload.email]).join(' and ');}else{document.getElementById('sent-mail').textContent='Marco will send your written estimate shortly.';}
+        if(r&&r.emailed){document.getElementById('sent-email').textContent=(r.emails&&r.emails.length?r.emails:[payload.email]).join(' and ');}else{document.getElementById('sent-mail').textContent='Marco will send your written Exterior Cleaning estimate shortly.';}
       }).catch(function(){btn.disabled=false; btn.textContent='Request this cleaning'; showManual();});
     } else showManual();
   });

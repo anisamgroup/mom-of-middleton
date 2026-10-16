@@ -91,7 +91,7 @@ function customerEmail(d, q, no) {
 
   const html = shell(`
 <tr><td style="padding:28px 24px 8px;">
-  <div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:${C.spray};font-weight:700;">Your estimate</div>
+  <div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:${C.spray};font-weight:700;">Your Exterior Cleaning estimate</div>
   <h1 style="margin:6px 0 12px;font-size:24px;line-height:1.25;">Thank you, ${esc(first)}!</h1>
   <p style="margin:0 0 8px;font-size:15px;line-height:1.5;">Here is the price for your ${HOME_NAMES[d.homeType].toLowerCase()} at ${esc(d.address)}, ${esc(d.city)}. Marco will call or text you at ${esc(d.phone)} to set a date.</p>
 </td></tr>
@@ -122,7 +122,7 @@ function customerEmail(d, q, no) {
 
   const text = [
     `Thank you, ${first}!`, '',
-    `Your MOM of Middleton estimate (${no}) for your ${HOME_NAMES[d.homeType].toLowerCase()} at ${d.address}, ${d.city}:`, '',
+    `Your MOM of Middleton Exterior Cleaning estimate (${no}) for your ${HOME_NAMES[d.homeType].toLowerCase()} at ${d.address}, ${d.city}:`, '',
     ...q.lines.map((l) => `  ${l.label}: ${money(l.price)}\n    ${LINE_TEXT[l.key]}`),
     `  Total: ${money(q.total)}`, '',
     `To book, just reply to this email or call or text ${PHONE}. Payment is due when the job is complete.`, '',
@@ -134,7 +134,7 @@ function customerEmail(d, q, no) {
     `Before your visit: ${BEFORE_VISIT}`, '', `Waiver of liability: ${WAIVER}`,
   ].filter((l, i, a) => l !== '' || a[i - 1] !== '').join('\n');
 
-  return { subject: `Your MOM of Middleton estimate: ${money(q.total)}`, html, text };
+  return { subject: `Your MOM of Middleton Exterior Cleaning estimate: ${money(q.total)}`, html, text };
 }
 
 function officeEmail(d, q, no, customerSent) {
@@ -148,16 +148,16 @@ function officeEmail(d, q, no, customerSent) {
   ];
   const html = shell(`
 <tr><td style="padding:24px;">
-  <div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:${C.spray};font-weight:700;">New website estimate request</div>
+  <div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:${C.spray};font-weight:700;">New website Exterior Cleaning estimate request</div>
   <h1 style="margin:6px 0 12px;font-size:22px;">${esc(d.name)} · ${money(q.total)}</h1>
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="font-size:14px;">
     ${fields.map(([k, v]) => `<tr><td valign="top" style="padding:6px 12px 6px 0;color:${C.soft};white-space:nowrap;border-bottom:1px solid ${C.line};">${esc(k.trim())}</td><td style="padding:6px 0;border-bottom:1px solid ${C.line};">${esc(v).replace(/\n/g, '<br>')}</td></tr>`).join('')}
   </table>
   <p style="margin:14px 0 0;font-size:13px;color:${C.soft};">${customerSent ? `The customer was emailed their estimate at ${esc(d.email)}.` : `<b style="color:${C.crimson};">The estimate email to the customer did not go through.</b> Please call or text them.`} Reply to this email to answer the customer directly. When they book, copy these details into ServiceMonster.</p>
 </td></tr>`, `${no} · ${longDate()}`);
-  const text = [`New website estimate request (${no})`, '', ...fields.map(([k, v]) => `${k}: ${v}`), '',
+  const text = [`New website Exterior Cleaning estimate request (${no})`, '', ...fields.map(([k, v]) => `${k}: ${v}`), '',
     customerSent ? `The customer was emailed their estimate at ${d.email}.` : 'The estimate email to the customer did NOT go through. Please call or text them.'].join('\n');
-  return { subject: `New estimate request: ${d.name}, ${HOME_NAMES[d.homeType]}, ${money(q.total)}`, html, text };
+  return { subject: `New Exterior Cleaning estimate request: ${d.name}, ${HOME_NAMES[d.homeType]}, ${money(q.total)}`, html, text };
 }
 
 async function sendEmail({ to, replyTo, subject, html, text }) {

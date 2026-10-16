@@ -34,6 +34,46 @@
 .rv-home{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
 @media (max-width:860px){.rv-home{grid-template-columns:1fr}}
 .rv-home .rv{margin:0}
+
+/* division switch: Exterior Cleaning | Pavers */
+.divbar{background:var(--band)}
+.top .divbar .wrap{justify-content:flex-start;padding-block:0;flex-wrap:nowrap}
+@media (min-width:761px){.top nav[aria-label="Main"]{gap:16px}.top nav a.navlink{font-size:.92rem}}
+.divbar .wrap{display:flex;gap:8px;padding-block:0;align-items:flex-end}
+.divbar .dlabel{font-family:var(--display);font-weight:700;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:#A9A2B2;align-self:center;margin-right:6px}
+.div-tab{display:flex;flex-direction:column;gap:1px;min-width:0;padding:9px 18px 8px;border-radius:10px 10px 0 0;border:1px solid rgba(255,255,255,.22);border-bottom:0;color:var(--band-ink);text-decoration:none;line-height:1.2}
+.div-tab b{font-family:var(--display);font-weight:800;font-size:1rem;letter-spacing:.01em;white-space:nowrap}
+.div-tab small{font-size:.78rem;color:#C9C2D1;white-space:nowrap}
+.div-tab:hover{background:rgba(255,255,255,.08)}
+.div-tab.clean.on{background:var(--sun);border-color:var(--sun);color:var(--sun-ink)}
+.div-tab.pave.on{background:#E3D7C1;border-color:#E3D7C1;color:#2A2216}
+.div-tab.on small{color:inherit;opacity:.8}
+.div-tab .nav-new{display:inline-block;margin-left:6px;padding:1px 5px;border-radius:3px;background:var(--crimson);color:#fff;font-family:var(--display);font-weight:800;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;vertical-align:2px}
+.top.pv-side{border-bottom-color:#E3D7C1}
+@media (max-width:760px){
+  .divbar .wrap{padding:0 16px;gap:6px}
+  .divbar .dlabel{display:none}
+  .divbar{padding-bottom:10px}
+  .div-tab{flex:1 1 0;padding:8px 10px 7px;text-align:center;align-items:center;border-radius:10px;border-bottom:1px solid rgba(255,255,255,.22)}
+  .div-tab b{font-size:.95rem}
+  .div-tab small{display:none}
+}
+/* home: division chooser */
+.choose{padding-block:40px 8px}
+.choose h2{margin:6px 0 18px}
+.choose-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.dcard{border:1px solid var(--line);border-radius:14px;background:var(--surface);overflow:hidden;display:flex;flex-direction:column}
+.dcard .dtop{padding:14px 20px;font-family:var(--display);font-weight:800;letter-spacing:.12em;text-transform:uppercase;font-size:.8rem}
+.dcard.clean .dtop{background:var(--sun);color:var(--sun-ink)}
+.dcard.pave .dtop{background:#E3D7C1;color:#2A2216}
+.dcard .dbody{padding:18px 20px 22px;display:flex;flex-direction:column;gap:10px;flex:1}
+.dcard h3{font-family:var(--display);font-size:1.45rem;margin:0}
+.dcard p{color:var(--ink-soft)}
+.dcard .area{font-size:.9rem}
+.dcard .ctas{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto;padding-top:8px}
+.dcard .btn-ghost{border:1.5px solid var(--ink);color:var(--ink);background:transparent}
+@media (max-width:760px){.choose-grid{grid-template-columns:1fr}}
+.hero-pv{margin-top:18px;color:var(--band-ink);font-size:.95rem}.hero-pv a{color:var(--sun);font-weight:700}
 </style>
 <style>
 :root{
@@ -295,6 +335,7 @@ legend{font-size:.95rem;font-weight:700;margin-bottom:8px}
 .fineprint{font-size:.85rem;color:var(--ink-soft)}
 footer{border-top:1px solid var(--line);padding-block:36px;font-size:.92rem;color:var(--ink-soft)}
 footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.hero-pv{margin-top:18px;color:var(--band-ink);font-size:.95rem}.hero-pv a{color:var(--sun);font-weight:700}
 </style>
 </head>
 <body>
@@ -311,32 +352,39 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
       <img src="/logo.jpg" alt="MOM Exterior cleaning &amp; Sealing" width="72" height="52">
     </a>
     <nav aria-label="Main">
-      <a class="navlink" href="/services/">Services</a>
-      <a class="navlink" href="/pavers/">Pavers<span class="nav-new">New</span></a>
-      <a class="navlink" href="/pricing/">Pricing</a>
+      <a class="navlink" href="/services/">Cleaning services</a>
+      <a class="navlink" href="/pricing/">Cleaning prices</a>
       <a class="navlink" href="/protection-plan/">Protection Plan</a>
       <a class="navlink" href="/service-area/">Service area</a>
       <a class="navlink" href="/faq/">FAQ</a>
       <a class="navlink" href="/about/">About us</a>
       <a class="phone" href="tel:+13528082082">352-808-2082</a>
-      <a class="btn btn-sun" href="/get-my-price/">Get my price</a>
+      <a class="btn btn-sun" href="/get-my-price/">Get my cleaning price</a>
     </nav>
   </div>
-  <nav class="mnav" aria-label="Pages"><a href="/" class="on" aria-current="page">Home</a><a href="/services/">Services</a><a href="/pavers/">Pavers</a><a href="/pricing/">Pricing</a><a href="/protection-plan/">Protection Plan</a><a href="/service-area/">Service area</a><a href="/faq/">FAQ</a><a href="/about/">About us</a></nav>
+  <div class="divbar" role="navigation" aria-label="MOM divisions">
+    <div class="wrap">
+      <span class="dlabel">Our divisions</span>
+      <a class="div-tab clean" href="/services/"><b>Exterior Cleaning</b><small>House washing · driveways · lanais</small></a>
+      <a class="div-tab pave" href="/pavers/"><b>Pavers<span class="nav-new">New</span></b><small>New driveways · patios · pool decks</small></a>
+    </div>
+  </div>
+  <nav class="mnav" aria-label="Pages"><a href="/" class="on" aria-current="page">Home</a><a href="/services/">Cleaning services</a><a href="/pricing/">Cleaning prices</a><a href="/protection-plan/">Protection Plan</a><a href="/service-area/">Service area</a><a href="/faq/">FAQ</a><a href="/about/">About us</a></nav>
 </header>
 
 <main id="top">
   <section class="hero">
     <div class="wrap">
       <div>
-        <p class="eyebrow">Pressure washing &amp; soft washing · The Villages, FL</p>
+        <p class="eyebrow">Exterior Cleaning · Pressure washing &amp; soft washing</p>
         <h1 style="margin-top:14px">Middleton &amp; Eastport.</h1>
         <p class="lede">House washing, driveways, walkways, gutters, lanais and fences, cleaned by a local crew that works only in your part of The Villages. Flat prices by home type.</p>
         <div class="ctas">
-          <a class="btn btn-sun" href="/pricing/">See prices</a>
+          <a class="btn btn-sun" href="/pricing/">See cleaning prices</a>
           <a class="btn btn-line" href="tel:+13528082082">Call 352-808-2082</a>
         </div>
         <span class="tag">Dirty House? Call MOM!</span>
+        <p class="hero-pv">Looking for new pavers? <a href="/pavers/">See our Pavers division →</a></p>
       </div>
       <div>
         <figure class="ba">
@@ -346,6 +394,38 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
           </div>
           <figcaption class="wash-cap">A real MOM house wash. Florida humidity grows mildew on vinyl siding in a single season; our low-pressure soft wash takes it off without damaging the siding.</figcaption>
         </figure>
+      </div>
+    </div>
+  </section>
+  <section class="choose" id="divisions">
+    <div class="wrap">
+      <p class="eyebrow">Two divisions, one local company</p>
+      <h2>What can MOM do for you?</h2>
+      <div class="choose-grid">
+        <article class="dcard clean">
+          <div class="dtop">Exterior Cleaning</div>
+          <div class="dbody">
+            <h3>Clean what you already have</h3>
+            <p>Soft washing for your house, plus driveway, walkway, entry, gutters and lanai. Flat prices by home type, and the Protection Plan to keep it clean all year.</p>
+            <p class="area"><b>Where:</b> Middleton and the Eastport villages</p>
+            <div class="ctas">
+              <a class="btn btn-sun" href="/get-my-price/">Get my cleaning price</a>
+              <a class="btn btn-ghost" href="/pricing/">See cleaning prices</a>
+            </div>
+          </div>
+        </article>
+        <article class="dcard pave">
+          <div class="dtop">Pavers · New</div>
+          <div class="dbody">
+            <h3>Put in new pavers</h3>
+            <p>New paver driveways, patios, walkways and pool decks, sealed by MOM. Pick your style, color and pattern; we measure in person and give you a free estimate.</p>
+            <p class="area"><b>Where:</b> all of The Villages and Middleton</p>
+            <div class="ctas">
+              <a class="btn btn-sun" href="/pavers/#estimate">Free paver estimate</a>
+              <a class="btn btn-ghost" href="/pavers/">See paver styles</a>
+            </div>
+          </div>
+        </article>
       </div>
     </div>
   </section>
@@ -401,7 +481,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
 
 <footer>
   <div class="wrap">
-    <span><b style="color:var(--ink)">MOM of Middleton</b> · Exterior cleaning &amp; sealing for Middleton &amp; Eastport, The Villages, FL</span>
+    <span><b style="color:var(--ink)">MOM of Middleton</b> · Exterior Cleaning for Middleton &amp; Eastport · Pavers for all of The Villages &amp; Middleton, FL</span>
     <span>352-808-2082 · momofmiddleton@gmail.com · @momofmiddleton · <a href="/accessibility/">Accessibility</a></span>
   </div>
 </footer>

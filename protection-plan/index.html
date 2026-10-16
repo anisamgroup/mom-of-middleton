@@ -58,6 +58,45 @@
 .plan-cta{display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px;margin-top:6px}
 .plan-cta > span{color:var(--ink-soft)}
 .plan-list{font-size:.9rem}
+
+/* division switch: Exterior Cleaning | Pavers */
+.divbar{background:var(--band)}
+.top .divbar .wrap{justify-content:flex-start;padding-block:0;flex-wrap:nowrap}
+@media (min-width:761px){.top nav[aria-label="Main"]{gap:16px}.top nav a.navlink{font-size:.92rem}}
+.divbar .wrap{display:flex;gap:8px;padding-block:0;align-items:flex-end}
+.divbar .dlabel{font-family:var(--display);font-weight:700;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:#A9A2B2;align-self:center;margin-right:6px}
+.div-tab{display:flex;flex-direction:column;gap:1px;min-width:0;padding:9px 18px 8px;border-radius:10px 10px 0 0;border:1px solid rgba(255,255,255,.22);border-bottom:0;color:var(--band-ink);text-decoration:none;line-height:1.2}
+.div-tab b{font-family:var(--display);font-weight:800;font-size:1rem;letter-spacing:.01em;white-space:nowrap}
+.div-tab small{font-size:.78rem;color:#C9C2D1;white-space:nowrap}
+.div-tab:hover{background:rgba(255,255,255,.08)}
+.div-tab.clean.on{background:var(--sun);border-color:var(--sun);color:var(--sun-ink)}
+.div-tab.pave.on{background:#E3D7C1;border-color:#E3D7C1;color:#2A2216}
+.div-tab.on small{color:inherit;opacity:.8}
+.div-tab .nav-new{display:inline-block;margin-left:6px;padding:1px 5px;border-radius:3px;background:var(--crimson);color:#fff;font-family:var(--display);font-weight:800;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;vertical-align:2px}
+.top.pv-side{border-bottom-color:#E3D7C1}
+@media (max-width:760px){
+  .divbar .wrap{padding:0 16px;gap:6px}
+  .divbar .dlabel{display:none}
+  .divbar{padding-bottom:10px}
+  .div-tab{flex:1 1 0;padding:8px 10px 7px;text-align:center;align-items:center;border-radius:10px;border-bottom:1px solid rgba(255,255,255,.22)}
+  .div-tab b{font-size:.95rem}
+  .div-tab small{display:none}
+}
+/* home: division chooser */
+.choose{padding-block:40px 8px}
+.choose h2{margin:6px 0 18px}
+.choose-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.dcard{border:1px solid var(--line);border-radius:14px;background:var(--surface);overflow:hidden;display:flex;flex-direction:column}
+.dcard .dtop{padding:14px 20px;font-family:var(--display);font-weight:800;letter-spacing:.12em;text-transform:uppercase;font-size:.8rem}
+.dcard.clean .dtop{background:var(--sun);color:var(--sun-ink)}
+.dcard.pave .dtop{background:#E3D7C1;color:#2A2216}
+.dcard .dbody{padding:18px 20px 22px;display:flex;flex-direction:column;gap:10px;flex:1}
+.dcard h3{font-family:var(--display);font-size:1.45rem;margin:0}
+.dcard p{color:var(--ink-soft)}
+.dcard .area{font-size:.9rem}
+.dcard .ctas{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto;padding-top:8px}
+.dcard .btn-ghost{border:1.5px solid var(--ink);color:var(--ink);background:transparent}
+@media (max-width:760px){.choose-grid{grid-template-columns:1fr}}
 </style>
 <style>
 :root{
@@ -370,25 +409,31 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
       <img src="/logo.jpg" alt="MOM Exterior cleaning &amp; Sealing" width="72" height="52">
     </a>
     <nav aria-label="Main">
-      <a class="navlink" href="/services/">Services</a>
-      <a class="navlink" href="/pavers/">Pavers<span class="nav-new">New</span></a>
-      <a class="navlink" href="/pricing/">Pricing</a>
+      <a class="navlink" href="/services/">Cleaning services</a>
+      <a class="navlink" href="/pricing/">Cleaning prices</a>
       <a class="navlink on" aria-current="page" href="/protection-plan/">Protection Plan</a>
       <a class="navlink" href="/service-area/">Service area</a>
       <a class="navlink" href="/faq/">FAQ</a>
       <a class="navlink" href="/about/">About us</a>
       <a class="phone" href="tel:+13528082082">352-808-2082</a>
-      <a class="btn btn-sun" href="/get-my-price/">Get my price</a>
+      <a class="btn btn-sun" href="/get-my-price/">Get my cleaning price</a>
     </nav>
   </div>
-  <nav class="mnav" aria-label="Pages"><a href="/">Home</a><a href="/services/">Services</a><a href="/pavers/">Pavers</a><a href="/pricing/">Pricing</a><a href="/protection-plan/" class="on" aria-current="page">Protection Plan</a><a href="/service-area/">Service area</a><a href="/faq/">FAQ</a><a href="/about/">About us</a></nav>
+  <div class="divbar" role="navigation" aria-label="MOM divisions">
+    <div class="wrap">
+      <span class="dlabel">Our divisions</span>
+      <a class="div-tab clean on" href="/services/" aria-current="true"><b>Exterior Cleaning</b><small>House washing · driveways · lanais</small></a>
+      <a class="div-tab pave" href="/pavers/"><b>Pavers<span class="nav-new">New</span></b><small>New driveways · patios · pool decks</small></a>
+    </div>
+  </div>
+  <nav class="mnav" aria-label="Pages"><a href="/">Home</a><a href="/services/">Cleaning services</a><a href="/pricing/">Cleaning prices</a><a href="/protection-plan/" class="on" aria-current="page">Protection Plan</a><a href="/service-area/">Service area</a><a href="/faq/">FAQ</a><a href="/about/">About us</a></nav>
 </header>
 
 <main id="top">
   <section class="block pricing" id="protection-plan">
     <div class="wrap">
       <div class="head">
-        <p class="eyebrow">Protection Plan</p>
+        <p class="eyebrow">Exterior Cleaning · Protection Plan</p>
         <h1 class="h2">MOM Home Investment Protection Plan</h1>
         <p>Your home stays clean all year, and every visit costs less than a one-time cleaning. We put you on a schedule, show up, and you stop thinking about it.</p>
       </div>
@@ -462,7 +507,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
 
 <footer>
   <div class="wrap">
-    <span><b style="color:var(--ink)">MOM of Middleton</b> · Exterior cleaning &amp; sealing for Middleton &amp; Eastport, The Villages, FL</span>
+    <span><b style="color:var(--ink)">MOM of Middleton</b> · Exterior Cleaning for Middleton &amp; Eastport · Pavers for all of The Villages &amp; Middleton, FL</span>
     <span>352-808-2082 · momofmiddleton@gmail.com · @momofmiddleton · <a href="/accessibility/">Accessibility</a></span>
   </div>
 </footer>

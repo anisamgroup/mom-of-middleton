@@ -5,3 +5,9 @@
 [functions]
   node_bundler = "esbuild"
   included_files = ["plan/MOM-Protection-Plan-Agreement.pdf"]
+
+# Contact card on the link page opens as "Add to Contacts" on phones.
+[[headers]]
+  for = "/links/*.vcf"
+  [headers.values]
+    Content-Type = "text/vcard; charset=utf-8"

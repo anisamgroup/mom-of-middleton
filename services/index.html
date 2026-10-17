@@ -16,7 +16,46 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,112,600;0,112,800;0,125,900;1,125,900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
-<style>[hidden]{display:none!important} html,body{margin:0} img{max-width:100%}</style>
+<style>[hidden]{display:none!important} html,body{margin:0} img{max-width:100%}
+/* division switch: Exterior Cleaning | Pavers */
+.divbar{background:var(--band)}
+.top .divbar .wrap{justify-content:flex-start;padding-block:0;flex-wrap:nowrap}
+@media (min-width:761px){.top nav[aria-label="Main"]{gap:16px}.top nav a.navlink{font-size:.92rem}}
+.divbar .wrap{display:flex;gap:8px;padding-block:0;align-items:flex-end}
+.divbar .dlabel{font-family:var(--display);font-weight:700;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:#A9A2B2;align-self:center;margin-right:6px}
+.div-tab{display:flex;flex-direction:column;gap:1px;min-width:0;padding:9px 18px 8px;border-radius:10px 10px 0 0;border:1px solid rgba(255,255,255,.22);border-bottom:0;color:var(--band-ink);text-decoration:none;line-height:1.2}
+.div-tab b{font-family:var(--display);font-weight:800;font-size:1rem;letter-spacing:.01em;white-space:nowrap}
+.div-tab small{font-size:.78rem;color:#C9C2D1;white-space:nowrap}
+.div-tab:hover{background:rgba(255,255,255,.08)}
+.div-tab.clean.on{background:var(--sun);border-color:var(--sun);color:var(--sun-ink)}
+.div-tab.pave.on{background:#E3D7C1;border-color:#E3D7C1;color:#2A2216}
+.div-tab.on small{color:inherit;opacity:.8}
+.div-tab .nav-new{display:inline-block;margin-left:6px;padding:1px 5px;border-radius:3px;background:var(--crimson);color:#fff;font-family:var(--display);font-weight:800;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;vertical-align:2px}
+.top.pv-side{border-bottom-color:#E3D7C1}
+@media (max-width:760px){
+  .divbar .wrap{padding:0 16px;gap:6px}
+  .divbar .dlabel{display:none}
+  .divbar{padding-bottom:10px}
+  .div-tab{flex:1 1 0;padding:8px 10px 7px;text-align:center;align-items:center;border-radius:10px;border-bottom:1px solid rgba(255,255,255,.22)}
+  .div-tab b{font-size:.95rem}
+  .div-tab small{display:none}
+}
+/* home: division chooser */
+.choose{padding-block:40px 8px}
+.choose h2{margin:6px 0 18px}
+.choose-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.dcard{border:1px solid var(--line);border-radius:14px;background:var(--surface);overflow:hidden;display:flex;flex-direction:column}
+.dcard .dtop{padding:14px 20px;font-family:var(--display);font-weight:800;letter-spacing:.12em;text-transform:uppercase;font-size:.8rem}
+.dcard.clean .dtop{background:var(--sun);color:var(--sun-ink)}
+.dcard.pave .dtop{background:#E3D7C1;color:#2A2216}
+.dcard .dbody{padding:18px 20px 22px;display:flex;flex-direction:column;gap:10px;flex:1}
+.dcard h3{font-family:var(--display);font-size:1.45rem;margin:0}
+.dcard p{color:var(--ink-soft)}
+.dcard .area{font-size:.9rem}
+.dcard .ctas{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto;padding-top:8px}
+.dcard .btn-ghost{border:1.5px solid var(--ink);color:var(--ink);background:transparent}
+@media (max-width:760px){.choose-grid{grid-template-columns:1fr}}
+</style>
 <style>
 :root{
   --bg:#F7F6F3;
@@ -88,6 +127,7 @@ p{margin:0}
 @media (max-width:760px){.top{position:static}}
 @media (max-width:760px){.top nav.mnav{display:flex;flex-wrap:nowrap;gap:6px;overflow-x:auto;scrollbar-width:none;padding:0 16px 10px;background:var(--band)}.mnav::-webkit-scrollbar{display:none}.mnav a{flex:none;color:var(--band-ink);text-decoration:none;font-size:.95rem;padding:5px 11px;border:1px solid rgba(255,255,255,.22);border-radius:999px;white-space:nowrap}.mnav a.on{background:var(--sun);color:var(--sun-ink);border-color:var(--sun);font-weight:700}}
 
+.nav-new{display:inline-block;margin-left:5px;padding:1px 5px;border-radius:3px;background:var(--crimson);color:#fff;font-family:var(--display);font-weight:800;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;vertical-align:2px}
 /* hero */
 .hero{padding-block:56px 56px;background:var(--band);color:var(--band-ink)}
 .hero .eyebrow{color:var(--sun)}
@@ -318,24 +358,31 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
       <img src="/logo.jpg" alt="MOM Exterior cleaning &amp; Sealing" width="72" height="52">
     </a>
     <nav aria-label="Main">
-      <a class="navlink on" aria-current="page" href="/services/">Services</a>
-      <a class="navlink" href="/pricing/">Pricing</a>
+      <a class="navlink on" aria-current="page" href="/services/">Cleaning services</a>
+      <a class="navlink" href="/pricing/">Cleaning prices</a>
       <a class="navlink" href="/protection-plan/">Protection Plan</a>
       <a class="navlink" href="/service-area/">Service area</a>
       <a class="navlink" href="/faq/">FAQ</a>
       <a class="navlink" href="/about/">About us</a>
       <a class="phone" href="tel:+13528082082">352-808-2082</a>
-      <a class="btn btn-sun" href="/get-my-price/">Get my price</a>
+      <a class="btn btn-sun" href="/get-my-price/">Exterior Cleaning Price</a>
     </nav>
   </div>
-  <nav class="mnav" aria-label="Pages"><a href="/">Home</a><a href="/services/" class="on" aria-current="page">Services</a><a href="/pricing/">Pricing</a><a href="/protection-plan/">Protection Plan</a><a href="/service-area/">Service area</a><a href="/faq/">FAQ</a><a href="/about/">About us</a></nav>
+  <div class="divbar" role="navigation" aria-label="MOM divisions">
+    <div class="wrap">
+      <span class="dlabel">Our divisions</span>
+      <a class="div-tab clean on" href="/services/" aria-current="true"><b>Exterior Cleaning</b><small>House washing · driveways · lanais</small></a>
+      <a class="div-tab pave" href="/pavers/"><b>Pavers<span class="nav-new">New</span></b><small>New driveways · patios · pool decks</small></a>
+    </div>
+  </div>
+  <nav class="mnav" aria-label="Pages"><a href="/">Home</a><a href="/services/" class="on" aria-current="page">Cleaning services</a><a href="/pricing/">Cleaning prices</a><a href="/protection-plan/">Protection Plan</a><a href="/service-area/">Service area</a><a href="/faq/">FAQ</a><a href="/about/">About us</a></nav>
 </header>
 
 <main id="top">
   <section class="block" id="services">
     <div class="wrap">
       <div class="head">
-        <p class="eyebrow">Services</p>
+        <p class="eyebrow">Exterior Cleaning · Services</p>
         <h1 class="h2">The whole outside of your home</h1>
         <p>Every house wash can include the Complete Exterior Package: driveway, walkway, entry, exterior gutters and back patio or lanai. Stucco is soft washed at low pressure. Concrete and pavers get a surface cleaner and a full rinse.</p>
       </div>
@@ -345,35 +392,35 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
           <h3>House wash</h3>
           <p>Stucco walls, soffits and trim cleaned at low pressure, so paint and texture stay intact. To book: <a href="tel:+13528082082">call</a> or <a href="sms:+13528082082">text</a> 352-808-2082.</p>
           <span class="how">Soft wash</span>
-          <a class="btn btn-sun svc-cta" href="/get-my-price/">Get my price now →</a>
+          <a class="btn btn-sun svc-cta" href="/get-my-price/">Exterior Cleaning Price →</a>
         </article>
         <article class="svc">
           <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M11 4 5 28M21 4l6 24"/><path d="M16 6v4M16 14v4M16 22v4"/></svg>
           <h3>Driveway</h3>
           <p>Mildew, rust, tire marks and dirt lifted from concrete and pavers, with an even finish and no swirl marks.</p>
           <span class="how">Surface cleaner</span>
-          <a class="btn btn-sun svc-cta" href="/get-my-price/">Get my price now →</a>
+          <a class="btn btn-sun svc-cta" href="/get-my-price/">Exterior Cleaning Price →</a>
         </article>
         <article class="svc">
           <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 4 5 28h22L23 4z"/><path d="M7 16h18M8 10h16M6 22h20M16 4v24"/></svg>
           <h3>Walkway &amp; entry</h3>
           <p>The path to your front door and the entry itself, the first thing guests see.</p>
           <span class="how">Surface cleaner</span>
-          <a class="btn btn-sun svc-cta" href="/get-my-price/">Get my price now →</a>
+          <a class="btn btn-sun svc-cta" href="/get-my-price/">Exterior Cleaning Price →</a>
         </article>
         <article class="svc">
           <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 10h26l-3 5H6z"/><path d="M24 15v12"/><path d="M8 20c0 2 1 3 2 3s2-1 2-3-2-4-2-4-2 2-2 4z"/></svg>
           <h3>Exterior gutters</h3>
           <p>The outside face of the gutters brightened. Interior gutter flushing is available and priced separately.</p>
           <span class="how">Soft wash</span>
-          <a class="btn btn-sun svc-cta" href="/get-my-price/">Get my price now →</a>
+          <a class="btn btn-sun svc-cta" href="/get-my-price/">Exterior Cleaning Price →</a>
         </article>
         <article class="svc">
           <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 27V12l12-7 12 7v15"/><path d="M4 12h24M10 12v15M16 5v22M22 12v15"/></svg>
           <h3>Back patio &amp; lanai</h3>
           <p>The patio or lanai floor, screens and frames washed so it's ready to use again.</p>
           <span class="how">Low pressure</span>
-          <a class="btn btn-sun svc-cta" href="/get-my-price/">Get my price now →</a>
+          <a class="btn btn-sun svc-cta" href="/get-my-price/">Exterior Cleaning Price →</a>
         </article>
         <article class="svc">
           <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M4 22h24v6H4z"/><path d="M10 22V10h12v12"/><path d="M13 6h6v4h-6z"/><path d="M8 17l-3 5M24 17l3 5"/></svg>
@@ -396,7 +443,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
 
 <footer>
   <div class="wrap">
-    <span><b style="color:var(--ink)">MOM of Middleton</b> · Exterior cleaning &amp; sealing for Middleton &amp; Eastport, The Villages, FL</span>
+    <span><b style="color:var(--ink)">MOM of Middleton</b> · Exterior Cleaning for Middleton &amp; Eastport · Pavers for all of The Villages &amp; Middleton, FL</span>
     <span>352-808-2082 · momofmiddleton@gmail.com · @momofmiddleton · <a href="/accessibility/">Accessibility</a></span>
   </div>
 </footer>
@@ -495,7 +542,7 @@ window.momSubmit=function(p){
         form.hidden=true; var ok=document.getElementById('sent'); ok.hidden=false;
         document.getElementById('sent-name').textContent=payload.name.split(' ')[0];
         document.getElementById('sent-total').textContent=money(q.total);
-        if(r&&r.emailed){document.getElementById('sent-email').textContent=(r.emails&&r.emails.length?r.emails:[payload.email]).join(' and ');}else{document.getElementById('sent-mail').textContent='Marco will send your written estimate shortly.';}
+        if(r&&r.emailed){document.getElementById('sent-email').textContent=(r.emails&&r.emails.length?r.emails:[payload.email]).join(' and ');}else{document.getElementById('sent-mail').textContent='Marco will send your written Exterior Cleaning estimate shortly.';}
       }).catch(function(){btn.disabled=false; btn.textContent='Request this cleaning'; showManual();});
     } else showManual();
   });

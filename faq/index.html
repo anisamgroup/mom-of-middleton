@@ -342,6 +342,7 @@ legend{font-size:.95rem;font-weight:700;margin-bottom:8px}
 footer{border-top:1px solid var(--line);padding-block:36px;font-size:.92rem;color:var(--ink-soft)}
 footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
 </style>
+<link rel="stylesheet" href="/assets/redesign.css">
 </head>
 <body>
 
@@ -351,31 +352,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
 
 
 
-<header class="top">
-  <div class="wrap">
-    <a class="brand" href="/" aria-label="MOM of Middleton home">
-      <img src="/logo.jpg" alt="MOM Exterior cleaning &amp; Sealing" width="72" height="52">
-    </a>
-    <nav aria-label="Main">
-      <a class="navlink" href="/services/">Cleaning services</a>
-      <a class="navlink" href="/pricing/">Cleaning prices</a>
-      <a class="navlink" href="/protection-plan/">Protection Plan</a>
-      <a class="navlink" href="/service-area/">Service area</a>
-      <a class="navlink on" aria-current="page" href="/faq/">FAQ</a>
-      <a class="navlink" href="/about/">About us</a>
-      <a class="phone" href="tel:+13528082082">352-808-2082</a>
-      <a class="btn btn-sun" href="/get-my-price/">Exterior Cleaning Price</a>
-    </nav>
-  </div>
-  <div class="divbar" role="navigation" aria-label="MOM divisions">
-    <div class="wrap">
-      <span class="dlabel">Our divisions</span>
-      <a class="div-tab clean" href="/services/"><b>Exterior Cleaning</b><small>House washing · driveways · lanais</small></a>
-      <a class="div-tab pave" href="/pavers/"><b>Pavers<span class="nav-new">New</span></b><small>New driveways · patios · pool decks</small></a>
-    </div>
-  </div>
-  <nav class="mnav" aria-label="Pages"><a href="/">Home</a><a href="/services/">Cleaning services</a><a href="/pricing/">Cleaning prices</a><a href="/protection-plan/">Protection Plan</a><a href="/service-area/">Service area</a><a href="/faq/" class="on" aria-current="page">FAQ</a><a href="/about/">About us</a></nav>
-</header>
+<header class="top cl"><div class="wrap hbar"><a class="brand" href="/" aria-label="MOM of Middleton home"><img src="/img/brand/logo-cleaning.webp" alt="MOM Exterior Cleaning. Dirty House? Call MOM!" width="640" height="479"></a><div class="hright"><a class="btn-call" href="tel:+13528082082"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg><span><small>Call or text</small>352-808-2082</span></a><a class="btn btn-sun btn-div" href="/get-my-price/">Exterior Cleaning Price</a></div></div><nav class="dtabs" aria-label="MOM divisions"><div class="wrap"><a class="dtab clean on" aria-current="true" href="/exterior-cleaning/"><span class="dot"></span><span><b>Exterior Cleaning</b><small>House washing · driveways · lanais</small></span></a><a class="dtab pave" href="/pavers/"><span class="dot"></span><span><b>Pavers</b><small>Supply &amp; installation · driveways · patios</small></span><span class="burst burst-sm"><span>NEW</span></span></a></div></nav><nav class="subnav" aria-label="Exterior Cleaning pages"><div class="wrap"><a href="/exterior-cleaning/">Overview</a><a href="/services/">Cleaning services</a><a href="/pricing/">Cleaning prices</a><a href="/protection-plan/">Protection Plan</a><a href="/service-area/">Service area</a><a href="/faq/" class="on" aria-current="page">FAQ</a><a href="/get-my-price/">Get my price</a></div></nav><script>(function(){var w=document.querySelector(".subnav .wrap"),a=w&&w.querySelector("a.on");if(a)w.scrollLeft=a.offsetLeft-16;})();</script></header>
 
 <main id="top">
   <section class="block" id="faq">
@@ -398,7 +375,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
 
 <footer>
   <div class="wrap">
-    <span><b style="color:var(--ink)">MOM of Middleton</b> · Exterior Cleaning for Middleton &amp; Eastport · Pavers for all of The Villages &amp; Middleton, FL</span>
+    <span class="flogos"><a href="/exterior-cleaning/"><img src="/img/brand/logo-cleaning.webp" alt="MOM Exterior Cleaning" width="640" height="479" loading="lazy"></a><a href="/pavers/"><img src="/img/brand/logo-pavers.webp" alt="MOM Pavers &amp; Installation" width="640" height="479" loading="lazy"></a></span>
+    <span><b style="color:var(--ink)">MOM of Middleton</b> · Exterior Cleaning for Middleton &amp; the Eastport villages · Paver Supply &amp; Installation for all of The Villages &amp; Middleton, FL</span>
     <span>352-808-2082 · momofmiddleton@gmail.com · @momofmiddleton · <a href="/accessibility/">Accessibility</a></span>
   </div>
 </footer>

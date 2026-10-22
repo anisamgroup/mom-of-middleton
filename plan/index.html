@@ -90,6 +90,7 @@
 .dcard .ctas{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto;padding-top:8px}
 .dcard .btn-ghost{border:1.5px solid var(--ink);color:var(--ink);background:transparent}
 @media (max-width:760px){.choose-grid{grid-template-columns:1fr}}
+.ps-change{background:#FFF6CC;border-left:4px solid var(--sun);padding:12px 14px;border-radius:8px;margin-top:12px}
 </style>
 <style>
 :root{
@@ -393,9 +394,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
   <section class="block">
     <div class="wrap ps">
       <div class="head">
-        <p class="eyebrow">MOM Home Investment Protection Plan</p>
-        <h1 class="h2">Sign up for your Protection Plan</h1>
-        <p>Choose your home and plan, fill in your details, read the agreement and sign with your finger or mouse (or use your typed name). Takes about 3 minutes. You'll get a signed copy by email.</p>
+        <p class="eyebrow" id="ps-eyebrow">MOM Home Investment Protection Plan</p>
+        <h1 class="h2" id="ps-title">Sign up for your Protection Plan</h1>
+        <p id="ps-change-note" class="ps-change" hidden><b>Already on a Protection Plan?</b> Pick the plan you want now (for example, cleanings every 2 or 3 months instead of every 4) and sign below. Your new agreement replaces your current one, and Marco will call or text you to confirm when your new plan starts and to update your monthly payment. Not on a plan yet? <a href="/plan/">Sign up here instead</a>.</p>
+        <p id="ps-intro">Choose your home and plan, fill in your details, read the agreement and sign with your finger or mouse (or use your typed name). Takes about 3 minutes. You'll get a signed copy by email.</p>
       </div>
       <form id="ps" class="ps-grid" novalidate>
         <div class="ps-card">
@@ -420,7 +422,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
             <span class="k">Your plan</span>
             <span><b id="sum-plan"></b> · <span id="sum-home"></span></span>
             <span class="big"><span id="sum-rate"></span>/month</span>
-            <small>Starts after your first full-service cleaning (<span id="sum-full"></span>). Every visit includes the house wash and the Complete Exterior Package.</small>
+            <small><span id="sum-start">Starts after your first full-service cleaning (<span id="sum-full"></span>).</span> Every visit includes the house wash and the Complete Exterior Package.</small>
           </div>
         </div>
 
@@ -533,8 +535,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
       </form>
       <div class="ps-done" id="ps-done" hidden>
         <h2>Thank you, <span id="d-name"></span>!</h2>
-        <p>Your Protection Plan agreement is signed. <span id="d-mail">We just emailed your signed copy to <b id="d-email"></b> (check spam if you don't see it).</span></p>
-        <p><b>What happens next:</b> Marco will call or text you to schedule your first cleaning and set up your monthly payment.</p>
+        <p><span id="d-what">Your Protection Plan agreement is signed.</span> <span id="d-mail">We just emailed your signed copy to <b id="d-email"></b> (check spam if you don't see it).</span></p>
+        <p id="d-next"><b>What happens next:</b> Marco will call or text you to schedule your first cleaning and set up your monthly payment.</p>
         <p style="color:var(--ink-soft);font-size:.92rem">Agreement ID <span id="d-id"></span></p>
       </div>
     </div>
@@ -549,7 +551,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
   </div>
 </footer>
 <form name="plan-signup" data-netlify="true" netlify-honeypot="company" hidden>
-<input name="name"><input name="phone"><input name="email"><input name="address"><input name="city"><input name="zip"><input name="home"><input name="plan"><input name="rate"><input name="agreementId"><input name="company">
+<input name="name"><input name="phone"><input name="email"><input name="address"><input name="city"><input name="zip"><input name="home"><input name="plan"><input name="rate"><input name="agreementId"><input name="change"><input name="company">
 </form>
 <script>
 (function(){
@@ -559,11 +561,13 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
   function val(n){var e=form.querySelector('input[name="'+n+'"]:checked');return e?e.value:'';}
   function $(id){return document.getElementById(id);}
   var q;try{q=new URLSearchParams(location.search)}catch(e){q=null}
+  var CHANGE=!!(q&&/^(1|yes|true)$/i.test(q.get('change')||''));
+  if(CHANGE){$('ps-eyebrow').textContent='Already on the Protection Plan';$('ps-title').textContent='Change my Protection Plan';$('ps-change-note').hidden=false;$('ps-intro').textContent='Choose your home and your new plan, fill in your details, read the agreement and sign. Takes about 3 minutes. You\'ll get a signed copy by email.';$('sum-start').textContent='Your new rate starts on the date Marco confirms with you.';document.title='Change my Protection Plan | MOM of Middleton';}
   if(q){var h=q.get('home'),p=q.get('plan');if(D[h])form.querySelector('input[name=home][value='+h+']').checked=true;if(p&&PN[p])form.querySelector('input[name=plan][value='+p+']').checked=true;}
   function render(){
     var h=val('home'),p=val('plan');
     document.querySelectorAll('.pp').forEach(function(s){s.textContent=money(D[h][1][s.dataset.p])+'/mo';});
-    $('sum-plan').textContent=PN[p];$('sum-home').textContent=NAMES[h];$('sum-rate').textContent=money(D[h][1][p]);$('sum-full').textContent=money(D[h][0]);
+    $('sum-plan').textContent=PN[p];$('sum-home').textContent=NAMES[h];$('sum-rate').textContent=money(D[h][1][p]);if(!CHANGE)$('sum-full').textContent=money(D[h][0]);
     document.querySelector('[data-f=home]').textContent=NAMES[h];
     document.querySelector('[data-f=plan]').textContent=PN[p]+' – '+money(D[h][1][p])+'/mo';
     var n=$('p-name').value.trim(),a=$('p-addr').value.trim();
@@ -614,7 +618,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
     syncName();
     var d={name:$('p-name').value.trim(),phone:$('p-phone').value.trim(),email:$('p-email').value.trim(),address:$('p-addr').value.trim(),
       city:$('p-city').value.trim()||'The Villages',zip:$('p-zip').value.trim(),home:val('home'),plan:val('plan'),signedName:$('p-signed').value.trim(),
-      agreeTerms:$('p-terms').checked,agreeEsign:$('p-esign').checked};
+      agreeTerms:$('p-terms').checked,agreeEsign:$('p-esign').checked,change:CHANGE};
     if(!$('p-first').value.trim())return fail('Please enter your first name.',$('p-first'));
     if(!$('p-last').value.trim())return fail('Please enter your last name.',$('p-last'));
     if(!d.phone)return fail('Please enter your mobile phone.',$('p-phone'));
@@ -635,10 +639,11 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
     fetch('/.netlify/functions/sign-plan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)})
       .then(function(r){return r.json().then(function(j){if(!r.ok)throw j;return j;});})
       .then(function(j){
-        var fd=new URLSearchParams({'form-name':'plan-signup',name:d.name,phone:d.phone,email:d.email,address:d.address,city:d.city,zip:d.zip,home:NAMES[d.home],plan:PN[d.plan],rate:money(D[d.home][1][d.plan])+'/mo',agreementId:j.id||''});
+        var fd=new URLSearchParams({'form-name':'plan-signup',name:d.name,phone:d.phone,email:d.email,address:d.address,city:d.city,zip:d.zip,home:NAMES[d.home],plan:PN[d.plan],rate:money(D[d.home][1][d.plan])+'/mo',agreementId:j.id||'',change:CHANGE?'yes':''});
         fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:fd.toString()}).catch(function(){});
         form.hidden=true;$('ps-done').hidden=false;$('d-name').textContent=d.name.split(' ')[0];$('d-id').textContent=j.id||'';
         if(j.emailed)$('d-email').textContent=(j.emails&&j.emails.length?j.emails.join(' and '):d.email);else $('d-mail').textContent='Marco will send your signed copy shortly.';
+        if(CHANGE){$('d-what').textContent='Your plan change is signed.';$('d-next').innerHTML='<b>What happens next:</b> Marco will call or text you to confirm when your new plan starts and to update your monthly payment.';}
         window.scrollTo(0,0);
       })
       .catch(function(){btn.disabled=false;btn.textContent='Sign my agreement';fail('Something went wrong and your agreement was not sent. Please try again, or call or text 352-808-2082.');});

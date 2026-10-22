@@ -100,9 +100,11 @@ async function buildPdf(blank, d, sigPng, t, sig2Png) {
     `Agreement ID: ${t.id}`,
     `Signed electronically by ${d.signedName} (${d.email}) on ${t.stamp}.`,
     ...(sig2Png ? [`Also signed electronically by ${d.name2}${d.email2 ? ` (${d.email2})` : ''} on the same device at the same time.`] : []),
-    `Signed at momofmiddleton.com/plan from IP address ${d.ip || 'unknown'}.`,
+    `Signed at momofmiddleton.com/plan${d.change ? '?change=1' : ''} from IP address ${d.ip || 'unknown'}.`,
     `Plan selected: ${PLAN[d.plan].name} (${PLAN[d.plan].freq}), ${HOME[d.home]}.`,
-    `Monthly rate ${money(PLAN[d.plan].rate[d.home])}, starting after the initial full-service cleaning (${money(FULL[d.home])}).`,
+    ...(d.change
+      ? [`PLAN CHANGE: replaces the customer's existing Protection Plan agreement. Monthly rate ${money(PLAN[d.plan].rate[d.home])}, starting on the date confirmed by MOM.`]
+      : [`Monthly rate ${money(PLAN[d.plan].rate[d.home])}, starting after the initial full-service cleaning (${money(FULL[d.home])}).`]),
     `Customer${sig2Png ? 's' : ''} agreed to sign electronically and to receive this agreement by email.`,
   ];
   let y = 150;
@@ -165,7 +167,7 @@ export default async (req) => {
   const d = {
     name: clean(p.name, 100), phone: clean(p.phone, 30), email: clean(p.email, 120).toLowerCase(),
     address: clean(p.address, 150), city: clean(p.city || 'The Villages', 60) || 'The Villages', zip: clean(p.zip, 10),
-    home: p.home, plan: p.plan, signedName: clean(p.signedName, 100),
+    home: p.home, plan: p.plan, signedName: clean(p.signedName, 100), change: p.change === true,
     ip: clean(req.headers.get('x-nf-client-connection-ip') || req.headers.get('x-forwarded-for') || '', 60).split(',')[0],
   };
   const missing = ['name', 'phone', 'email', 'address', 'zip', 'signedName'].filter((k) => !d[k]);
@@ -206,15 +208,17 @@ export default async (req) => {
   try {
     await sendEmail({
       to: [...new Set([d.email, d.email2].filter(Boolean))], replyTo: office, attachments,
-      subject: 'Your signed MOM Home Investment Protection Plan',
-      html: shell(`<p style="margin:0 0 12px;font-size:20px;font-weight:800;">Welcome to the Protection Plan, ${esc(first)}${d.name2 ? ` and ${esc(d.name2.split(' ')[0])}` : ''}!</p>
-<p>Thank you for signing up. Your signed agreement is attached for your records.</p>
+      subject: d.change ? 'Your updated MOM Home Investment Protection Plan' : 'Your signed MOM Home Investment Protection Plan',
+      html: shell(`<p style="margin:0 0 12px;font-size:20px;font-weight:800;">${d.change ? 'Your plan change is signed' : 'Welcome to the Protection Plan'}, ${esc(first)}${d.name2 ? ` and ${esc(d.name2.split(' ')[0])}` : ''}!</p>
+<p>${d.change ? 'Thank you! Your new signed agreement is attached for your records. It replaces your current one.' : 'Thank you for signing up. Your signed agreement is attached for your records.'}</p>
 <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;background:#FFF6CC;border-radius:8px;margin:12px 0;"><tr><td style="padding:14px 16px;">
 <b>${esc(pl.name)}</b> · ${esc(pl.freq)}<br>${esc(HOME[d.home])} · <b>${rate} per month</b><br>
-<span style="font-size:13px;color:#57525E;">Starts after your first full-service cleaning (${full}).</span></td></tr></table>
-<p><b>What happens next:</b> Marco will call or text you to schedule your first cleaning and set up your monthly payment.</p>
+<span style="font-size:13px;color:#57525E;">${d.change ? 'Starts on the date Marco confirms with you.' : `Starts after your first full-service cleaning (${full}).`}</span></td></tr></table>
+<p><b>What happens next:</b> ${d.change ? 'Marco will call or text you to confirm when your new plan starts and to update your monthly payment.' : 'Marco will call or text you to schedule your first cleaning and set up your monthly payment.'}</p>
 <p style="font-size:13px;color:#57525E;">Agreement ID ${t.id}. Questions? <a href="tel:+13528082082" style="color:#6A0B9E;font-weight:700;">Call</a> or <a href="sms:+13528082082" style="color:#6A0B9E;font-weight:700;">text</a> ${PHONE}.</p>`),
-      text: `Welcome to the MOM Home Investment Protection Plan, ${first}!\n\nYour signed agreement is attached.\n${pl.name} (${pl.freq}), ${HOME[d.home]}, ${rate} per month after your first full-service cleaning (${full}).\n\nMarco will call or text you to schedule your first cleaning and set up your monthly payment.\n\nAgreement ID ${t.id}. Questions? Call or text ${PHONE}.`,
+      text: d.change
+        ? `Your MOM Protection Plan change is signed, ${first}!\n\nYour new agreement is attached; it replaces your current one.\n${pl.name} (${pl.freq}), ${HOME[d.home]}, ${rate} per month, starting on the date Marco confirms with you.\n\nMarco will call or text you to confirm when your new plan starts and to update your monthly payment.\n\nAgreement ID ${t.id}. Questions? Call or text ${PHONE}.`
+        : `Welcome to the MOM Home Investment Protection Plan, ${first}!\n\nYour signed agreement is attached.\n${pl.name} (${pl.freq}), ${HOME[d.home]}, ${rate} per month after your first full-service cleaning (${full}).\n\nMarco will call or text you to schedule your first cleaning and set up your monthly payment.\n\nAgreement ID ${t.id}. Questions? Call or text ${PHONE}.`,
     });
     customerSent = true;
   } catch (e) { console.error('Customer email failed:', e.message); }
@@ -225,10 +229,10 @@ export default async (req) => {
       ['Signed', t.stamp], ['Agreement ID', t.id]];
     await sendEmail({
       to: office, replyTo: d.email, attachments,
-      subject: `New Protection Plan signed: ${d.name}, ${pl.name}, ${rate}/mo`,
-      html: shell(`<p style="margin:0 0 12px;font-size:20px;font-weight:800;">New Protection Plan signed</p>
+      subject: d.change ? `PLAN CHANGE signed: ${d.name}, now ${pl.name}, ${rate}/mo` : `New Protection Plan signed: ${d.name}, ${pl.name}, ${rate}/mo`,
+      html: shell(`<p style="margin:0 0 12px;font-size:20px;font-weight:800;">${d.change ? 'Plan change signed (existing client)' : 'New Protection Plan signed'}</p>
 <table role="presentation" cellpadding="6" cellspacing="0" style="width:100%;border-collapse:collapse;font-size:14px;">${rows.map(([k, v]) => `<tr><td style="color:#57525E;border-bottom:1px solid #E1DDE3;">${k}</td><td style="border-bottom:1px solid #E1DDE3;"><b>${esc(v)}</b></td></tr>`).join('')}</table>
-<p style="margin-top:16px;"><b>Next steps:</b> create the contract in ServiceMonster, schedule the first full cleaning, collect the first check and set up ACH. Nothing to sign: the attached agreement is complete.</p>
+<p style="margin-top:16px;"><b>Next steps:</b> ${d.change ? 'call or text the client to confirm the start date of the new plan, then update their contract, schedule and ACH amount in ServiceMonster. Nothing to sign: the attached agreement is complete.' : 'create the contract in ServiceMonster, schedule the first full cleaning, collect the first check and set up ACH. Nothing to sign: the attached agreement is complete.'}</p>
 ${customerSent ? '' : '<p style="color:#9A0000;"><b>The copy to the customer did NOT go through.</b> Please send them the attached PDF.</p>'}`),
       text: [`New Protection Plan signed`, '', ...rows.map(([k, v]) => `${k}: ${v}`), '', 'Next steps: create the contract in ServiceMonster, schedule the first full cleaning, collect the first check and set up ACH. Nothing to sign: the attached agreement is complete.', customerSent ? '' : 'The copy to the customer did NOT go through. Please send them the attached PDF.'].join('\n'),
     });

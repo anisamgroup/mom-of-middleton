@@ -5,3 +5,22 @@
 [functions]
   node_bundler = "esbuild"
   included_files = ["plan/MOM-Protection-Plan-Agreement.pdf"]
+
+# One version of the site for Google: always https://momofmiddleton.com (no http, no www)
+[[redirects]]
+  from = "http://momofmiddleton.com/*"
+  to = "https://momofmiddleton.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.momofmiddleton.com/*"
+  to = "https://momofmiddleton.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.momofmiddleton.com/*"
+  to = "https://momofmiddleton.com/:splat"
+  status = 301
+  force = true

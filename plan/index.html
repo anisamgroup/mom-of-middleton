@@ -418,6 +418,13 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
               <label><input type="radio" name="plan" value="pre" checked><b>Premium</b><small>6 cleanings a year · every 2 months</small><span class="pp" data-p="pre"></span></label>
             </div>
           </fieldset>
+          <fieldset id="ps-term" style="margin-top:14px" hidden>
+            <legend>When should your new plan year run?</legend>
+            <div class="ps-plans">
+              <label><input type="radio" name="term" value="keep"><b>Keep my current plan year</b><small>The new plan runs until the end date of my current agreement, then renews for 12 months as usual.</small></label>
+              <label><input type="radio" name="term" value="new"><b>Start a new 12-month year</b><small>A new 12-month term starts on the date my new plan starts.</small></label>
+            </div>
+          </fieldset>
           <div class="ps-sum" aria-live="polite">
             <span class="k">Your plan</span>
             <span><b id="sum-plan"></b> · <span id="sum-home"></span></span>
@@ -551,7 +558,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
   </div>
 </footer>
 <form name="plan-signup" data-netlify="true" netlify-honeypot="company" hidden>
-<input name="name"><input name="phone"><input name="email"><input name="address"><input name="city"><input name="zip"><input name="home"><input name="plan"><input name="rate"><input name="agreementId"><input name="change"><input name="company">
+<input name="name"><input name="phone"><input name="email"><input name="address"><input name="city"><input name="zip"><input name="home"><input name="plan"><input name="rate"><input name="agreementId"><input name="change"><input name="term"><input name="company">
 </form>
 <script>
 (function(){
@@ -562,7 +569,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
   function $(id){return document.getElementById(id);}
   var q;try{q=new URLSearchParams(location.search)}catch(e){q=null}
   var CHANGE=!!(q&&/^(1|yes|true)$/i.test(q.get('change')||''));
-  if(CHANGE){$('ps-eyebrow').textContent='Already on the Protection Plan';$('ps-title').textContent='Change my Protection Plan';$('ps-change-note').hidden=false;$('ps-intro').textContent='Choose your home and your new plan, fill in your details, read the agreement and sign. Takes about 3 minutes. You\'ll get a signed copy by email.';$('sum-start').textContent='Your new rate starts on the date Marco confirms with you.';document.title='Change my Protection Plan | MOM of Middleton';}
+  if(CHANGE){$('ps-eyebrow').textContent='Already on the Protection Plan';$('ps-title').textContent='Change my Protection Plan';$('ps-change-note').hidden=false;$('ps-term').hidden=false;$('ps-intro').textContent='Choose your home and your new plan, fill in your details, read the agreement and sign. Takes about 3 minutes. You\'ll get a signed copy by email.';$('sum-start').textContent='Your new rate starts on the date Marco confirms with you.';document.title='Change my Protection Plan | MOM of Middleton';}
   if(q){var h=q.get('home'),p=q.get('plan');if(D[h])form.querySelector('input[name=home][value='+h+']').checked=true;if(p&&PN[p])form.querySelector('input[name=plan][value='+p+']').checked=true;}
   function render(){
     var h=val('home'),p=val('plan');
@@ -618,9 +625,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
     syncName();
     var d={name:$('p-name').value.trim(),phone:$('p-phone').value.trim(),email:$('p-email').value.trim(),address:$('p-addr').value.trim(),
       city:$('p-city').value.trim()||'The Villages',zip:$('p-zip').value.trim(),home:val('home'),plan:val('plan'),signedName:$('p-signed').value.trim(),
-      agreeTerms:$('p-terms').checked,agreeEsign:$('p-esign').checked,change:CHANGE};
+      agreeTerms:$('p-terms').checked,agreeEsign:$('p-esign').checked,change:CHANGE,term:CHANGE?val('term'):''};
     if(!$('p-first').value.trim())return fail('Please enter your first name.',$('p-first'));
     if(!$('p-last').value.trim())return fail('Please enter your last name.',$('p-last'));
+    if(CHANGE&&!d.term)return fail('Please choose whether to keep your current plan year or start a new 12-month year.',form.querySelector('input[name=term]'));
     if(!d.phone)return fail('Please enter your mobile phone.',$('p-phone'));
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email))return fail('Please enter a valid email so we can send your signed copy.',$('p-email'));
     if(!d.address||!d.zip)return fail('Please enter the street address and ZIP of the home.',$('p-addr'));
@@ -639,7 +647,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
     fetch('/.netlify/functions/sign-plan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)})
       .then(function(r){return r.json().then(function(j){if(!r.ok)throw j;return j;});})
       .then(function(j){
-        var fd=new URLSearchParams({'form-name':'plan-signup',name:d.name,phone:d.phone,email:d.email,address:d.address,city:d.city,zip:d.zip,home:NAMES[d.home],plan:PN[d.plan],rate:money(D[d.home][1][d.plan])+'/mo',agreementId:j.id||'',change:CHANGE?'yes':''});
+        var fd=new URLSearchParams({'form-name':'plan-signup',name:d.name,phone:d.phone,email:d.email,address:d.address,city:d.city,zip:d.zip,home:NAMES[d.home],plan:PN[d.plan],rate:money(D[d.home][1][d.plan])+'/mo',agreementId:j.id||'',change:CHANGE?'yes':'',term:d.term||''});
         fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:fd.toString()}).catch(function(){});
         form.hidden=true;$('ps-done').hidden=false;$('d-name').textContent=d.name.split(' ')[0];$('d-id').textContent=j.id||'';
         if(j.emailed)$('d-email').textContent=(j.emails&&j.emails.length?j.emails.join(' and '):d.email);else $('d-mail').textContent='Marco will send your signed copy shortly.';

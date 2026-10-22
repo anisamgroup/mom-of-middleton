@@ -20,6 +20,11 @@ const PLAN = {
   pre: { name: 'Premium Protection', freq: '6 visits a year, every 2 months', field: 'plan_premium', rate: { pv: 109, s1: 139, s2: 175 } },
 };
 const PHONE = '352-808-2082';
+const TERMS = {
+  keep: 'Plan year: keeps the current plan year (runs to the existing end date, then renews for 12 months).',
+  new: 'Plan year: a new 12-month term starts on the date the new plan starts.',
+};
+const TERM_SHORT = { keep: 'Keeps current plan year (runs to the end date of the existing agreement, then renews)', new: 'New 12-month term from the new start date' };
 const money = (v) => '$' + (v % 1 ? v.toFixed(2) : v);
 const clean = (s, max = 200) => String(s ?? '').replace(/[\u0000-\u001f<>]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, max);
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -103,7 +108,7 @@ async function buildPdf(blank, d, sigPng, t, sig2Png) {
     `Signed at momofmiddleton.com/plan${d.change ? '?change=1' : ''} from IP address ${d.ip || 'unknown'}.`,
     `Plan selected: ${PLAN[d.plan].name} (${PLAN[d.plan].freq}), ${HOME[d.home]}.`,
     ...(d.change
-      ? [`PLAN CHANGE: replaces the customer's existing Protection Plan agreement. Monthly rate ${money(PLAN[d.plan].rate[d.home])}, starting on the date confirmed by MOM.`]
+      ? [`PLAN CHANGE: replaces the existing agreement. ${money(PLAN[d.plan].rate[d.home])}/month from the date confirmed by MOM.`, TERMS[d.term]]
       : [`Monthly rate ${money(PLAN[d.plan].rate[d.home])}, starting after the initial full-service cleaning (${money(FULL[d.home])}).`]),
     `Customer${sig2Png ? 's' : ''} agreed to sign electronically and to receive this agreement by email.`,
   ];
@@ -167,10 +172,11 @@ export default async (req) => {
   const d = {
     name: clean(p.name, 100), phone: clean(p.phone, 30), email: clean(p.email, 120).toLowerCase(),
     address: clean(p.address, 150), city: clean(p.city || 'The Villages', 60) || 'The Villages', zip: clean(p.zip, 10),
-    home: p.home, plan: p.plan, signedName: clean(p.signedName, 100), change: p.change === true,
+    home: p.home, plan: p.plan, signedName: clean(p.signedName, 100), change: p.change === true, term: p.change === true && ['keep', 'new'].includes(p.term) ? p.term : '',
     ip: clean(req.headers.get('x-nf-client-connection-ip') || req.headers.get('x-forwarded-for') || '', 60).split(',')[0],
   };
   const missing = ['name', 'phone', 'email', 'address', 'zip', 'signedName'].filter((k) => !d[k]);
+  if (d.change && !d.term) missing.push('term');
   if (!HOME[d.home]) missing.push('home');
   if (!PLAN[d.plan]) missing.push('plan');
   if (!/^[^\s@,;]+@[^\s@,;]+\.[^\s@,;]+$/.test(d.email)) missing.push('email');
@@ -213,11 +219,11 @@ export default async (req) => {
 <p>${d.change ? 'Thank you! Your new signed agreement is attached for your records. It replaces your current one.' : 'Thank you for signing up. Your signed agreement is attached for your records.'}</p>
 <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;background:#FFF6CC;border-radius:8px;margin:12px 0;"><tr><td style="padding:14px 16px;">
 <b>${esc(pl.name)}</b> · ${esc(pl.freq)}<br>${esc(HOME[d.home])} · <b>${rate} per month</b><br>
-<span style="font-size:13px;color:#57525E;">${d.change ? 'Starts on the date Marco confirms with you.' : `Starts after your first full-service cleaning (${full}).`}</span></td></tr></table>
+<span style="font-size:13px;color:#57525E;">${d.change ? `Starts on the date Marco confirms with you. ${esc(TERM_SHORT[d.term])}.` : `Starts after your first full-service cleaning (${full}).`}</span></td></tr></table>
 <p><b>What happens next:</b> ${d.change ? 'Marco will call or text you to confirm when your new plan starts and to update your monthly payment.' : 'Marco will call or text you to schedule your first cleaning and set up your monthly payment.'}</p>
 <p style="font-size:13px;color:#57525E;">Agreement ID ${t.id}. Questions? <a href="tel:+13528082082" style="color:#6A0B9E;font-weight:700;">Call</a> or <a href="sms:+13528082082" style="color:#6A0B9E;font-weight:700;">text</a> ${PHONE}.</p>`),
       text: d.change
-        ? `Your MOM Protection Plan change is signed, ${first}!\n\nYour new agreement is attached; it replaces your current one.\n${pl.name} (${pl.freq}), ${HOME[d.home]}, ${rate} per month, starting on the date Marco confirms with you.\n\nMarco will call or text you to confirm when your new plan starts and to update your monthly payment.\n\nAgreement ID ${t.id}. Questions? Call or text ${PHONE}.`
+        ? `Your MOM Protection Plan change is signed, ${first}!\n\nYour new agreement is attached; it replaces your current one.\n${pl.name} (${pl.freq}), ${HOME[d.home]}, ${rate} per month, starting on the date Marco confirms with you.\n${TERM_SHORT[d.term]}.\n\nMarco will call or text you to confirm when your new plan starts and to update your monthly payment.\n\nAgreement ID ${t.id}. Questions? Call or text ${PHONE}.`
         : `Welcome to the MOM Home Investment Protection Plan, ${first}!\n\nYour signed agreement is attached.\n${pl.name} (${pl.freq}), ${HOME[d.home]}, ${rate} per month after your first full-service cleaning (${full}).\n\nMarco will call or text you to schedule your first cleaning and set up your monthly payment.\n\nAgreement ID ${t.id}. Questions? Call or text ${PHONE}.`,
     });
     customerSent = true;
@@ -225,7 +231,7 @@ export default async (req) => {
 
   try {
     const rows = [['Customer', d.name], ...(d.name2 ? [['Second signer', d.name2 + (d.email2 ? ` (${d.email2})` : '')]] : []), ['Phone', d.phone], ['Email', d.email], ['Address', `${d.address}, ${d.city} ${d.zip}`],
-      ['Home type', HOME[d.home]], ['Plan', `${pl.name} (${pl.freq})`], ['Monthly rate', rate], ['First full-service cleaning', full],
+      ['Home type', HOME[d.home]], ['Plan', `${pl.name} (${pl.freq})`], ...(d.change ? [['Plan year', TERM_SHORT[d.term]]] : []), ['Monthly rate', rate], ['First full-service cleaning', full],
       ['Signed', t.stamp], ['Agreement ID', t.id]];
     await sendEmail({
       to: office, replyTo: d.email, attachments,

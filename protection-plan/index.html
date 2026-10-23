@@ -29,29 +29,37 @@
 .perks{list-style:none;margin:4px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
 .perks li{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 14px 6px 10px;font-size:.95rem;font-weight:700}
 .perks li::before{content:"✓";display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--sun);color:var(--sun-ink);font-size:.75rem;margin-right:8px;vertical-align:1px}
-.htoggle{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:6px}
-.htoggle-l{font-family:var(--display);font-weight:800;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-right:4px}
-.htoggle button{font:inherit;font-weight:700;font-size:.95rem;border:2px solid var(--band);background:transparent;color:var(--ink);border-radius:999px;padding:8px 16px;cursor:pointer}
-.htoggle button[aria-checked="true"]{background:var(--band);color:var(--sun)}
-.lvb{--lv-cream:#FDF6E7;--lv-card:#FFFFFF;--lv-ink:#1E1A22;--lv-soft:#6A6470;--lv-line:#EEDDB8;--lv-chk:#6B1FA6;background:var(--lv-cream);border-radius:16px;padding:18px 16px 22px;margin-top:10px;color:var(--lv-ink)}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .lvb{--lv-cream:#1C1920;--lv-card:#26222B;--lv-ink:#F1EDF3;--lv-soft:#B3ABBA;--lv-line:#3A3342;--lv-chk:#C38BEA}}
-:root[data-theme="dark"] .lvb{--lv-cream:#1C1920;--lv-card:#26222B;--lv-ink:#F1EDF3;--lv-soft:#B3ABBA;--lv-line:#3A3342;--lv-chk:#C38BEA}
-.lvb-head{background:var(--lv-card);border:1.5px solid var(--lv-line);border-radius:14px;padding:14px 16px;text-align:center;margin-bottom:26px}
-.lvb-title{font-weight:700;font-size:1.15rem;margin:0}
-.lvb-full{color:var(--lv-soft);margin:4px 0 0}
-.pcards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;align-items:stretch}
-@media (max-width:820px){.pcards{grid-template-columns:1fr;gap:26px}}
-.pcard{position:relative;background:var(--lv-card);border:1.5px solid var(--lv-line);border-radius:14px;padding:16px 12px 14px;display:grid;gap:4px;align-content:start;text-align:center;color:var(--lv-ink)}
-.pbadge{position:absolute;top:-15px;right:10px;background:linear-gradient(120deg,#B4142B,#6B1FA6);color:#fff;font-weight:700;font-size:.78rem;padding:4px 12px;border-radius:8px;white-space:nowrap}
-.pname{font-weight:700;font-size:1.05rem}
-.pvis{font-size:.92rem;color:var(--lv-soft)}
-.pprice{margin:6px 0 0;background:linear-gradient(120deg,#B4142B,#6B1FA6);color:#fff;border-radius:10px;padding:10px 8px 8px;line-height:1}
-.pm{display:block;font-family:var(--display);font-weight:900;font-stretch:112%;font-size:2.5rem;font-variant-numeric:tabular-nums;color:#fff}
-.pu{display:block;font-weight:700;font-size:.85rem;margin-top:3px;color:#fff}
-.pper{margin:8px 0 10px;font-weight:700;font-size:1.05rem}
+.lvb{--lv-cream:#FFF8E9;--lv-card:#FFFFFF;--lv-ink:#211D23;--lv-soft:#69636F;--lv-line:#E9D5A7;--lv-red:#9A0000;--lv-acc:#121212;background:var(--lv-cream);border:1px solid var(--lv-line);border-radius:18px;padding:22px 20px 24px;margin-top:10px;color:var(--lv-ink)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .lvb{--lv-cream:#1C1920;--lv-card:#26222B;--lv-ink:#F1EDF3;--lv-soft:#B3ABBA;--lv-line:#3A3342;--lv-red:#FF7A7A}}
+:root[data-theme="dark"] .lvb{--lv-cream:#1C1920;--lv-card:#26222B;--lv-ink:#F1EDF3;--lv-soft:#B3ABBA;--lv-line:#3A3342;--lv-red:#FF7A7A}
+.htoggle{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0 0 16px}
+.htoggle-l{font-family:var(--display);font-weight:700;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:var(--lv-soft);margin-right:4px}
+.htoggle button{font-family:var(--body);font-weight:700;font-size:15px;min-height:46px;border:2px solid var(--lv-ink);background:var(--lv-card);color:var(--lv-ink);border-radius:999px;padding:0 20px;cursor:pointer}
+.htoggle button:focus-visible{outline:3px solid #6A0B9E;outline-offset:3px}
+.htoggle button[data-h="pv"][aria-checked="true"]{background:#FFC800;border-color:#FFC800;color:#211D23}
+.htoggle button[data-h="s1"][aria-checked="true"]{background:#121212;border-color:#121212;color:#FFC800}
+.htoggle button[data-h="s2"][aria-checked="true"]{background:#6A0B9E;border-color:#6A0B9E;color:#fff}
+.lvb[data-h="pv"]{--lv-acc:#FFC800}.lvb[data-h="s1"]{--lv-acc:#FFC800}.lvb[data-h="s2"]{--lv-acc:#6A0B9E}
+.lvb-head{background:var(--lv-card);border:1px solid var(--lv-line);border-radius:14px;padding:24px 20px;text-align:center;margin-bottom:16px}
+.lvb-title{font-family:var(--display);font-weight:700;font-size:26px;line-height:1.2;margin:0}
+.lvb-title::after{content:"";display:block;width:70px;height:2px;background:var(--lv-acc);margin:10px auto 8px}
+.lvb-full{font-family:var(--body);font-weight:500;font-size:21px;color:var(--lv-soft);margin:0;display:flex;flex-wrap:wrap;justify-content:center;align-items:baseline;gap:4px 12px}
+.lvb-full b{font-family:var(--display);font-weight:800;font-size:42px;line-height:1;color:var(--lv-red);font-variant-numeric:tabular-nums}
+.pcards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:stretch}
+@media (max-width:767px){.pcards{grid-template-columns:1fr}}
+.pcard{background:var(--lv-card);border:1px solid var(--lv-line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:4px;text-align:center;color:var(--lv-ink)}
+.pname{font-family:var(--display);font-weight:700;font-size:21px;line-height:1.2;margin:0}
+.pfreq{font-size:16px;color:var(--lv-soft);margin:0}
+.pprice{margin:10px 0 0;min-height:80px;background:linear-gradient(120deg,#B4142B,#6B1FA6);color:#fff;border-radius:10px;padding:10px 8px;display:flex;flex-direction:column;justify-content:center;line-height:1}
+.pm{font-family:var(--display);font-weight:800;font-size:44px;font-variant-numeric:tabular-nums;color:#fff}
+.pu{font-weight:600;font-size:15px;margin-top:4px;color:#fff}
+.pper{margin:14px 0 16px;font-weight:700;font-size:21px}
 .pper b{font-variant-numeric:tabular-nums}
-.pcard .pchoose{margin-top:auto;align-self:stretch;justify-content:center;background:transparent;color:var(--lv-chk);border:2px solid var(--lv-chk)}
-.pcard .pchoose:hover{background:var(--lv-chk);color:#fff}
+.pcard .pchoose{margin-top:auto;min-height:48px;justify-content:center;background:#9A0000;color:#fff;border:0;border-radius:9px;font-size:18px;font-weight:700}
+.pcard .pchoose:hover{background:#7E0000}
+.pcard .pchoose:focus-visible{outline:3px solid #FFC800;outline-offset:3px}
+@media (min-width:768px) and (max-width:1023px){.pcard{padding:16px 12px}.pm{font-size:38px}.pname{font-size:19px}}
+@media (max-width:767px){.lvb{padding:16px 12px 18px}.lvb-title{font-size:22px}.lvb-full b{font-size:36px}.pm{font-size:40px}}
 .plan-cta{display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px;margin-top:6px}
 .plan-cta > span{color:var(--ink-soft)}
 .plan-list{font-size:.9rem}
@@ -423,36 +431,35 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
             <li>One fixed monthly price, no surprise bills</li>
           </ul>
         </div>
-        <div class="htoggle" role="radiogroup" aria-label="Your home type">
-          <span class="htoggle-l">Show prices for my</span>
-          <button type="button" role="radio" aria-checked="false" data-h="pv">Patio villa</button>
-          <button type="button" role="radio" aria-checked="true" data-h="s1">1-story home</button>
-          <button type="button" role="radio" aria-checked="false" data-h="s2">2-story home</button>
-        </div>
-        <div class="lvb">
+        <div class="lvb" data-h="s1">
+          <div class="htoggle" role="radiogroup" aria-label="Your home type">
+            <span class="htoggle-l">Show prices for my</span>
+            <button type="button" role="radio" aria-checked="false" data-h="pv">Patio villa</button>
+            <button type="button" role="radio" aria-checked="true" data-h="s1">1-story home</button>
+            <button type="button" role="radio" aria-checked="false" data-h="s2">2-story home</button>
+          </div>
           <div class="lvb-head">
             <p class="lvb-title">MOM Home Investment Protection Plan — <span id="hlabel">1-Story Home</span></p>
-            <p class="lvb-full">One-time full-service cleaning: <span id="pfull">$348</span></p>
+            <p class="lvb-full"><span>One-time full-service cleaning:</span> <b id="pfull">$348</b></p>
           </div>
           <div class="pcards">
           <article class="pcard" data-plan="std">
             <p class="pname">Standard Protection</p>
-            <p class="pvis">3 visits a year</p>
+            <p class="pfreq">Every 4 months</p>
             <p class="pprice"><span class="pm">$79</span><span class="pu">per month</span></p>
             <p class="pper"><b class="pc">$316</b> per visit</p>
             <a class="btn pchoose" data-plan="std" href="/plan/?home=s1&amp;plan=std">Choose Standard →</a>
           </article>
           <article class="pcard" data-plan="enh">
             <p class="pname">Enhanced Protection</p>
-            <p class="pvis">4 visits a year</p>
+            <p class="pfreq">Every 3 months</p>
             <p class="pprice"><span class="pm">$99</span><span class="pu">per month</span></p>
             <p class="pper"><b class="pc">$297</b> per visit</p>
             <a class="btn pchoose" data-plan="enh" href="/plan/?home=s1&amp;plan=enh">Choose Enhanced →</a>
           </article>
-          <article class="pcard best" data-plan="pre">
-            <span class="pbadge">Best value — save <span class="sv">$70</span> a visit</span>
+          <article class="pcard" data-plan="pre">
             <p class="pname">Premium Protection</p>
-            <p class="pvis">6 visits a year</p>
+            <p class="pfreq">Every 2 months</p>
             <p class="pprice"><span class="pm">$139</span><span class="pu">per month</span></p>
             <p class="pper"><b class="pc">$278</b> per visit</p>
             <a class="btn pchoose" data-plan="pre" href="/plan/?home=s1&amp;plan=pre">Choose Premium →</a>
@@ -609,7 +616,7 @@ window.momSubmit=function(p){
       var sv=c.querySelector('.sv');if(sv)sv.textContent='$'+d[2];
       var a=c.querySelector('.pchoose');if(a)a.href='/plan/?home='+h+'&plan='+c.dataset.plan;});
     var s=document.getElementById('pp-sign');if(s)s.href='/plan/?home='+h;
-    var L=document.getElementById('hlabel');if(L)L.textContent={pv:'Patio Villa',s1:'1-Story Home',s2:'2-Story Home'}[h];
+    var P=document.querySelector('.lvb');if(P)P.dataset.h=h;var L=document.getElementById('hlabel');if(L)L.textContent={pv:'Patio Villa',s1:'1-Story Home',s2:'2-Story Home'}[h];
     var F=document.getElementById('pfull');if(F)F.textContent={pv:'$298',s1:'$348',s2:'$448'}[h];
   }
   t.addEventListener('click',function(e){var b=e.target.closest('button');if(b)show(b.dataset.h);});

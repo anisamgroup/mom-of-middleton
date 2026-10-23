@@ -29,6 +29,7 @@
 .ps-plans b{font-family:var(--display);font-weight:900;font-stretch:112%;font-size:1.1rem}
 .ps-plans .pp{font-family:var(--display);font-weight:900;font-size:1.6rem;color:var(--spray);font-variant-numeric:tabular-nums}
 .ps-plans small{color:var(--ink-soft)}
+.ps-plans .ppc{font-weight:700;font-size:.95rem}
 .ps-sum{background:var(--band);color:#fff;border-radius:12px;padding:16px 18px;display:grid;gap:4px;margin-top:14px}
 .ps-sum .k{font-family:var(--display);font-weight:800;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--sun)}
 .ps-sum .big{font-family:var(--display);font-weight:900;font-size:1.6rem;color:var(--sun);font-variant-numeric:tabular-nums}
@@ -411,9 +412,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
           <fieldset style="margin-top:14px">
             <legend>Plan level</legend>
             <div class="ps-plans">
-              <label><input type="radio" name="plan" value="std"><b>Standard</b><small>3 cleanings a year · every 4 months</small><span class="pp" data-p="std"></span></label>
-              <label><input type="radio" name="plan" value="enh"><b>Enhanced</b><small>4 cleanings a year · every 3 months</small><span class="pp" data-p="enh"></span></label>
-              <label><input type="radio" name="plan" value="pre" checked><b>Premium</b><small>6 cleanings a year · every 2 months</small><span class="pp" data-p="pre"></span></label>
+              <label><input type="radio" name="plan" value="std"><b>Standard</b><small>3 cleanings a year · every 4 months</small><span class="pp" data-p="std"></span><span class="ppc" data-c="std"></span></label>
+              <label><input type="radio" name="plan" value="enh"><b>Enhanced</b><small>4 cleanings a year · every 3 months</small><span class="pp" data-p="enh"></span><span class="ppc" data-c="enh"></span></label>
+              <label><input type="radio" name="plan" value="pre" checked><b>Premium</b><small>6 cleanings a year · every 2 months</small><span class="pp" data-p="pre"></span><span class="ppc" data-c="pre"></span></label>
             </div>
           </fieldset>
           <div class="ps-sum" aria-live="polite">
@@ -543,7 +544,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
 
 <footer>
   <div class="wrap">
-    <span class="flogos"><a href="/exterior-cleaning/"><img src="/img/brand/logo-cleaning.webp" alt="MOM Exterior Cleaning" width="640" height="479" loading="lazy"></a><a href="/pavers/"><img src="/img/brand/logo-pavers.webp" alt="MOM Pavers &amp; Installation" width="640" height="532" loading="lazy"></a></span>
+    <span class="flogos"><a href="/exterior-cleaning/"><img src="/img/brand/logo-cleaning.webp" alt="MOM Exterior Cleaning" width="640" height="479" loading="lazy"></a></span>
     <span><b style="color:var(--ink)">MOM of Middleton</b> · Exterior Cleaning for Middleton &amp; the Eastport villages · Paver Supply &amp; Installation for all of The Villages &amp; Middleton, FL</span>
     <span>352-808-2082 · momofmiddleton@gmail.com · @momofmiddleton · <a href="/accessibility/">Accessibility</a></span>
   </div>
@@ -553,7 +554,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
 </form>
 <script>
 (function(){
-  var D={"pv": [298, {"std": 62.5, "enh": 79, "pre": 109}], "s1": [348, {"std": 79, "enh": 99, "pre": 139}], "s2": [448, {"std": 99, "enh": 125, "pre": 175}]}, NAMES={pv:'Patio villa',s1:'1-story home',s2:'2-story home'}, PN={std:'Standard Protection',enh:'Enhanced Protection',pre:'Premium Protection'};
+  var D={"pv": [298, {"std": 62.5, "enh": 79, "pre": 109}], "s1": [348, {"std": 79, "enh": 99, "pre": 139}], "s2": [448, {"std": 99, "enh": 125, "pre": 175}]}, NAMES={pv:'Patio villa',s1:'1-story home',s2:'2-story home'}, V={std:3,enh:4,pre:6}, PN={std:'Standard Protection',enh:'Enhanced Protection',pre:'Premium Protection'};
   var form=document.getElementById('ps');
   function money(v){return '$'+(v%1?v.toFixed(2):v);}
   function val(n){var e=form.querySelector('input[name="'+n+'"]:checked');return e?e.value:'';}
@@ -563,6 +564,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
   function render(){
     var h=val('home'),p=val('plan');
     document.querySelectorAll('.pp').forEach(function(s){s.textContent=money(D[h][1][s.dataset.p])+'/mo';});
+    document.querySelectorAll('.ppc').forEach(function(s){s.textContent='$'+Math.round(D[h][1][s.dataset.c]*12/V[s.dataset.c])+' per visit';});
     $('sum-plan').textContent=PN[p];$('sum-home').textContent=NAMES[h];$('sum-rate').textContent=money(D[h][1][p]);$('sum-full').textContent=money(D[h][0]);
     document.querySelector('[data-f=home]').textContent=NAMES[h];
     document.querySelector('[data-f=plan]').textContent=PN[p]+' – '+money(D[h][1][p])+'/mo';

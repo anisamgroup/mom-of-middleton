@@ -18,11 +18,9 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,112,600;0,112,800;0,125,900;1,125,900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
 <style>[hidden]{display:none!important} html,body{margin:0} img{max-width:100%}
 /* protection plan */
-.pchoose{margin-top:auto;align-self:stretch;text-align:center;background:var(--ink);color:#fff}
-.pcard.best .pchoose{background:var(--sun);color:var(--ink)}
 .steps3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:8px 0 4px}
-.steps3 > div{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:12px;padding:14px}
-.steps3 b{flex:none;width:30px;height:30px;border-radius:50%;background:var(--sun);display:grid;place-items:center;font-family:Archivo,sans-serif}
+.steps3 > div{display:flex;gap:12px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px}
+.steps3 b{flex:none;width:30px;height:30px;border-radius:50%;background:var(--sun);color:#1A1400;display:grid;place-items:center;font-family:Archivo,sans-serif}
 .steps3 p{margin:0;color:var(--ink-soft);font-size:.95rem}.steps3 strong{display:block;color:var(--ink)}
 @media (max-width:760px){.steps3{grid-template-columns:1fr}}
 .plan-hero{display:grid;gap:10px;max-width:760px}
@@ -31,30 +29,37 @@
 .perks{list-style:none;margin:4px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
 .perks li{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 14px 6px 10px;font-size:.95rem;font-weight:700}
 .perks li::before{content:"✓";display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--sun);color:var(--sun-ink);font-size:.75rem;margin-right:8px;vertical-align:1px}
-.htoggle{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:6px}
-.htoggle-l{font-family:var(--display);font-weight:800;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-right:4px}
-.htoggle button{font:inherit;font-weight:700;font-size:.95rem;border:2px solid var(--band);background:transparent;color:var(--ink);border-radius:999px;padding:8px 16px;cursor:pointer}
-.htoggle button[aria-checked="true"]{background:var(--band);color:var(--sun)}
-.pcards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:stretch;margin-top:8px}
-@media (max-width:820px){.pcards{grid-template-columns:1fr}}
-.pcard{position:relative;background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:26px 22px 22px;display:grid;gap:8px;align-content:start;text-align:center}
-.pcard.best{background:var(--band);color:#fff;border-color:var(--sun);box-shadow:0 12px 30px rgba(0,0,0,.18)}
-@media (min-width:821px){.pcard.best{transform:translateY(-8px)}}
-.pbadge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--sun);color:var(--sun-ink);font-family:var(--display);font-weight:800;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;padding:6px 12px;border-radius:999px;white-space:nowrap}
-.pname{font-family:var(--display);font-weight:900;font-style:italic;font-stretch:125%;font-size:1.35rem;line-height:1.1}
-.pfreq{font-size:.95rem;color:var(--ink-soft)}
-.pcard.best .pfreq{color:#CFC8D6}
-.pprice{margin-top:6px;line-height:1}
-.pm{font-family:var(--display);font-weight:900;font-stretch:112%;font-size:3rem;color:var(--spray);font-variant-numeric:tabular-nums}
-.pcard.best .pm{color:var(--sun)}
-.pu{font-weight:700;color:var(--ink-soft);margin-left:2px}
-.pcard.best .pu{color:#CFC8D6}
-.pper{font-size:1rem}
+.lvb{--lv-cream:#FFF8E9;--lv-card:#FFFFFF;--lv-ink:#211D23;--lv-soft:#69636F;--lv-line:#E9D5A7;--lv-red:#9A0000;--lv-acc:#121212;background:var(--lv-cream);border:1px solid var(--lv-line);border-radius:18px;padding:22px 20px 24px;margin-top:10px;color:var(--lv-ink)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .lvb{--lv-cream:#1C1920;--lv-card:#26222B;--lv-ink:#F1EDF3;--lv-soft:#B3ABBA;--lv-line:#3A3342;--lv-red:#FF7A7A}}
+:root[data-theme="dark"] .lvb{--lv-cream:#1C1920;--lv-card:#26222B;--lv-ink:#F1EDF3;--lv-soft:#B3ABBA;--lv-line:#3A3342;--lv-red:#FF7A7A}
+.htoggle{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0 0 16px}
+.htoggle-l{font-family:var(--display);font-weight:700;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:var(--lv-soft);margin-right:4px}
+.htoggle button{font-family:var(--body);font-weight:700;font-size:15px;min-height:46px;border:2px solid var(--lv-ink);background:var(--lv-card);color:var(--lv-ink);border-radius:999px;padding:0 20px;cursor:pointer}
+.htoggle button:focus-visible{outline:3px solid #6A0B9E;outline-offset:3px}
+.htoggle button[data-h="pv"][aria-checked="true"]{background:#FFC800;border-color:#FFC800;color:#211D23}
+.htoggle button[data-h="s1"][aria-checked="true"]{background:#121212;border-color:#121212;color:#FFC800}
+.htoggle button[data-h="s2"][aria-checked="true"]{background:#6A0B9E;border-color:#6A0B9E;color:#fff}
+.lvb[data-h="pv"]{--lv-acc:#FFC800}.lvb[data-h="s1"]{--lv-acc:#FFC800}.lvb[data-h="s2"]{--lv-acc:#6A0B9E}
+.lvb-head{background:var(--lv-card);border:1px solid var(--lv-line);border-radius:14px;padding:24px 20px;text-align:center;margin-bottom:16px}
+.lvb-title{font-family:var(--display);font-weight:700;font-size:26px;line-height:1.2;margin:0}
+.lvb-title::after{content:"";display:block;width:70px;height:2px;background:var(--lv-acc);margin:10px auto 8px}
+.lvb-full{font-family:var(--body);font-weight:500;font-size:21px;color:var(--lv-soft);margin:0;display:flex;flex-wrap:wrap;justify-content:center;align-items:baseline;gap:4px 12px}
+.lvb-full b{font-family:var(--display);font-weight:800;font-size:42px;line-height:1;color:var(--lv-red);font-variant-numeric:tabular-nums}
+.pcards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:stretch}
+@media (max-width:767px){.pcards{grid-template-columns:1fr}}
+.pcard{background:var(--lv-card);border:1px solid var(--lv-line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:4px;text-align:center;color:var(--lv-ink)}
+.pname{font-family:var(--display);font-weight:700;font-size:21px;line-height:1.2;margin:0}
+.pfreq{font-size:16px;color:var(--lv-soft);margin:0}
+.pprice{margin:10px 0 0;min-height:80px;background:linear-gradient(120deg,#B4142B,#6B1FA6);color:#fff;border-radius:10px;padding:10px 8px;display:flex;flex-direction:column;justify-content:center;line-height:1}
+.pm{font-family:var(--display);font-weight:800;font-size:44px;font-variant-numeric:tabular-nums;color:#fff}
+.pu{font-weight:600;font-size:15px;margin-top:4px;color:#fff}
+.pper{margin:14px 0 16px;font-weight:700;font-size:21px}
 .pper b{font-variant-numeric:tabular-nums}
-.psave{margin-top:6px;background:color-mix(in srgb,var(--sun) 22%,var(--surface));border-radius:10px;padding:10px 12px;font-weight:700;line-height:1.35}
-.psave span{font-weight:400;font-size:.92rem}
-.pcard.best .psave{background:var(--sun);color:var(--sun-ink)}
-.psave b{font-variant-numeric:tabular-nums}
+.pcard .pchoose{margin-top:auto;min-height:48px;justify-content:center;background:#9A0000;color:#fff;border:0;border-radius:9px;font-size:18px;font-weight:700}
+.pcard .pchoose:hover{background:#7E0000}
+.pcard .pchoose:focus-visible{outline:3px solid #FFC800;outline-offset:3px}
+@media (min-width:768px) and (max-width:1023px){.pcard{padding:16px 12px}.pm{font-size:38px}.pname{font-size:19px}}
+@media (max-width:767px){.lvb{padding:16px 12px 18px}.lvb-title{font-size:22px}.lvb-full b{font-size:36px}.pm{font-size:40px}}
 .plan-cta{display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px;margin-top:6px}
 .plan-cta > span{color:var(--ink-soft)}
 .plan-list{font-size:.9rem}
@@ -418,48 +423,48 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
       <div class="price-block plan">
         <div class="plan-hero">
           
-          <h2 class="price-title">How the plan works</h2>
-          <p>Pick how often you want us. Every visit includes the full house wash and the Complete Exterior Package, and the more often we come, the less each cleaning costs.</p>
+          <h2 class="price-title">Protect your home. We'll handle the schedule.</h2>
+          <p>One fixed monthly payment. Professional exterior cleaning all year long.</p>
           <ul class="perks">
             <li>House wash + Complete Exterior Package every visit</li>
             <li>Lanai past the roofline included (normally +$50)</li>
             <li>One fixed monthly price, no surprise bills</li>
           </ul>
         </div>
-        <div class="htoggle" role="radiogroup" aria-label="Your home type">
-          <span class="htoggle-l">Show prices for my</span>
-          <button type="button" role="radio" aria-checked="false" data-h="pv">Patio villa</button>
-          <button type="button" role="radio" aria-checked="true" data-h="s1">1-story home</button>
-          <button type="button" role="radio" aria-checked="false" data-h="s2">2-story home</button>
-        </div>
-        <div class="pcards">
+        <div class="lvb" data-h="s1">
+          <div class="htoggle" role="radiogroup" aria-label="Your home type">
+            <span class="htoggle-l">Show prices for my</span>
+            <button type="button" role="radio" aria-checked="false" data-h="pv">Patio villa</button>
+            <button type="button" role="radio" aria-checked="true" data-h="s1">1-story home</button>
+            <button type="button" role="radio" aria-checked="false" data-h="s2">2-story home</button>
+          </div>
+          <div class="lvb-head">
+            <p class="lvb-title">MOM Home Investment Protection Plan — <span id="hlabel">1-Story Home</span></p>
+            <p class="lvb-full"><span>One-time full-service cleaning:</span> <b id="pfull">$348</b></p>
+          </div>
+          <div class="pcards">
           <article class="pcard" data-plan="std">
-            
             <p class="pname">Standard Protection</p>
-            <p class="pfreq"><b>3 cleanings a year</b> · Every 4 months</p>
-            <p class="pprice"><span class="pm">$79</span><span class="pu">/month</span></p>
-            <p class="pper">≈ <b class="pc">$316</b> per cleaning</p>
-            <p class="psave">You save <b class="se">$32</b> every visit<br><span>That's <b class="sy">$96</b> a year</span></p>
-          <a class="btn pchoose" data-plan="std" href="/plan/?home=s1&amp;plan=std">Choose Standard →</a>
+            <p class="pfreq">Every 4 months</p>
+            <p class="pprice"><span class="pm">$79</span><span class="pu">per month</span></p>
+            <p class="pper"><b class="pc">$316</b> per visit</p>
+            <a class="btn pchoose" data-plan="std" href="/plan/?home=s1&amp;plan=std">Choose Standard →</a>
           </article>
           <article class="pcard" data-plan="enh">
-            
             <p class="pname">Enhanced Protection</p>
-            <p class="pfreq"><b>4 cleanings a year</b> · Every 3 months</p>
-            <p class="pprice"><span class="pm">$99</span><span class="pu">/month</span></p>
-            <p class="pper">≈ <b class="pc">$297</b> per cleaning</p>
-            <p class="psave">You save <b class="se">$51</b> every visit<br><span>That's <b class="sy">$204</b> a year</span></p>
-          <a class="btn pchoose" data-plan="enh" href="/plan/?home=s1&amp;plan=enh">Choose Enhanced →</a>
+            <p class="pfreq">Every 3 months</p>
+            <p class="pprice"><span class="pm">$99</span><span class="pu">per month</span></p>
+            <p class="pper"><b class="pc">$297</b> per visit</p>
+            <a class="btn pchoose" data-plan="enh" href="/plan/?home=s1&amp;plan=enh">Choose Enhanced →</a>
           </article>
-          <article class="pcard best" data-plan="pre">
-            <span class="pbadge">Lowest cost per cleaning</span>
+          <article class="pcard" data-plan="pre">
             <p class="pname">Premium Protection</p>
-            <p class="pfreq"><b>6 cleanings a year</b> · Every 2 months</p>
-            <p class="pprice"><span class="pm">$139</span><span class="pu">/month</span></p>
-            <p class="pper">≈ <b class="pc">$278</b> per cleaning</p>
-            <p class="psave">You save <b class="se">$70</b> every visit<br><span>That's <b class="sy">$420</b> a year</span></p>
-          <a class="btn pchoose" data-plan="pre" href="/plan/?home=s1&amp;plan=pre">Choose Premium →</a>
+            <p class="pfreq">Every 2 months</p>
+            <p class="pprice"><span class="pm">$139</span><span class="pu">per month</span></p>
+            <p class="pper"><b class="pc">$278</b> per visit</p>
+            <a class="btn pchoose" data-plan="pre" href="/plan/?home=s1&amp;plan=pre">Choose Premium →</a>
           </article>
+          </div>
         </div>
         <div class="plan-cta">
           <a class="btn btn-sun" id="pp-sign" href="/plan/?home=s1">Sign up online →</a>
@@ -484,7 +489,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
 
 <footer>
   <div class="wrap">
-    <span class="flogos"><a href="/exterior-cleaning/"><img src="/img/brand/logo-cleaning.webp" alt="MOM Exterior Cleaning" width="640" height="479" loading="lazy"></a><a href="/pavers/"><img src="/img/brand/logo-pavers.webp" alt="MOM Pavers &amp; Installation" width="640" height="532" loading="lazy"></a></span>
+    <span class="flogos"><a href="/exterior-cleaning/"><img src="/img/brand/logo-cleaning.webp" alt="MOM Exterior Cleaning" width="640" height="479" loading="lazy"></a></span>
     <span><b style="color:var(--ink)">MOM of Middleton</b> · Exterior Cleaning for Middleton &amp; the Eastport villages · Paver Supply &amp; Installation for all of The Villages &amp; Middleton, FL</span>
     <span>352-808-2082 · momofmiddleton@gmail.com · @momofmiddleton · <a href="/accessibility/">Accessibility</a></span>
   </div>
@@ -608,9 +613,11 @@ window.momSubmit=function(p){
     t.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-checked',b.dataset.h===h?'true':'false');});
     document.querySelectorAll('.pcard').forEach(function(c){var d=D[h][c.dataset.plan];
       c.querySelector('.pm').textContent=money(d[0]);c.querySelector('.pc').textContent='$'+d[1];
-      c.querySelector('.se').textContent='$'+d[2];c.querySelector('.sy').textContent='$'+d[3];
+      var sv=c.querySelector('.sv');if(sv)sv.textContent='$'+d[2];
       var a=c.querySelector('.pchoose');if(a)a.href='/plan/?home='+h+'&plan='+c.dataset.plan;});
     var s=document.getElementById('pp-sign');if(s)s.href='/plan/?home='+h;
+    var P=document.querySelector('.lvb');if(P)P.dataset.h=h;var L=document.getElementById('hlabel');if(L)L.textContent={pv:'Patio Villa',s1:'1-Story Home',s2:'2-Story Home'}[h];
+    var F=document.getElementById('pfull');if(F)F.textContent={pv:'$298',s1:'$348',s2:'$448'}[h];
   }
   t.addEventListener('click',function(e){var b=e.target.closest('button');if(b)show(b.dataset.h);});
 })();

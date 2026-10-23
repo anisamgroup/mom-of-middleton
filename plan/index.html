@@ -29,6 +29,8 @@
 .ps-plans b{font-family:var(--display);font-weight:900;font-stretch:112%;font-size:1.1rem}
 .ps-plans .pp{font-family:var(--display);font-weight:900;font-size:1.6rem;color:var(--spray);font-variant-numeric:tabular-nums}
 .ps-plans small{color:var(--ink-soft)}
+.ps-plans .ppc{font-weight:700;font-size:.95rem}
+.ps-plans .pps{font-size:.88rem;color:var(--ink-soft)}
 .ps-sum{background:var(--band);color:#fff;border-radius:12px;padding:16px 18px;display:grid;gap:4px;margin-top:14px}
 .ps-sum .k{font-family:var(--display);font-weight:800;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--sun)}
 .ps-sum .big{font-family:var(--display);font-weight:900;font-size:1.6rem;color:var(--sun);font-variant-numeric:tabular-nums}
@@ -411,9 +413,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
           <fieldset style="margin-top:14px">
             <legend>Plan level</legend>
             <div class="ps-plans">
-              <label><input type="radio" name="plan" value="std"><b>Standard</b><small>3 cleanings a year · every 4 months</small><span class="pp" data-p="std"></span></label>
-              <label><input type="radio" name="plan" value="enh"><b>Enhanced</b><small>4 cleanings a year · every 3 months</small><span class="pp" data-p="enh"></span></label>
-              <label><input type="radio" name="plan" value="pre" checked><b>Premium</b><small>6 cleanings a year · every 2 months</small><span class="pp" data-p="pre"></span></label>
+              <label><input type="radio" name="plan" value="std"><b>Standard</b><small>3 cleanings a year · every 4 months</small><span class="pp" data-p="std"></span><span class="ppc" data-c="std"></span><span class="pps" data-s="std"></span></label>
+              <label><input type="radio" name="plan" value="enh"><b>Enhanced</b><small>4 cleanings a year · every 3 months</small><span class="pp" data-p="enh"></span><span class="ppc" data-c="enh"></span><span class="pps" data-s="enh"></span></label>
+              <label><input type="radio" name="plan" value="pre" checked><b>Premium</b><small>6 cleanings a year · every 2 months</small><span class="pp" data-p="pre"></span><span class="ppc" data-c="pre"></span><span class="pps" data-s="pre"></span></label>
             </div>
           </fieldset>
           <div class="ps-sum" aria-live="polite">
@@ -553,7 +555,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
 </form>
 <script>
 (function(){
-  var D={"pv": [298, {"std": 62.5, "enh": 79, "pre": 109}], "s1": [348, {"std": 79, "enh": 99, "pre": 139}], "s2": [448, {"std": 99, "enh": 125, "pre": 175}]}, NAMES={pv:'Patio villa',s1:'1-story home',s2:'2-story home'}, PN={std:'Standard Protection',enh:'Enhanced Protection',pre:'Premium Protection'};
+  var D={"pv": [298, {"std": 62.5, "enh": 79, "pre": 109}], "s1": [348, {"std": 79, "enh": 99, "pre": 139}], "s2": [448, {"std": 99, "enh": 125, "pre": 175}]}, NAMES={pv:'Patio villa',s1:'1-story home',s2:'2-story home'}, V={std:3,enh:4,pre:6}, PN={std:'Standard Protection',enh:'Enhanced Protection',pre:'Premium Protection'};
   var form=document.getElementById('ps');
   function money(v){return '$'+(v%1?v.toFixed(2):v);}
   function val(n){var e=form.querySelector('input[name="'+n+'"]:checked');return e?e.value:'';}
@@ -563,6 +565,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
   function render(){
     var h=val('home'),p=val('plan');
     document.querySelectorAll('.pp').forEach(function(s){s.textContent=money(D[h][1][s.dataset.p])+'/mo';});
+    document.querySelectorAll('.ppc').forEach(function(s){s.textContent='Just $'+Math.round(D[h][1][s.dataset.c]*12/V[s.dataset.c])+' per cleaning';});
+    document.querySelectorAll('.pps').forEach(function(s){s.textContent='Save $'+(D[h][0]-Math.round(D[h][1][s.dataset.s]*12/V[s.dataset.s]))+' per visit';});
     $('sum-plan').textContent=PN[p];$('sum-home').textContent=NAMES[h];$('sum-rate').textContent=money(D[h][1][p]);$('sum-full').textContent=money(D[h][0]);
     document.querySelector('[data-f=home]').textContent=NAMES[h];
     document.querySelector('[data-f=plan]').textContent=PN[p]+' – '+money(D[h][1][p])+'/mo';

@@ -51,9 +51,17 @@
 .pcard.best .pu{color:#CFC8D6}
 .pper{font-size:1rem}
 .pper b{font-variant-numeric:tabular-nums}
-.psave{margin-top:6px;background:color-mix(in srgb,var(--sun) 22%,var(--surface));border-radius:10px;padding:10px 12px;font-weight:700;line-height:1.35}
-.psave span{font-weight:400;font-size:.92rem}
-.pcard.best .psave{background:var(--sun);color:var(--sun-ink)}
+.psave{font-size:.92rem;color:var(--ink-soft)}
+.pcard.best .psave{color:#CFC8D6}
+.pvis{font-size:.9rem;color:var(--ink-soft);margin-top:2px}
+.pcard.best .pvis{color:#CFC8D6}
+.pu{display:block;margin:6px 0 0}
+.pper{font-weight:700;margin-top:4px}
+.pcard.best .pper b{color:var(--sun)}
+.cards-intro{margin-top:18px}
+.cards-intro h3{font-family:var(--display);font-weight:900;font-size:1.3rem;line-height:1.2;margin:0 0 4px}
+.cards-intro p{color:var(--ink-soft);margin:0}
+.hlabel{font-family:var(--display);font-weight:800;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin:14px 0 0}
 .psave b{font-variant-numeric:tabular-nums}
 .plan-cta{display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px;margin-top:6px}
 .plan-cta > span{color:var(--ink-soft)}
@@ -418,13 +426,17 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
       <div class="price-block plan">
         <div class="plan-hero">
           
-          <h2 class="price-title">How the plan works</h2>
-          <p>Pick how often you want us. Every visit includes the full house wash and the Complete Exterior Package, and the more often we come, the less each cleaning costs.</p>
+          <h2 class="price-title">Protect your home. We'll handle the schedule.</h2>
+          <p>One fixed monthly payment. Professional exterior cleaning all year long.</p>
           <ul class="perks">
             <li>House wash + Complete Exterior Package every visit</li>
             <li>Lanai past the roofline included (normally +$50)</li>
             <li>One fixed monthly price, no surprise bills</li>
           </ul>
+        </div>
+        <div class="cards-intro">
+          <h3>Your home stays clean. Your schedule stays free.</h3>
+          <p>Choose how often you'd like your home professionally cleaned. We'll take care of the rest.</p>
         </div>
         <div class="htoggle" role="radiogroup" aria-label="Your home type">
           <span class="htoggle-l">Show prices for my</span>
@@ -432,32 +444,36 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
           <button type="button" role="radio" aria-checked="true" data-h="s1">1-story home</button>
           <button type="button" role="radio" aria-checked="false" data-h="s2">2-story home</button>
         </div>
+        <p class="hlabel"><span id="hlabel">1-story home</span> pricing</p>
         <div class="pcards">
           <article class="pcard" data-plan="std">
             
             <p class="pname">Standard Protection</p>
-            <p class="pfreq"><b>3 cleanings a year</b> · Every 4 months</p>
-            <p class="pprice"><span class="pm">$79</span><span class="pu">/month</span></p>
-            <p class="pper">≈ <b class="pc">$316</b> per cleaning</p>
-            <p class="psave">You save <b class="se">$32</b> every visit<br><span>That's <b class="sy">$96</b> a year</span></p>
+            <p class="pfreq">Every 4 months</p>
+            <p class="pprice"><span class="pm">$79</span><span class="pu">per month</span></p>
+            <p class="pvis">3 visits/year</p>
+            <p class="pper">Just <b class="pc">$316</b> per cleaning</p>
+            <p class="psave">Save <b class="se">$32</b> per visit</p>
           <a class="btn pchoose" data-plan="std" href="/plan/?home=s1&amp;plan=std">Choose Standard →</a>
           </article>
           <article class="pcard" data-plan="enh">
             
             <p class="pname">Enhanced Protection</p>
-            <p class="pfreq"><b>4 cleanings a year</b> · Every 3 months</p>
-            <p class="pprice"><span class="pm">$99</span><span class="pu">/month</span></p>
-            <p class="pper">≈ <b class="pc">$297</b> per cleaning</p>
-            <p class="psave">You save <b class="se">$51</b> every visit<br><span>That's <b class="sy">$204</b> a year</span></p>
+            <p class="pfreq">Every 3 months</p>
+            <p class="pprice"><span class="pm">$99</span><span class="pu">per month</span></p>
+            <p class="pvis">4 visits/year</p>
+            <p class="pper">Just <b class="pc">$297</b> per cleaning</p>
+            <p class="psave">Save <b class="se">$51</b> per visit</p>
           <a class="btn pchoose" data-plan="enh" href="/plan/?home=s1&amp;plan=enh">Choose Enhanced →</a>
           </article>
           <article class="pcard best" data-plan="pre">
-            <span class="pbadge">Lowest cost per cleaning</span>
+            
             <p class="pname">Premium Protection</p>
-            <p class="pfreq"><b>6 cleanings a year</b> · Every 2 months</p>
-            <p class="pprice"><span class="pm">$139</span><span class="pu">/month</span></p>
-            <p class="pper">≈ <b class="pc">$278</b> per cleaning</p>
-            <p class="psave">You save <b class="se">$70</b> every visit<br><span>That's <b class="sy">$420</b> a year</span></p>
+            <p class="pfreq">Every 2 months</p>
+            <p class="pprice"><span class="pm">$139</span><span class="pu">per month</span></p>
+            <p class="pvis">6 visits/year</p>
+            <p class="pper">Just <b class="pc">$278</b> per cleaning</p>
+            <p class="psave">Save <b class="se">$70</b> per visit</p>
           <a class="btn pchoose" data-plan="pre" href="/plan/?home=s1&amp;plan=pre">Choose Premium →</a>
           </article>
         </div>
@@ -608,9 +624,10 @@ window.momSubmit=function(p){
     t.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-checked',b.dataset.h===h?'true':'false');});
     document.querySelectorAll('.pcard').forEach(function(c){var d=D[h][c.dataset.plan];
       c.querySelector('.pm').textContent=money(d[0]);c.querySelector('.pc').textContent='$'+d[1];
-      c.querySelector('.se').textContent='$'+d[2];c.querySelector('.sy').textContent='$'+d[3];
+      c.querySelector('.se').textContent='$'+d[2];
       var a=c.querySelector('.pchoose');if(a)a.href='/plan/?home='+h+'&plan='+c.dataset.plan;});
     var s=document.getElementById('pp-sign');if(s)s.href='/plan/?home='+h;
+    var L=document.getElementById('hlabel');if(L)L.textContent={pv:'Patio villa',s1:'1-story home',s2:'2-story home'}[h];
   }
   t.addEventListener('click',function(e){var b=e.target.closest('button');if(b)show(b.dataset.h);});
 })();

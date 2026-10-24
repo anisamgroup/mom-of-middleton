@@ -31,7 +31,7 @@ const WASH_TEXT = 'Removal of all dirt, mold and mildew from exterior walls, win
 const LINE_TEXT = {
   pv: WASH_TEXT, s1: WASH_TEXT, s2: WASH_TEXT,
   pkg: 'Driveway, walkway, entry, back patio, exterior gutters, oxidation streaks (tiger stripes) and screen lanai. Removes dirt, mold, mildew and most bugs.',
-  lanai: 'Lanai/patio area extending past the roofline.',
+  lanai: 'Any lanai that extends past the roofline.',
 };
 const BEFORE_VISIT = "Water plants and grass near the areas we're cleaning at least 1 hour before we arrive and for 3 days after; some browning may occur. Move cars, furniture, rugs, potted plants and hanging baskets away from the service areas.";
 const WAIVER = 'By approving this estimate, verbally or otherwise, you release and hold harmless MOM of Middleton and its employees and agents from claims arising from the services, including property or plant damage, discoloration or fading of surfaces, damage to light fixtures, outlets or key sockets, personal injury, and events beyond our control. You accept the risks of exterior cleaning, are responsible for insuring your own property, and are responsible for any permits or law-enforcement personnel the job requires.';

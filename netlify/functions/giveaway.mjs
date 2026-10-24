@@ -19,7 +19,10 @@ const ZIPS = ['34785', '34762', '32162', '32163']; // usual ZIPs for these areas
 const AREAS = { middleton: 'Middleton (Wildwood)', eastport: 'Eastport area, The Villages', brownwood: 'Brownwood area, The Villages' };
 // Villages that count (approved by Ani, Oct 24, 2026). Middleton homes use the value "Middleton".
 const VILLAGES = {"middleton": ["Middleton"], "eastport": ["Dabney", "Edenfield", "LaGrange", "Lake Denham", "Lakeview", "Moultrie Creek", "Newell", "Oak Hollow", "Shady Brook", "Waters Edge", "Well Point"], "brownwood": ["Bradford", "Cason Hammock", "Charlotte", "Chitty Chatty", "Citrus Grove", "Collier", "DeLuna", "DeSoto", "Dunedin", "Fenney", "Fernandina", "Gilchrist", "Hammock at Fenney", "Hawkins", "Hillsborough", "LaBelle", "Lake Deaton", "Linden", "Marsh Bend", "McClure", "Monarch Grove", "Osceola Hills", "Pinellas", "Richmond", "Sanibel", "St. Catherine", "St. Johns"]};
-const COUPON_UNTIL = 'January 31, 2027';
+const COUPON_UNTIL = 'March 1, 2027';
+// A copy of every office notice also goes to Ani's inbox so Claude can enter coupons in ServiceMonster
+// and run the Dec 14 draw (set NOTIFY_CC in Netlify to change it, or to "none" to switch it off).
+const CC = (process.env.NOTIFY_CC || 'anisam.ferrada@gmail.com').toLowerCase() === 'none' ? [] : [process.env.NOTIFY_CC || 'anisam.ferrada@gmail.com'];
 
 const json = (status, body) => new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json' } });
 const clean = (s, max = 200) => String(s ?? '').replace(/[\u0000-\u001f<>]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, max);
@@ -75,7 +78,7 @@ async function coupon(p, isTest) {
 <p><a href="https://momofmiddleton.com/get-my-price/" style="color:#6A0B9E;font-weight:700;">Get your price</a> or call/text <b>352-808-2082</b>.</p>
 <p><b>MOM of Middleton</b> · Dirty House? Call MOM!</p>`);
   let officeSent = false;
-  try { await sendEmail({ to: office, replyTo: c.email, subject: `${isTest ? 'TEST – ' : ''}💵 $50 coupon ${code}: ${c.name}`, html: officeHtml, text: officeText }); officeSent = true; } catch (e) { console.error('Office email failed:', e.message); }
+  try { await sendEmail({ to: [office, ...CC], replyTo: c.email, subject: `${isTest ? 'TEST – ' : ''}💵 $50 coupon ${code}: ${c.name}`, html: officeHtml, text: officeText }); officeSent = true; } catch (e) { console.error('Office email failed:', e.message); }
   let sent = false;
   try { await sendEmail({ to: c.email, replyTo: office, subject: 'Your $50 coupon from MOM of Middleton 💵', html: custHtml, text: custText }); sent = true; } catch (e) { console.error('Coupon email failed:', e.message); }
   if (!sent) return json(502, { message: 'Sorry, we could not send your coupon.' });
@@ -132,7 +135,7 @@ export default async (req) => {
 
   let officeSent = false, custSent = false;
   try {
-    await sendEmail({ to: office, replyTo: d.email, subject: `${isTest ? 'TEST – ' : ''}🎁 Giveaway entry: ${d.name}${d.forWho === 'neighbor' ? ' for ' + d.nomName : ''} – ${d.village}`, html: officeHtml, text: officeText });
+    await sendEmail({ to: [office, ...CC], replyTo: d.email, subject: `${isTest ? 'TEST – ' : ''}🎁 Giveaway entry: ${d.name}${d.forWho === 'neighbor' ? ' for ' + d.nomName : ''} – ${d.village}`, html: officeHtml, text: officeText });
     officeSent = true;
   } catch (e) { console.error('Office email failed:', e.message); }
   try {

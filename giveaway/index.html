@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>MOM's Holiday Giveaway | MOM of Middleton</title>
-<meta name="description" content="Win a free driveway cleaning from MOM of Middleton. Open to homes in Middleton and the Eastport area of The Villages, FL. Entries close Dec 13, 2026.">
+<meta name="description" content="Win a free driveway cleaning from MOM of Middleton. Open to homes in Middleton and the Eastport and Brownwood areas of The Villages, FL. Entries close Dec 13, 2026.">
 <meta name="robots" content="noindex">
 <link rel="icon" href="/logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -40,6 +40,10 @@
 .gv-rules ul{margin:10px 0 0;padding-left:1.2em;display:grid;gap:10px}
 .gv-q{margin-top:14px;font-weight:700}
 .opt-l{font-weight:400;color:var(--ink-soft)}
+.gv-coupon{display:grid;gap:14px;background:#FFF7D6;border:3px solid var(--sun);border-radius:12px;padding:18px;color:#1A1400}
+.gv-coupon input{background:#fff}
+.gv-cp-h{font-weight:700}
+.gv-cp-big{font-family:var(--display);font-weight:900;font-style:italic;font-stretch:112%;font-size:1.6rem;line-height:1.15;color:#9A0000}
 #gv-rest{display:grid;gap:20px}
 /* division switch: Exterior Cleaning | Pavers */
 .divbar{background:var(--band)}
@@ -384,7 +388,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
       <p class="gv-kicker">🎁 MOM's Holiday Giveaway</p>
       <h1>Win a FREE driveway cleaning!</h1>
       <p class="gv-lede">Enter for your own home, or nominate a neighbor who deserves a little holiday sparkle. One winner is picked at random on <b>Monday, December 14</b>.</p>
-      <p class="gv-only">📍 Only for homes in <b>Middleton</b> or the <b>Eastport area of The Villages</b></p>
+      <p class="gv-only">📍 Only for homes in <b>Middleton</b>, <b>Eastport</b> or <b>Brownwood</b></p>
     </div>
   </section>
 
@@ -417,9 +421,22 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
             <div class="opts">
               <label class="opt"><span class="l"><input type="radio" name="area" value="middleton" required> <span><b>Middleton</b><small>Wildwood, FL 34785</small></span></span></label>
               <label class="opt"><span class="l"><input type="radio" name="area" value="eastport"> <span><b>A village in the Eastport area</b><small>The Villages, FL</small></span></span></label>
+              <label class="opt"><span class="l"><input type="radio" name="area" value="brownwood"> <span><b>A village in the Brownwood area</b><small>The Villages, FL</small></span></span></label>
               <label class="opt"><span class="l"><input type="radio" name="area" value="other"> <span><b>Somewhere else</b></span></span></label>
             </div>
-            <p id="gv-other" class="gv-stop" hidden>Sorry, this giveaway is only for homes in Middleton or the Eastport area of The Villages. We'd still love to help! <a href="/get-my-price/">Get your price</a> or call <a href="tel:+13528082082">352-808-2082</a>.</p>
+            <div id="gv-other" class="gv-coupon" hidden>
+              <p class="gv-cp-h">This giveaway is only for Middleton, Eastport &amp; Brownwood homes, but we don't want you to leave empty-handed! 🎁</p>
+              <p class="gv-cp-big">Get <b>$50 OFF</b> your first exterior cleaning with MOM.</p>
+              <p>Tell us where to send your coupon. Good through January 31, 2027.</p>
+              <label>Your name <input name="cname" autocomplete="name"></label>
+              <div class="row2">
+                <label>Phone <input name="cphone" type="tel" autocomplete="tel"></label>
+                <label>Email <input name="cemail" type="email" autocomplete="email"></label>
+              </div>
+              <label>Home address, city and ZIP <input name="caddress" autocomplete="street-address" placeholder="1234 Example Way, The Villages 32159"></label>
+              <p id="gv-cerr" class="gv-stop" role="alert" hidden></p>
+              <button class="btn btn-sun gv-btn" type="button" id="gv-cbtn">Send me my $50 coupon 💵</button>
+            </div>
           </fieldset>
 
           <div id="gv-rest">
@@ -431,7 +448,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
 
             <label><span id="addr-label">Street address of the home</span> <input name="address" autocomplete="street-address" required placeholder="1234 Example Way"></label>
             <div class="row2">
-              <label>Village or neighborhood <input name="village" required placeholder="e.g. Village of Moultrie Creek"></label>
+              <label id="vwrap">Village <select name="village"><option value="">Choose your village…</option></select></label>
               <label>ZIP code <input name="zip" inputmode="numeric" maxlength="5" required placeholder="34785" autocomplete="postal-code"></label>
             </div>
 
@@ -451,10 +468,16 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
           </div>
         </form>
 
+        <div id="gv-cdone" class="gv-msg" hidden tabindex="-1">
+          <h2 class="gv-h">Your $50 coupon is on its way! 💵</h2>
+          <p>Check your email for your coupon code. Mention it when you book, and we'll take $50 off your first exterior cleaning (good through January 31, 2027).</p>
+          <p>Ready now? <a href="/get-my-price/">Get your price</a> or call/text <a href="tel:+13528082082">352-808-2082</a>.</p>
+        </div>
+
         <div id="gv-done" class="gv-msg" hidden tabindex="-1">
           <h2 class="gv-h">You're entered! 🎉</h2>
           <p id="gv-done-text">Good luck! We'll pick the winner at random on Monday, December 14 and announce it on our Facebook and Instagram pages. If you win, we'll call you to confirm the address and set up a day.</p>
-          <p>Know another neighbor in Middleton or Eastport who deserves it? <a href="/giveaway/">Nominate them too</a>.</p>
+          <p>Know another neighbor in Middleton, Eastport or Brownwood who deserves it? <a href="/giveaway/">Nominate them too</a>.</p>
         </div>
       </div>
 
@@ -462,11 +485,12 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
         <h2 class="gv-h">Giveaway rules</h2>
         <ul>
           <li><b>Prize:</b> one free driveway cleaning from MOM of Middleton.</li>
-          <li><b>Who can win:</b> only homes in Middleton or the Eastport area of The Villages, FL. We confirm the address before anything is scheduled. An entry for a home outside these areas can't win, and we'll draw again.</li>
+          <li><b>Villages that count:</b><br><b>Eastport area:</b> Dabney, Edenfield, LaGrange, Lake Denham, Lakeview, Moultrie Creek, Newell, Oak Hollow, Shady Brook, Waters Edge, Well Point.<br><b>Brownwood area:</b> Bradford, Cason Hammock, Charlotte, Chitty Chatty, Citrus Grove, Collier, DeLuna, DeSoto, Dunedin, Fenney, Fernandina, Gilchrist, Hammock at Fenney, Hawkins, Hillsborough, LaBelle, Lake Deaton, Linden, Marsh Bend, McClure, Monarch Grove, Osceola Hills, Pinellas, Richmond, Sanibel, St. Catherine, St. Johns.<br><b>Plus all of Middleton.</b></li>
+          <li><b>Who can win:</b> only homes in Middleton or the Eastport or Brownwood areas of The Villages, FL. We confirm the address before anything is scheduled. An entry for a home outside these areas can't win, and we'll draw again.</li>
           <li><b>How to enter:</b> fill in this form for your own home or a neighbor's. Entrants must be 18 or older. No purchase needed.</li>
           <li><b>One entry per home.</b> Extra entries for the same home don't add chances.</li>
           <li><b>Dates:</b> entries close Sunday, December 13 at 11:59 PM. The winner is picked at random on Monday, December 14 and announced on our Facebook and Instagram pages.</li>
-          <li><b>Gifting:</b> if you win, you can keep the cleaning or give it to another home in Middleton or Eastport.</li>
+          <li><b>Gifting:</b> if you win, you can keep the cleaning or give it to another home in Middleton, Eastport or Brownwood.</li>
           <li>We'll only use your details for this giveaway and to contact you about it.</li>
           <li>This giveaway is not sponsored, endorsed or run by Facebook or Instagram.</li>
         </ul>
@@ -477,6 +501,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
 </main>
 <script>
 (function(){
+  var VIL={"eastport": ["Dabney", "Edenfield", "LaGrange", "Lake Denham", "Lakeview", "Moultrie Creek", "Newell", "Oak Hollow", "Shady Brook", "Waters Edge", "Well Point"], "brownwood": ["Bradford", "Cason Hammock", "Charlotte", "Chitty Chatty", "Citrus Grove", "Collier", "DeLuna", "DeSoto", "Dunedin", "Fenney", "Fernandina", "Gilchrist", "Hammock at Fenney", "Hawkins", "Hillsborough", "LaBelle", "Lake Deaton", "Linden", "Marsh Bend", "McClure", "Monarch Grove", "Osceola Hills", "Pinellas", "Richmond", "Sanibel", "St. Catherine", "St. Johns"]};
   var OPEN=Date.UTC(2026,10,16,5,0,0), CLOSE=Date.UTC(2026,11,14,5,0,0); // Nov 16 00:00 and Dec 14 00:00 Florida time
   var test=/[?&]test=1/.test(location.search), now=Date.now();
   var f=document.getElementById('gv-form');
@@ -488,17 +513,31 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
     nom.hidden = who!=='neighbor';
     f.nomName.required = who==='neighbor';
     document.getElementById('addr-label').textContent = who==='neighbor' ? "Street address of your neighbor's home" : 'Street address of your home';
+    var vs=f.village, vw=document.getElementById('vwrap');
+    if(area!==vs.dataset.area){vs.dataset.area=area; vs.length=1; (VIL[area]||[]).forEach(function(v){vs.add(new Option('Village of '+v,v));}); if(area==='middleton'){vs.add(new Option('Middleton','Middleton'));vs.value='Middleton';}}
+    vw.hidden = !VIL[area];
     other.hidden = area!=='other';
     rest.hidden = area==='other';
   }
   f.addEventListener('change',sync); sync();
+  document.getElementById('gv-cbtn').addEventListener('click',function(){
+    var ce=document.getElementById('gv-cerr'); ce.hidden=true;
+    var q={kind:'coupon',name:f.cname.value,phone:f.cphone.value,email:f.cemail.value,address:f.caddress.value,test:test};
+    if(!q.name.trim()||!q.phone.trim()||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(q.email.trim())||!q.address.trim()){ce.textContent='Please fill in your name, phone, email and address.';ce.hidden=false;return;}
+    var b=this; b.disabled=true; b.textContent='Sending…';
+    fetch('/.netlify/functions/giveaway',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(q)})
+      .then(function(r){return r.json().then(function(j){return {ok:r.ok,j:j};});})
+      .then(function(x){ if(!x.ok) throw new Error(x.j&&x.j.message||''); f.hidden=true; var d=document.getElementById('gv-cdone'); d.hidden=false; d.focus(); d.scrollIntoView({block:'start'}); })
+      .catch(function(e2){b.disabled=false;b.textContent='Send me my $50 coupon 💵';ce.textContent=(e2.message||'Something went wrong.')+' Please try again, or call/text 352-808-2082.';ce.hidden=false;});
+  });
   f.addEventListener('submit',function(e){
     e.preventDefault(); err.hidden=true;
     var area=f.area.value, zip=(f.zip.value||'').trim(), msg='';
     if(!area) msg='Please choose where the home is.';
-    else if(area==='other') msg='Sorry, this giveaway is only for homes in Middleton or the Eastport area.';
+    else if(area==='other') msg='Sorry, this giveaway is only for homes in Middleton, Eastport or Brownwood.';
     else if(!f.checkValidity()) msg='Please fill in every box (address, village, ZIP, name, phone and email) and tick the 18+ box.';
-    else if(!/^(34785|34762|32162|32163)$/.test(zip)) msg='That ZIP code is outside Middleton and the Eastport area. This giveaway is only for homes there. Questions? Call 352-808-2082.';
+    else if(!f.village.value) msg='Please choose your village. If it isn\'t on the list, choose "Somewhere else" above to get $50 off your first cleaning instead.';
+    else if(!/^\d{5}$/.test(zip)) msg='Please enter a 5-digit ZIP code.';
     if(msg){err.textContent=msg;err.hidden=false;err.scrollIntoView({block:'center'});return;}
     var b=f.querySelector('button[type=submit]'); b.disabled=true; b.textContent='Sending…';
     var p={forWho:f.forWho.value,area:area,nomName:f.nomName.value,why:f.why.value,address:f.address.value,village:f.village.value,zip:zip,name:f.name.value,phone:f.phone.value,email:f.email.value,agree:f.agree.checked,test:test};

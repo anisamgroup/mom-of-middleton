@@ -5,7 +5,7 @@
 //   1. To the office (momofmiddleton@gmail.com): the entry, numbered MOM-GIVE-YYMMDD-####.
 //   2. To the person who entered: a short "you're entered" confirmation with the rules.
 //
-// Only homes in Middleton or the Eastport and Brownwood areas of The Villages can win. The page and this
+// Only homes in Middleton or the Eastport area of The Villages can win. The page and this
 // function both refuse other areas and ZIP codes; the office still confirms the address
 // (village name) before the winner is announced.
 //
@@ -16,9 +16,9 @@
 const OPEN = Date.UTC(2026, 10, 16, 5, 0, 0);   // Mon Nov 16, 2026, 00:00 Florida time
 const CLOSE = Date.UTC(2026, 11, 14, 5, 0, 0);  // Mon Dec 14, 2026, 00:00 Florida time (= Dec 13, 11:59 PM)
 const ZIPS = ['34785', '34762', '32162', '32163']; // usual ZIPs for these areas; others are flagged for the office, not refused
-const AREAS = { middleton: 'Middleton (Wildwood)', eastport: 'Eastport area, The Villages', brownwood: 'Brownwood area, The Villages' };
+const AREAS = { middleton: 'Middleton (Wildwood)', eastport: 'Eastport area, The Villages' };
 // Villages that count (approved by Ani, Oct 24, 2026). Middleton homes use the value "Middleton".
-const VILLAGES = {"middleton": ["Middleton"], "eastport": ["Dabney", "Edenfield", "LaGrange", "Lake Denham", "Lakeview", "Moultrie Creek", "Newell", "Oak Hollow", "Shady Brook", "Waters Edge", "Well Point"], "brownwood": ["Bradford", "Cason Hammock", "Charlotte", "Chitty Chatty", "Citrus Grove", "Collier", "DeLuna", "DeSoto", "Dunedin", "Fenney", "Fernandina", "Gilchrist", "Hammock at Fenney", "Hawkins", "Hillsborough", "LaBelle", "Lake Deaton", "Linden", "Marsh Bend", "McClure", "Monarch Grove", "Osceola Hills", "Pinellas", "Richmond", "Sanibel", "St. Catherine", "St. Johns"]};
+const VILLAGES = {"middleton": ["Middleton"], "eastport": ["Dabney", "Edenfield", "LaGrange", "Lake Denham", "Lakeview", "Moultrie Creek", "Newell", "Oak Hollow", "Shady Brook", "Waters Edge", "Well Point"]};
 const COUPON_UNTIL = 'March 1, 2027';
 // A copy of every office notice also goes to Ani's inbox so Claude can enter coupons in ServiceMonster
 // and run the Dec 14 draw (set NOTIFY_CC in Netlify to change it, or to "none" to switch it off).
@@ -62,7 +62,7 @@ async function coupon(p, isTest) {
   if (!c.name || !c.phone || !c.address || !/^[^\s@,;]+@[^\s@,;]+\.[^\s@,;]+$/.test(c.email)) return json(400, { message: 'Please fill in your name, phone, email and address.' });
   const code = 'MOM50-' + Math.floor(1000 + Math.random() * 9000);
   const office = process.env.OFFICE_EMAIL || process.env.OWNER_EMAIL || 'momofmiddleton@gmail.com';
-  const rows = [['Coupon code', code], ['Offer', `$50 off first exterior cleaning, good through ${COUPON_UNTIL}`], ['Name', c.name], ['Phone', c.phone], ['Email', c.email], ['Address', c.address], ['Came from', 'Holiday giveaway page (home outside Middleton / Eastport / Brownwood)']];
+  const rows = [['Coupon code', code], ['Offer', `$50 off first exterior cleaning, good through ${COUPON_UNTIL}`], ['Name', c.name], ['Phone', c.phone], ['Email', c.email], ['Address', c.address], ['Came from', 'Holiday giveaway page (home outside Middleton / Eastport)']];
   const officeText = rows.map(([k, v]) => `${k}: ${v}`).join('\n') + '\n\nWhen they book: take $50 off the first exterior cleaning and note the code in ServiceMonster.';
   const officeHtml = wrap(`<h2 style="margin:0 0 12px;font-size:20px;">💵 $50-off coupon sent${isTest ? ' (TEST)' : ''}</h2>
 <table role="presentation" cellpadding="6" cellspacing="0" style="border-collapse:collapse;font-size:15px;">${rows.map(([k, v]) => `<tr><td style="color:#57525E;vertical-align:top;white-space:nowrap;">${esc(k)}</td><td><b>${esc(v)}</b></td></tr>`).join('')}</table>
@@ -103,7 +103,7 @@ export default async (req) => {
 
   if (p.kind === 'coupon') return coupon(p, isTest);
 
-  if (!AREAS[d.area]) return json(400, { message: 'Sorry, this giveaway is only for homes in Middleton, Eastport or Brownwood.' });
+  if (!AREAS[d.area]) return json(400, { message: 'Sorry, this giveaway is only for homes in Middleton or Eastport.' });
   if (!VILLAGES[d.area].includes(d.village)) return json(400, { message: 'Please choose your village from the list.' });
   if (!/^\d{5}$/.test(d.zip)) return json(400, { message: 'Please enter a 5-digit ZIP code.' });
   const missing = ['address', 'village', 'name', 'phone', 'email'].filter((k) => !d[k]);
@@ -119,18 +119,18 @@ export default async (req) => {
     ['Home address', `${d.address}, ${d.zip}${ZIPS.includes(d.zip) ? '' : '  ⚠️ unusual ZIP, check the address'}`], ['Entered by', d.name], ['Phone', d.phone], ['Email', d.email],
     ...(d.why ? [['Why they deserve it', d.why]] : []), ['18+ and agreed to rules', 'Yes'],
   ];
-  const officeText = rows.map(([k, v]) => `${k}: ${v}`).join('\n') + '\n\nBefore announcing a winner: confirm the home really is in Middleton, Eastport or Brownwood (check the village and address).';
+  const officeText = rows.map(([k, v]) => `${k}: ${v}`).join('\n') + '\n\nBefore announcing a winner: confirm the home really is in Middleton or Eastport (check the village and address).';
   const officeHtml = wrap(`<h2 style="margin:0 0 12px;font-size:20px;">🎁 New giveaway entry${isTest ? ' (TEST)' : ''}</h2>
 <table role="presentation" cellpadding="6" cellspacing="0" style="border-collapse:collapse;font-size:15px;">${rows.map(([k, v]) => `<tr><td style="color:#57525E;vertical-align:top;white-space:nowrap;">${esc(k)}</td><td><b>${esc(v)}</b></td></tr>`).join('')}</table>
-<p style="margin-top:14px;font-size:14px;color:#9A0000;">Before announcing a winner, confirm the home really is in Middleton, Eastport or Brownwood (check the village and address).</p>`);
+<p style="margin-top:14px;font-size:14px;color:#9A0000;">Before announcing a winner, confirm the home really is in Middleton or Eastport (check the village and address).</p>`);
 
   const who = d.forWho === 'neighbor' ? `${d.nomName}'s home` : 'your home';
-  const custText = `Hi ${d.name},\n\nYou're entered in MOM's Holiday Giveaway for ${who} at ${d.address} (${d.village}). Your entry number is ${no}.\n\nWe pick one winner at random on Monday, December 14 and announce it on our Facebook and Instagram pages. If you win, we'll call you to confirm the address and set up a day.\n\nRemember: only homes in Middleton or the Eastport and Brownwood areas of The Villages can win.\n\nGood luck!\nMOM of Middleton · Dirty House? Call MOM! · 352-808-2082`;
+  const custText = `Hi ${d.name},\n\nYou're entered in MOM's Holiday Giveaway for ${who} at ${d.address} (${d.village}). Your entry number is ${no}.\n\nWe pick one winner at random on Monday, December 14 and announce it on our Facebook and Instagram pages. If you win, we'll call you to confirm the address and set up a day.\n\nRemember: only homes in Middleton or the Eastport area of The Villages can win.\n\nGood luck!\nMOM of Middleton · Dirty House? Call MOM! · 352-808-2082`;
   const custHtml = wrap(`<h2 style="margin:0 0 12px;font-size:22px;">You're entered! 🎉</h2>
 <p>Hi ${esc(d.name)},</p>
 <p>You're entered in <b>MOM's Holiday Giveaway</b> for ${esc(who)} at ${esc(d.address)} (${esc(d.village)}). Your entry number is <b>${no}</b>.</p>
 <p>We pick one winner at random on <b>Monday, December 14</b> and announce it on our Facebook and Instagram pages. If you win, we'll call you to confirm the address and set up a day.</p>
-<p style="font-size:14px;color:#57525E;">Only homes in Middleton or the Eastport and Brownwood areas of The Villages can win.</p>
+<p style="font-size:14px;color:#57525E;">Only homes in Middleton or the Eastport area of The Villages can win.</p>
 <p>Good luck!<br><b>MOM of Middleton</b> · Dirty House? Call MOM!</p>`);
 
   let officeSent = false, custSent = false;

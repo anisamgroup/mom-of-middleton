@@ -49,6 +49,21 @@ const TERMS = [
   'The Client is solely responsible for obtaining and maintaining adequate insurance coverage for any potential loss or damage to their property. The Client is responsible for obtaining and paying for any permits required and any law enforcement personnel for the job.',
 ];
 
+// "Getting ready" instructions sent right away when a customer books on the website
+// (same guidelines as the ServiceMonster Appointment Confirmation email, Nov 8, 2026).
+const PREP = [
+  'Please water landscaping and plants around the cleaning area before we arrive. If you have an irrigation system, running it for about 10–15 minutes beforehand helps.',
+  'Remove or move outdoor furniture, rugs, potted plants, decorations and other personal items away from the areas being cleaned.',
+  "For house washing, please move any delicate items away from the home's exterior if possible.",
+  'If lawn, landscape, pool or other outdoor service providers are scheduled, please avoid having them come the same day as your cleaning.',
+  'For your comfort and safety, please stay clear of the immediate work area while we clean.',
+  'Please keep pets indoors or away from the work area until surfaces have dried.',
+];
+const PREP_NOTE = [
+  'Our cleaning process uses professional-grade cleaning solutions made for exterior surfaces. They are heavily diluted and applied to safely remove dirt, algae, mildew and organic growth. Please avoid touching freshly treated surfaces until they have dried and been naturally rinsed.',
+  'While rare, some sensitive plants or grass may show minor stress after cleaning. Watering before and after the service (for 3 days afterward) greatly reduces this and helps landscaping recover quickly.',
+];
+
 const json = (status, body) => new Response(JSON.stringify(body), {
   status, headers: { 'Content-Type': 'application/json' },
 });
@@ -175,6 +190,28 @@ function officeEmail(d, q, no, customerSent) {
   return { subject: `New Exterior Cleaning estimate request (${d.book ? 'BOOK – pending schedule' : 'estimate only'}): ${d.name}, ${HOME_NAMES[d.homeType]}, ${money(q.total)}`, html, text };
 }
 
+function prepEmail(d) {
+  const first = d.name.split(' ')[0];
+  const html = shell(`
+<tr><td style="padding:28px 24px 8px;">
+  <div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:${C.spray};font-weight:700;">Getting ready for your cleaning</div>
+  <h1 style="margin:6px 0 12px;font-size:24px;line-height:1.25;">Hi ${esc(first)}, here's how to get ready</h1>
+  <p style="margin:0 0 8px;font-size:15px;line-height:1.5;">Thank you for booking MOM of Middleton for ${esc(d.address)}, ${esc(d.city)}. Marco will call or text you at ${esc(d.phone)} to set your date. Sometimes that's as soon as the next day, so we're sending these instructions now.</p>
+</td></tr>
+<tr><td style="padding:4px 24px 8px;">
+  <ol style="margin:0;padding-left:20px;font-size:15px;line-height:1.5;">${PREP.map((t) => `<li style="margin:0 0 8px;">${esc(t)}</li>`).join('')}</ol>
+</td></tr>
+<tr><td style="padding:4px 24px 20px;">
+  ${PREP_NOTE.map((t) => `<p style="margin:0 0 10px;font-size:13px;line-height:1.5;color:${C.soft};">${esc(t)}</p>`).join('')}
+  <p style="margin:8px 0 0;font-size:15px;line-height:1.5;">Questions before your appointment? Call or text ${PHONE} or reply to this email. We look forward to making your home shine!</p>
+</td></tr>`, 'MOM of Middleton · Exterior Cleaning');
+  const text = [`Hi ${first}, here's how to get ready for your MOM of Middleton cleaning`, '',
+    `Thank you for booking MOM of Middleton for ${d.address}, ${d.city}. Marco will call or text you at ${d.phone} to set your date. Sometimes that's as soon as the next day, so we're sending these instructions now.`, '',
+    ...PREP.map((t, i) => `${i + 1}. ${t}`), '', ...PREP_NOTE, '',
+    `Questions before your appointment? Call or text ${PHONE} or reply to this email. We look forward to making your home shine!`].join('\n');
+  return { subject: 'How to get ready for your MOM of Middleton cleaning', html, text };
+}
+
 async function sendEmail({ to, bcc, replyTo, subject, html, text }) {
   const key = process.env.RESEND_API_KEY || process.env.Resend_API_Key || Object.entries(process.env).find(([k]) => k.toUpperCase().replace(/[^A-Z]/g, '') === 'RESENDAPIKEY')?.[1];
   if (!key) throw new Error('RESEND_API_KEY is not set');
@@ -241,6 +278,12 @@ export default async (req) => {
     await sendEmail({ to: d.emails, replyTo: office, ...customerEmail(d, q, no) });
     customerSent = true;
   } catch (e) { console.error('Customer email failed:', e.message); }
+
+  // Booked on the website: send the "how to get ready" instructions right away (jobs are often done the next day).
+  if (d.book && d.emails.length) {
+    try { await sendEmail({ to: d.emails, replyTo: office, ...prepEmail(d) }); }
+    catch (e) { console.error('Instructions email failed:', e.message); }
+  }
 
   let officeSent = false;
   try {

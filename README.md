@@ -19,6 +19,7 @@
 | `RESEND_API_KEY` | Resend API key, "Sending access" (Resend account momofmiddleton; domain momofmiddleton.com verified Sept 30, 2026) |
 | `EMAIL_FROM` (or `FROM_EMAIL`) | Optional. Default `MOM of Middleton <estimates@momofmiddleton.com>` (no mailbox needed) |
 | `OFFICE_EMAIL` (or `OWNER_EMAIL`) | Optional. Default `momofmiddleton@gmail.com` |
+| `COPY_EMAIL` | Optional. Hidden copy (BCC) of every new-request email to the office; used so CL can type requests into ServiceMonster |
 | `DRY_RUN` | `1` = price only, send nothing |
 | `SM_ENABLED`, `SM_USERNAME`, `SM_PASSWORD`, `SM_ITEM_*` | Only if ServiceMonster API access is added later |
 

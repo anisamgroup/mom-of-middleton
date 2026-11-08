@@ -24,3 +24,16 @@
   to = "https://momofmiddleton.com/:splat"
   status = 301
   force = true
+
+# Common typo: /plans → /plan/ (sign-up page). Query strings like ?change=1 carry over.
+[[redirects]]
+  from = "/plans"
+  to = "/plan/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/plans/*"
+  to = "/plan/"
+  status = 301
+  force = true

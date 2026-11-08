@@ -450,7 +450,7 @@ window.momSubmit=function(p){
       '<p>After your first full cleaning, you can join the <b>MOM Home Investment Protection Plan</b>. Each visit includes the house wash and the Complete Exterior Package. For your '+NAMES[h].toLowerCase()+':</p>'+
       '<div class="pl">'+['std','enh','pre'].map(function(k){var p=PLANS[k];return '<div><b>'+p.n.replace(' Protection','')+'</b><span class="pp">'+money(p.r[h])+'/mo</span><small>'+p.f+'</small></div>';}).join('')+'</div>'+
       (q.lan?'<p class="sub">Good news: on a protection plan, there\'s no extra charge for your lanai.</p>':'')+
-      '<p class="sub">Marco will go over the plans with you after your first cleaning.</p>';
+      '<p class="sub">We\'ll go over the plans with you after your first cleaning.</p>';
   }
   form.addEventListener('change',function(e){
     if(e.target.name==='svc')choice=e.target.value;
@@ -486,7 +486,7 @@ window.momSubmit=function(p){
         form.hidden=true; var ok=document.getElementById('sent'); ok.hidden=false;
         document.getElementById('sent-name').textContent=payload.name.split(' ')[0];
         document.getElementById('sent-total').textContent=money(q.total);
-        if(r&&r.emailed){document.getElementById('sent-email').textContent=(r.emails&&r.emails.length?r.emails:[payload.email]).join(' and ');}else{document.getElementById('sent-mail').textContent='Marco will send your written Exterior Cleaning estimate shortly.';}
+        if(r&&r.emailed){document.getElementById('sent-email').textContent=(r.emails&&r.emails.length?r.emails:[payload.email]).join(' and ');}else{document.getElementById('sent-mail').textContent='We will send your written Exterior Cleaning estimate shortly.';}
       }).catch(function(){btn.disabled=false; btn.textContent='Request this cleaning'; showManual();});
     } else showManual();
   });

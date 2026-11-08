@@ -374,7 +374,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
         <div class="head" style="margin-bottom:0">
           <p class="eyebrow">Exterior Cleaning · Instant price</p>
           <h1 class="h2">Get your cleaning price now</h1>
-          <p>Pick your home type and cleaning to see your price right away. Send the request and Marco will confirm your date. Prefer to talk? Call or text anytime.</p>
+          <p>Pick your home type and cleaning to see your price right away. Send the request and we'll confirm your date. Prefer to talk? Call or text anytime.</p>
         </div>
         <div class="cinfo">
           <div><small>Phone / text</small><a class="big" href="tel:+13528082082">352-808-2082</a></div>
@@ -449,7 +449,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
           <fieldset>
             <legend>5. What would you like to do?</legend>
             <div class="want">
-              <label><input type="radio" name="want" value="book" checked> <span><b>Book this cleaning</b><small>Marco will call or text you to set the date</small></span></label>
+              <label><input type="radio" name="want" value="book" checked> <span><b>Book this cleaning</b><small>We'll call or text you to set the date</small></span></label>
               <label><input type="radio" name="want" value="estimate"> <span><b>Just email me the estimate</b><small>No commitment</small></span></label>
             </div>
             <div class="terms" id="terms">
@@ -462,11 +462,11 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
           <p id="f-err" role="alert" style="color:#B3261E;font-size:.95rem" hidden></p>
           <button class="btn btn-sun" type="submit" id="f-submit" style="justify-self:start">Book this cleaning</button>
           <p class="fineprint"><b>Paver sealing</b> and <b>interior gutter flushing</b> are quoted separately: <a href="tel:+13528082082">call</a> or <a href="sms:+13528082082">text</a> 352-808-2082 for a quote.</p>
-          <p class="fineprint">Prices are for standard homes in Middleton and Eastport. Marco confirms your price and date before any work starts.</p>
+          <p class="fineprint">Prices are for standard homes in Middleton and Eastport. We confirm your price and date before any work starts.</p>
         </form>
         <div class="done" id="sent" hidden>
           <b style="font-family:var(--display);font-size:1.3rem">Thank you, <span id="sent-name"></span>!</b>
-          <p><span id="sent-lead">Your request for <b id="sent-total"></b> is in.</span> <span id="sent-mail">We just emailed your Exterior Cleaning estimate to <b id="sent-email"></b> (check spam if you don't see it).</span> Marco will call or text you to set a date.</p>
+          <p><span id="sent-lead">Your request for <b id="sent-total"></b> is in.</span> <span id="sent-mail">We just emailed your Exterior Cleaning estimate to <b id="sent-email"></b> (check spam if you don't see it).</span> We'll call or text you to set a date.</p>
           <p style="font-size:.95rem;color:var(--ink-soft)">Questions? Call or text 352-808-2082.</p>
         </div>
         <div class="done" id="done" hidden>
@@ -556,7 +556,7 @@ window.momSubmit=function(p){
       '<p>After your first full cleaning, you can join the <b>MOM Home Investment Protection Plan</b>. Each visit includes the house wash and the Complete Exterior Package. For your '+NAMES[h].toLowerCase()+':</p>'+
       '<div class="pl">'+['std','enh','pre'].map(function(k){var p=PLANS[k];return '<div><b>'+p.n.replace(' Protection','')+'</b><span class="pp">'+money(p.r[h])+'/mo</span><small>'+p.f+'</small></div>';}).join('')+'</div>'+
       (q.lan?'<p class="sub">Good news: on a protection plan, there\'s no extra charge for your lanai.</p>':'')+
-      '<p class="sub">Marco will go over the plans with you after your first cleaning.</p>';
+      '<p class="sub">We\'ll go over the plans with you after your first cleaning.</p>';
   }
   form.addEventListener('change',function(e){
     if(e.target.name==='svc')choice=e.target.value;
@@ -598,8 +598,8 @@ window.momSubmit=function(p){
         form.hidden=true; var ok=document.getElementById('sent'); ok.hidden=false;
         document.getElementById('sent-name').textContent=payload.name.split(' ')[0];
         document.getElementById('sent-total').textContent=money(q.total);
-        if(payload.wantsJob==='book'){document.getElementById('sent-lead').innerHTML='Your cleaning (<b>'+money(q.total)+'</b>) is booked. Marco will call or text you to set the date.';}
-        if(r&&r.emailed){document.getElementById('sent-email').textContent=(r.emails&&r.emails.length?r.emails:[payload.email]).join(' and ');}else{document.getElementById('sent-mail').textContent='Marco will send your written Exterior Cleaning estimate shortly.';}
+        if(payload.wantsJob==='book'){document.getElementById('sent-lead').innerHTML='Your cleaning (<b>'+money(q.total)+'</b>) is booked. We\'ll call or text you to set the date.';}
+        if(r&&r.emailed){document.getElementById('sent-email').textContent=(r.emails&&r.emails.length?r.emails:[payload.email]).join(' and ');}else{document.getElementById('sent-mail').textContent='We will send your written Exterior Cleaning estimate shortly.';}
       }).catch(function(){btn.disabled=false; btn.textContent=wantBook()?'Book this cleaning':'Email me my estimate'; showManual();});
     } else showManual();
   });

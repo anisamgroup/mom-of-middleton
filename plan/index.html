@@ -549,7 +549,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
       <div class="ps-done" id="ps-done" hidden>
         <h2>Thank you, <span id="d-name"></span>!</h2>
         <p>Your Protection Plan agreement is signed. <span id="d-mail">We just emailed your signed copy to <b id="d-email"></b> (check spam if you don't see it).</span></p>
-        <p><b>What happens next:</b> Marco will call or text you to schedule your first cleaning and set up your monthly payment.</p>
+        <p><b>What happens next:</b> We'll call or text you to schedule your first cleaning and set up your monthly payment.</p>
         <p style="color:var(--ink-soft);font-size:.92rem">Agreement ID <span id="d-id"></span></p>
       </div>
     </div>
@@ -654,7 +654,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
         var fd=new URLSearchParams({'form-name':'plan-signup',name:d.name,phone:d.phone,email:d.email,address:d.address,city:d.city,zip:d.zip,home:NAMES[d.home],plan:PN[d.plan],rate:money(D[d.home][1][d.plan])+'/mo',agreementId:j.id||''});
         fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:fd.toString()}).catch(function(){});
         form.hidden=true;$('ps-done').hidden=false;$('d-name').textContent=d.name.split(' ')[0];$('d-id').textContent=j.id||'';
-        if(j.emailed)$('d-email').textContent=(j.emails&&j.emails.length?j.emails.join(' and '):d.email);else $('d-mail').textContent='Marco will send your signed copy shortly.';
+        if(j.emailed)$('d-email').textContent=(j.emails&&j.emails.length?j.emails.join(' and '):d.email);else $('d-mail').textContent='We will send your signed copy shortly.';
         window.scrollTo(0,0);
       })
       .catch(function(){btn.disabled=false;btn.textContent='Sign my agreement';fail('Something went wrong and your agreement was not sent. Please try again, or call or text 352-808-2082.');});

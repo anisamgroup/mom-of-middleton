@@ -212,9 +212,9 @@ export default async (req) => {
 <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;background:#FFF6CC;border-radius:8px;margin:12px 0;"><tr><td style="padding:14px 16px;">
 <b>${esc(pl.name)}</b> · ${esc(pl.freq)}<br>${esc(HOME[d.home])} · <b>${rate} per month</b><br>
 <span style="font-size:13px;color:#57525E;">Starts after your first full-service cleaning (${full}).</span></td></tr></table>
-<p><b>What happens next:</b> Marco will call or text you to schedule your first cleaning and set up your monthly payment.</p>
+<p><b>What happens next:</b> We'll call or text you to schedule your first cleaning and set up your monthly payment.</p>
 <p style="font-size:13px;color:#57525E;">Agreement ID ${t.id}. Questions? <a href="tel:+13528082082" style="color:#6A0B9E;font-weight:700;">Call</a> or <a href="sms:+13528082082" style="color:#6A0B9E;font-weight:700;">text</a> ${PHONE}.</p>`),
-      text: `Welcome to the MOM Home Investment Protection Plan, ${first}!\n\nYour signed agreement is attached.\n${pl.name} (${pl.freq}), ${HOME[d.home]}, ${rate} per month after your first full-service cleaning (${full}).\n\nMarco will call or text you to schedule your first cleaning and set up your monthly payment.\n\nAgreement ID ${t.id}. Questions? Call or text ${PHONE}.`,
+      text: `Welcome to the MOM Home Investment Protection Plan, ${first}!\n\nYour signed agreement is attached.\n${pl.name} (${pl.freq}), ${HOME[d.home]}, ${rate} per month after your first full-service cleaning (${full}).\n\nWe'll call or text you to schedule your first cleaning and set up your monthly payment.\n\nAgreement ID ${t.id}. Questions? Call or text ${PHONE}.`,
     });
     customerSent = true;
   } catch (e) { console.error('Customer email failed:', e.message); }

@@ -114,6 +114,8 @@ ${inner}
 const deposit = (q) => Math.round(q.total * 50) / 100;
 const signedLine = (d) => d.book ? `Signed electronically by ${d.signature} on ${d.signedAt.toLocaleString('en-US', { timeZone: 'America/New_York', dateStyle: 'long', timeStyle: 'short' })} ET (terms ${d.termsVersion}, IP ${d.signedIp}).` : '';
 
+const custSigned = (d) => `You signed the MOM of Middleton Service Terms (${d.termsVersion}) as ${d.signature} on ${d.signedAt.toLocaleString('en-US', { timeZone: 'America/New_York', dateStyle: 'long', timeStyle: 'short' })}. Ask us anytime for a copy.`;
+
 function customerEmail(d, q, no) {
   const first = d.name.split(' ')[0];
   const rows = q.lines.map((l) => `<tr><td style="padding:10px 12px 10px 0;border-bottom:1px solid ${C.line};"><b>${esc(l.label)}</b><br><span style="font-size:13px;line-height:1.45;color:${C.soft};">${LINE_TEXT[l.key]}</span></td><td align="right" valign="top" style="padding:10px 0;border-bottom:1px solid ${C.line};white-space:nowrap;">${money(l.price)}</td></tr>`).join('');
@@ -125,8 +127,11 @@ function customerEmail(d, q, no) {
   const html = shell(`
 <tr><td style="padding:28px 24px 8px;">
   <div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:${C.spray};font-weight:700;">${d.book ? 'Your Exterior Cleaning booking' : 'Your Exterior Cleaning estimate'}</div>
-  <h1 style="margin:6px 0 12px;font-size:24px;line-height:1.25;">Thank you, ${esc(first)}!</h1>
-  <p style="margin:0 0 8px;font-size:15px;line-height:1.5;">Here is the price for your ${HOME_NAMES[d.homeType].toLowerCase()} at ${esc(d.address)}, ${esc(d.city)}. Marco will call or text you at ${esc(d.phone)} to set a date.</p>
+  <h1 style="margin:6px 0 12px;font-size:24px;line-height:1.25;">${d.book ? `Thank you for booking, ${esc(first)}!` : `Thank you, ${esc(first)}!`}</h1>
+  ${d.book
+    ? `<p style="margin:0 0 8px;font-size:15px;line-height:1.5;">We're glad you chose MOM of Middleton to clean your ${HOME_NAMES[d.homeType].toLowerCase()} at ${esc(d.address)}, ${esc(d.city)}. <b>You're all set: there's nothing else you need to do.</b> We'll call or text you at ${esc(d.phone)} to set your date.</p>
+  <p style="margin:0 0 8px;font-size:15px;line-height:1.5;">Need us sooner, or have a question? Call or text <a href="tel:+13528082082" style="color:${C.spray};font-weight:700;">${PHONE}</a>.</p>`
+    : `<p style="margin:0 0 8px;font-size:15px;line-height:1.5;">Here is the price for your ${HOME_NAMES[d.homeType].toLowerCase()} at ${esc(d.address)}, ${esc(d.city)}. We'll call or text you at ${esc(d.phone)} to set a date.</p>`}
 </td></tr>
 <tr><td style="padding:8px 24px;">
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="font-size:15px;">
@@ -135,7 +140,7 @@ function customerEmail(d, q, no) {
   </table>
 </td></tr>
 <tr><td style="padding:12px 24px 4px;">
-  <p style="margin:0;font-size:15px;line-height:1.5;">${d.book ? `<b>You asked us to do this cleaning. Marco will call or text you at ${esc(d.phone)} to set your date.</b> Payment is due when the job is complete.` : `<b>To book, just reply to this email or call or text ${PHONE}.</b> Payment is due when the job is complete.`}</p>
+  <p style="margin:0;font-size:15px;line-height:1.5;">${d.book ? `Your booked cleaning comes to <b>${money(q.total)}</b>. Payment is due when the job is complete.` : `<b>To book, just reply to this email or call or text ${PHONE}.</b> Payment is due when the job is complete.`}</p>
 </td></tr>
 <tr><td style="padding:12px 24px 4px;">
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:2px dashed ${C.spray};border-radius:10px;"><tr><td style="padding:16px;">
@@ -143,31 +148,31 @@ function customerEmail(d, q, no) {
     <p style="margin:6px 0 10px;font-size:14px;line-height:1.5;">After your first full cleaning (${money(FULL[d.homeType])} for your home), you can join the <b>MOM Home Investment Protection Plan</b>. Every visit includes the house wash and the Complete Exterior Package.</p>
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${plans}</table>
     ${d.lanai ? `<p style="margin:10px 0 0;font-size:13px;color:${C.soft};">Good news: on a protection plan, there's no extra charge for your lanai.</p>` : ''}
-    <p style="margin:8px 0 0;font-size:13px;color:${C.soft};">Marco will go over the plans with you after your first cleaning.</p>
+    <p style="margin:8px 0 0;font-size:13px;color:${C.soft};">We'll go over the plans with you after your first cleaning.</p>
   </td></tr></table>
 </td></tr>
 <tr><td style="padding:16px 24px 24px;">
-  <p style="margin:0 0 10px;font-size:14px;line-height:1.5;">Questions? Reply to this email, or call or text Marco at <a href="tel:+13528082082" style="color:${C.spray};font-weight:700;">${PHONE}</a>.</p>
-  <p style="margin:0 0 8px;font-size:12px;line-height:1.5;color:${C.soft};">Prices are for standard homes in Middleton and Eastport. Marco confirms your price and date before any work starts. Paver sealing and interior gutter flushing are quoted separately: <a href="tel:+13528082082" style="color:${C.spray};">call</a> or <a href="sms:+13528082082" style="color:${C.spray};">text</a> ${PHONE} for a quote.</p>
-  <p style="margin:0 0 8px;font-size:12px;line-height:1.5;color:${C.soft};"><b>Before your visit:</b> ${esc(BEFORE_VISIT)} Watch for our instruction email (check spam).</p>
-  ${d.book ? `<p style="margin:0 0 6px;font-size:12px;line-height:1.5;color:${C.soft};"><b>Service terms you agreed to:</b></p>${TERMS.map((t) => `<p style="margin:0 0 6px;font-size:12px;line-height:1.5;color:${C.soft};">${esc(t)}</p>`).join('')}<p style="margin:0;font-size:12px;line-height:1.5;color:${C.soft};"><i>${esc(signedLine(d))}</i></p>` : `<p style="margin:0;font-size:12px;line-height:1.5;color:${C.soft};"><b>Waiver of liability:</b> ${WAIVER}</p>`}
+  ${d.book ? '' : `<p style="margin:0 0 10px;font-size:14px;line-height:1.5;">Questions? Reply to this email, or call or text us at <a href="tel:+13528082082" style="color:${C.spray};font-weight:700;">${PHONE}</a>.</p>`}
+  <p style="margin:0 0 8px;font-size:12px;line-height:1.5;color:${C.soft};">Prices are for standard homes in Middleton and Eastport. We confirm your price and date before any work starts. Paver sealing and interior gutter flushing are quoted separately: <a href="tel:+13528082082" style="color:${C.spray};">call</a> or <a href="sms:+13528082082" style="color:${C.spray};">text</a> ${PHONE} for a quote.</p>
+  <p style="margin:0 0 8px;font-size:12px;line-height:1.5;color:${C.soft};"><b>Before your visit:</b> ${esc(BEFORE_VISIT)} ${d.book ? 'We also sent you a separate email on how to get ready (check spam if you don\'t see it).' : 'Watch for our instruction email (check spam).'}</p>
+  ${d.book ? `<p style="margin:0;font-size:12px;line-height:1.5;color:${C.soft};"><i>${esc(custSigned(d))}</i></p>` : `<p style="margin:0;font-size:12px;line-height:1.5;color:${C.soft};"><b>Waiver of liability:</b> ${WAIVER}</p>`}
 </td></tr>`, `${no} · ${longDate()}`);
 
   const text = [
-    `Thank you, ${first}!`, '',
-    `Your MOM of Middleton Exterior Cleaning estimate (${no}) for your ${HOME_NAMES[d.homeType].toLowerCase()} at ${d.address}, ${d.city}:`, '',
+    d.book ? `Thank you for booking, ${first}!` : `Thank you, ${first}!`, '',
+    ...(d.book ? [`We're glad you chose MOM of Middleton to clean your ${HOME_NAMES[d.homeType].toLowerCase()} at ${d.address}, ${d.city}. You're all set: there's nothing else you need to do. We'll call or text you at ${d.phone} to set your date.`, `Need us sooner, or have a question? Call or text ${PHONE}.`, '', `Your booking (${no}):`] : [`Your MOM of Middleton Exterior Cleaning estimate (${no}) for your ${HOME_NAMES[d.homeType].toLowerCase()} at ${d.address}, ${d.city}:`]), '',
     ...q.lines.map((l) => `  ${l.label}: ${money(l.price)}\n    ${LINE_TEXT[l.key]}`),
     `  Total: ${money(q.total)}`, '',
-    d.book ? `You asked us to do this cleaning. Marco will call or text you at ${d.phone} to set your date. Payment is due when the job is complete.` : `To book, just reply to this email or call or text ${PHONE}. Payment is due when the job is complete.`, '',
+    d.book ? `Payment is due when the job is complete.` : `To book, just reply to this email or call or text ${PHONE}. Payment is due when the job is complete.`, '',
     `Keep it clean all year: after your first full cleaning (${money(FULL[d.homeType])} for your home), you can join the MOM Home Investment Protection Plan. Every visit includes the house wash and the Complete Exterior Package.`,
     ...PLANS.map((p) => `  ${p.name}: ${money(p.rate[d.homeType])}/mo (${p.freq})`),
     d.lanai ? 'On a protection plan, there is no extra charge for your lanai.' : '',
-    '', `Marco will call or text you at ${d.phone} to set a date. Questions? Reply to this email or call/text ${PHONE}.`,
-    'Prices are for standard homes in Middleton and Eastport. Marco confirms your price and date before any work starts.', '',
-    `Before your visit: ${BEFORE_VISIT}`, '', ...(d.book ? ['Service terms you agreed to:', ...TERMS, signedLine(d)] : [`Waiver of liability: ${WAIVER}`]),
+    '', d.book ? '' : `We'll call or text you at ${d.phone} to set a date. Questions? Reply to this email or call/text ${PHONE}.`,
+    'Prices are for standard homes in Middleton and Eastport. We confirm your price and date before any work starts.', '',
+    `Before your visit: ${BEFORE_VISIT}${d.book ? ' We also sent you a separate email on how to get ready.' : ''}`, '', ...(d.book ? [custSigned(d)] : [`Waiver of liability: ${WAIVER}`]),
   ].filter((l, i, a) => l !== '' || a[i - 1] !== '').join('\n');
 
-  return { subject: d.book ? `Your MOM of Middleton cleaning is booked: ${money(q.total)} (we'll call to set the date)` : `Your MOM of Middleton Exterior Cleaning estimate: ${money(q.total)}`, html, text };
+  return { subject: d.book ? `Thank you for booking MOM of Middleton! We'll call you to set your date` : `Your MOM of Middleton Exterior Cleaning estimate: ${money(q.total)}`, html, text };
 }
 
 function officeEmail(d, q, no, customerSent) {
@@ -199,7 +204,7 @@ function prepEmail(d) {
 <tr><td style="padding:28px 24px 8px;">
   <div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:${C.spray};font-weight:700;">Getting ready for your cleaning</div>
   <h1 style="margin:6px 0 12px;font-size:24px;line-height:1.25;">Hi ${esc(first)}, here's how to get ready</h1>
-  <p style="margin:0 0 8px;font-size:15px;line-height:1.5;">Thank you for booking MOM of Middleton for ${esc(d.address)}, ${esc(d.city)}. Marco will call or text you at ${esc(d.phone)} to set your date. Sometimes that's as soon as the next day, so we're sending these instructions now.</p>
+  <p style="margin:0 0 8px;font-size:15px;line-height:1.5;">Thank you for booking MOM of Middleton for ${esc(d.address)}, ${esc(d.city)}. We'll call or text you at ${esc(d.phone)} to set your date. Sometimes that's as soon as the next day, so we're sending these instructions now.</p>
 </td></tr>
 <tr><td style="padding:4px 24px 8px;">
   <ol style="margin:0;padding-left:20px;font-size:15px;line-height:1.5;">${PREP.map((t) => `<li style="margin:0 0 8px;">${esc(t)}</li>`).join('')}</ol>
@@ -209,7 +214,7 @@ function prepEmail(d) {
   <p style="margin:8px 0 0;font-size:15px;line-height:1.5;">Questions before your appointment? Call or text ${PHONE} or reply to this email. We look forward to making your home shine!</p>
 </td></tr>`, 'MOM of Middleton · Exterior Cleaning');
   const text = [`Hi ${first}, here's how to get ready for your MOM of Middleton cleaning`, '',
-    `Thank you for booking MOM of Middleton for ${d.address}, ${d.city}. Marco will call or text you at ${d.phone} to set your date. Sometimes that's as soon as the next day, so we're sending these instructions now.`, '',
+    `Thank you for booking MOM of Middleton for ${d.address}, ${d.city}. We'll call or text you at ${d.phone} to set your date. Sometimes that's as soon as the next day, so we're sending these instructions now.`, '',
     ...PREP.map((t, i) => `${i + 1}. ${t}`), '', ...PREP_NOTE, '',
     `Questions before your appointment? Call or text ${PHONE} or reply to this email. We look forward to making your home shine!`].join('\n');
   return { subject: 'How to get ready for your MOM of Middleton cleaning', html, text };

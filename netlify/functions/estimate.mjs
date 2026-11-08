@@ -20,7 +20,7 @@ import { createServiceMonsterEstimate } from '../lib/servicemonster.mjs';
 
 const PRICES = { pv: 248, s1: 298, s2: 398 };
 const FULL = { pv: 298, s1: 348, s2: 448 };
-const PKG = 50, LANAI = 50;
+const PKG = 50, LANAI = 50, FENCE_SIDE = 25; // fence cleaning: $25 per side of the yard, up to 3 sides
 const HOME_NAMES = { pv: 'Patio villa', s1: '1-story home', s2: '2-story home' };
 const PLANS = [
   { name: 'Standard Protection', freq: '3 cleanings a year, every 4 months', rate: { pv: 62.5, s1: 79, s2: 99 } },
@@ -33,17 +33,19 @@ const LINE_TEXT = {
   pv: WASH_TEXT, s1: WASH_TEXT, s2: WASH_TEXT,
   pkg: 'Driveway, walkway, entry, back patio, exterior gutters, oxidation streaks (tiger stripes) and screen lanai. Removes dirt, mold, mildew and most bugs.',
   lanai: 'Lanai/patio area extending past the roofline.',
+  fence: 'Vinyl or metal fence cleaning, $25 per side of the yard (back, left, right).',
 };
 const BEFORE_VISIT = "Water plants and grass near the areas we're cleaning at least 1 hour before we arrive and for 3 days after; some browning may occur. Move cars, furniture, rugs, potted plants and hanging baskets away from the service areas.";
 const WAIVER = 'By approving this estimate, verbally or otherwise, you release and hold harmless MOM of Middleton and its employees and agents from claims arising from the services, including property or plant damage, discoloration or fading of surfaces, damage to light fixtures, outlets or key sockets, personal injury, and events beyond our control. You accept the risks of exterior cleaning, are responsible for insuring your own property, and are responsible for any permits or law-enforcement personnel the job requires.';
 
 // Service terms customers sign when they book on the website (from MOM's ServiceMonster order disclaimer, Nov 8, 2026).
-const TERMS_VERSION = 'MOM-TRM-261108';
+const TERMS_VERSION = 'MOM-TRM-261108b';
 const TERMS = [
   'Cleaning with chemicals: please read the instruction email; if you did not receive it, contact us right away and check your spam folder.',
   'Water the plants and grass around the areas being cleaned at least 1 hour before our visit and for 3 days afterward; some browning may occur.',
   'All cars, furniture, rugs, potted plants and hanging baskets must be moved away from the areas being serviced to avoid damage. MOM of Middleton is not liable for property damage or plant damage.',
-  'Payment is due when the job is complete.',
+  'Payment: a 50% deposit is due when you book; the remaining 50% is due when the job is complete. Protection Plan (maintenance) visits are billed automatically.',
+  'Cancellation: please give at least 72 hours\' notice to cancel or reschedule.',
   'Waiver of liability: The Company (MOM of Middleton) agrees to provide the services described in the estimate. In consideration for the services provided, the Client agrees to release, indemnify and hold harmless the Company, its agents, employees, officers and representatives from any and all liability, claims, demands, actions, causes of action, costs and expenses arising out of or related to the services provided by the Company, including but not limited to: any damage to property, including discoloration, fading or other alterations to surfaces, light fixtures, power outlets, key sockets, etc.; any injuries or harm to persons, including employees, agents or representatives of the Client or any third parties present where the services are performed; and any damage or harm caused by unforeseen circumstances, acts of nature or other events beyond the control of the Company.',
   'The Client acknowledges that the services may involve certain risks, including the potential for damage to property or harm to individuals. The Client voluntarily assumes all such risks and releases the Company from any and all claims arising out of or related to such risks.',
   'The Client is solely responsible for obtaining and maintaining adequate insurance coverage for any potential loss or damage to their property. The Client is responsible for obtaining and paying for any permits required and any law enforcement personnel for the job.',
@@ -109,6 +111,7 @@ ${inner}
 </table></td></tr></table></body></html>`;
 }
 
+const deposit = (q) => Math.round(q.total * 50) / 100;
 const signedLine = (d) => d.book ? `Signed electronically by ${d.signature} on ${d.signedAt.toLocaleString('en-US', { timeZone: 'America/New_York', dateStyle: 'long', timeStyle: 'short' })} ET (terms ${d.termsVersion}, IP ${d.signedIp}).` : '';
 
 function customerEmail(d, q, no) {
@@ -132,7 +135,7 @@ function customerEmail(d, q, no) {
   </table>
 </td></tr>
 <tr><td style="padding:12px 24px 4px;">
-  <p style="margin:0;font-size:15px;line-height:1.5;">${d.book ? `<b>You asked us to do this cleaning. Marco will call or text you at ${esc(d.phone)} to set your date.</b> Payment is due when the job is complete.` : `<b>To book, just reply to this email or call or text ${PHONE}.</b> Payment is due when the job is complete.`}</p>
+  <p style="margin:0;font-size:15px;line-height:1.5;">${d.book ? `<b>You asked us to do this cleaning. Marco will call or text you at ${esc(d.phone)} to set your date.</b> A 50% deposit (<b>${money(deposit(q))}</b>) is due to book; we'll send you a secure payment link. The rest is due when the job is complete.` : `<b>To book, just reply to this email or call or text ${PHONE}.</b> A 50% deposit is due when you book and the rest when the job is complete.`}</p>
 </td></tr>
 <tr><td style="padding:12px 24px 4px;">
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:2px dashed ${C.spray};border-radius:10px;"><tr><td style="padding:16px;">
@@ -145,7 +148,7 @@ function customerEmail(d, q, no) {
 </td></tr>
 <tr><td style="padding:16px 24px 24px;">
   <p style="margin:0 0 10px;font-size:14px;line-height:1.5;">Questions? Reply to this email, or call or text Marco at <a href="tel:+13528082082" style="color:${C.spray};font-weight:700;">${PHONE}</a>.</p>
-  <p style="margin:0 0 8px;font-size:12px;line-height:1.5;color:${C.soft};">Prices are for standard homes in Middleton and Eastport. Marco confirms your price and date before any work starts. Fence cleaning and paver sealing are quoted separately: <a href="tel:+13528082082" style="color:${C.spray};">call</a> or <a href="sms:+13528082082" style="color:${C.spray};">text</a> ${PHONE} for a quote.</p>
+  <p style="margin:0 0 8px;font-size:12px;line-height:1.5;color:${C.soft};">Prices are for standard homes in Middleton and Eastport. Marco confirms your price and date before any work starts. Paver sealing and interior gutter flushing are quoted separately: <a href="tel:+13528082082" style="color:${C.spray};">call</a> or <a href="sms:+13528082082" style="color:${C.spray};">text</a> ${PHONE} for a quote.</p>
   <p style="margin:0 0 8px;font-size:12px;line-height:1.5;color:${C.soft};"><b>Before your visit:</b> ${esc(BEFORE_VISIT)} Watch for our instruction email (check spam).</p>
   ${d.book ? `<p style="margin:0 0 6px;font-size:12px;line-height:1.5;color:${C.soft};"><b>Service terms you agreed to:</b></p>${TERMS.map((t) => `<p style="margin:0 0 6px;font-size:12px;line-height:1.5;color:${C.soft};">${esc(t)}</p>`).join('')}<p style="margin:0;font-size:12px;line-height:1.5;color:${C.soft};"><i>${esc(signedLine(d))}</i></p>` : `<p style="margin:0;font-size:12px;line-height:1.5;color:${C.soft};"><b>Waiver of liability:</b> ${WAIVER}</p>`}
 </td></tr>`, `${no} · ${longDate()}`);
@@ -155,7 +158,7 @@ function customerEmail(d, q, no) {
     `Your MOM of Middleton Exterior Cleaning estimate (${no}) for your ${HOME_NAMES[d.homeType].toLowerCase()} at ${d.address}, ${d.city}:`, '',
     ...q.lines.map((l) => `  ${l.label}: ${money(l.price)}\n    ${LINE_TEXT[l.key]}`),
     `  Total: ${money(q.total)}`, '',
-    d.book ? `You asked us to do this cleaning. Marco will call or text you at ${d.phone} to set your date. Payment is due when the job is complete.` : `To book, just reply to this email or call or text ${PHONE}. Payment is due when the job is complete.`, '',
+    d.book ? `You asked us to do this cleaning. Marco will call or text you at ${d.phone} to set your date. A 50% deposit (${money(deposit(q))}) is due to book; we'll send you a secure payment link. The rest is due when the job is complete.` : `To book, just reply to this email or call or text ${PHONE}. A 50% deposit is due when you book and the rest when the job is complete.`, '',
     `Keep it clean all year: after your first full cleaning (${money(FULL[d.homeType])} for your home), you can join the MOM Home Investment Protection Plan. Every visit includes the house wash and the Complete Exterior Package.`,
     ...PLANS.map((p) => `  ${p.name}: ${money(p.rate[d.homeType])}/mo (${p.freq})`),
     d.lanai ? 'On a protection plan, there is no extra charge for your lanai.' : '',
@@ -174,7 +177,7 @@ function officeEmail(d, q, no, customerSent) {
     ['Address', `${d.address}, ${d.city}, FL ${d.zip}`],
     ['Home type', HOME_NAMES[d.homeType]], ['Lanai past roofline', d.lanai ? 'Yes' : 'No'],
     ['Service', service], ...q.lines.map((l) => [`  ${l.label}`, money(l.price)]),
-    ['Total quoted', money(q.total)], ['Customer wants', d.book ? 'BOOK THE JOB – pending schedule' : 'Estimate only (follow up)'], ...(d.book ? [['Service terms', signedLine(d)]] : []), ['How they heard about us', d.heardFrom || '—'], ['Notes', d.note || '—'],
+    ['Total quoted', money(q.total)], ['Customer wants', d.book ? 'BOOK THE JOB – pending schedule' : 'Estimate only (follow up)'], ...(d.book ? [['50% deposit due', `${money(deposit(q))} – send the customer a payment link`]] : []), ...(d.book ? [['Service terms', signedLine(d)]] : []), ['How they heard about us', d.heardFrom || '—'], ['Notes', d.note || '—'],
   ];
   const html = shell(`
 <tr><td style="padding:24px;">
@@ -237,7 +240,7 @@ export default async (req) => {
   const d = {
     name: clean(p.name, 100), phone: clean(p.phone, 30), email: clean(p.email, 120), email2: clean(p.email2, 120),
     address: clean(p.address, 150), city: clean(p.city || 'The Villages', 60) || 'The Villages', zip: clean(p.zip, 10),
-    homeType: p.homeType, lanai: !!p.lanai, service: p.service === 'full' ? 'full' : 'wash', note: cleanNote(p.note),
+    homeType: p.homeType, lanai: !!p.lanai, service: p.service === 'full' ? 'full' : 'wash', fenceSides: Math.max(0, Math.min(3, parseInt(p.fenceSides, 10) || 0)), note: cleanNote(p.note),
     heardFrom: clean(p.heardFrom, 100),
     book: p.wantsJob === 'book',
     signature: clean(p.signature, 100),
@@ -265,6 +268,7 @@ export default async (req) => {
     lines.push({ key: 'pkg', label: 'Complete Exterior Package', price: PKG });
     if (d.lanai) lines.push({ key: 'lanai', label: 'Lanai past the roofline', price: LANAI });
   }
+  if (d.fenceSides) lines.push({ key: 'fence', label: `Fence cleaning, ${d.fenceSides} side${d.fenceSides > 1 ? 's' : ''}`, price: FENCE_SIDE * d.fenceSides });
   const q = { lines, total: lines.reduce((t, l) => t + l.price, 0) };
   const no = estimateNo();
 

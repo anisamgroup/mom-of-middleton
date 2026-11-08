@@ -304,6 +304,7 @@ form{display:grid;gap:16px}
 label{display:grid;gap:6px;font-size:.95rem;font-weight:700}
 input,select,textarea{font:inherit;font-size:1rem;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:12px 12px;width:100%}
 textarea{min-height:96px;resize:vertical}
+.fence{display:grid;gap:6px;margin-top:14px}
 .want{display:grid;gap:10px}
 .want label{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:var(--bg);cursor:pointer}
 .want label:has(input:checked){border:2px solid #6A0B9E;padding:11px 13px}
@@ -388,7 +389,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
             <label for="f-heard">How did you hear about us? <span style="font-weight:400">(optional)</span><select id="f-heard" name="heard">
               <option value="">Choose one</option>
               <option>Facebook</option>
+              <option>Instagram</option>
               <option>Saw your truck around</option>
+              <option>A mailer in my mailbox</option>
               <option>A neighbor</option>
               <option>My realtor</option>
               <option>Online (Google or another website)</option>
@@ -414,6 +417,13 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
           <fieldset>
             <legend>3. Choose your first cleaning</legend>
             <div class="opts" id="opts"></div>
+            <label for="f-fence" class="fence">Add fence cleaning? <span style="font-weight:400">Vinyl or metal fences, $25 per side of your yard (back, left, right).</span>
+              <select id="f-fence" name="fence">
+                <option value="0">No fence cleaning</option>
+                <option value="1">1 side of the yard: $25</option>
+                <option value="2">2 sides of the yard: $50</option>
+                <option value="3">3 sides (whole backyard): $75</option>
+              </select></label>
           </fieldset>
 
           <div class="quote" id="quote" aria-live="polite"></div>
@@ -434,24 +444,24 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
               <label for="f-city">City<input id="f-city" name="city" autocomplete="address-level2" placeholder="The Villages"></label>
               <label for="f-zip">ZIP<input id="f-zip" name="zip" autocomplete="postal-code" inputmode="numeric" required></label>
             </div>
-            <label for="f-note">Anything else? (optional)<textarea id="f-note" name="note" placeholder="Gate code, best time to reach you, interest in paver sealing or fence cleaning…"></textarea></label>
+            <label for="f-note">Anything else? (optional)<textarea id="f-note" name="note" placeholder="Gate code, best time to reach you, interest in paver sealing…"></textarea></label>
           </fieldset>
           <fieldset>
             <legend>5. What would you like to do?</legend>
             <div class="want">
-              <label><input type="radio" name="want" value="book" checked> <span><b>Book this cleaning</b><small>Marco will call or text you to set the date</small></span></label>
+              <label><input type="radio" name="want" value="book" checked> <span><b>Book this cleaning</b><small>50% deposit to book. Marco will call or text you to set the date</small></span></label>
               <label><input type="radio" name="want" value="estimate"> <span><b>Just email me the estimate</b><small>No commitment</small></span></label>
             </div>
             <div class="terms" id="terms">
               <p class="terms-h" id="terms-h">MOM of Middleton Service Terms</p>
-              <div class="terms-box" tabindex="0" role="region" aria-labelledby="terms-h"><p>Cleaning with chemicals: please read the instruction email; if you did not receive it, contact us right away and check your spam folder.</p><p>Water the plants and grass around the areas being cleaned at least 1 hour before our visit and for 3 days afterward; some browning may occur.</p><p>All cars, furniture, rugs, potted plants and hanging baskets must be moved away from the areas being serviced to avoid damage. MOM of Middleton is not liable for property damage or plant damage.</p><p>Payment is due when the job is complete.</p><p><b>Waiver of liability:</b> The Company (MOM of Middleton) agrees to provide the services described in the estimate. In consideration for the services provided, the Client agrees to release, indemnify and hold harmless the Company, its agents, employees, officers and representatives from any and all liability, claims, demands, actions, causes of action, costs and expenses arising out of or related to the services provided by the Company, including but not limited to: any damage to property, including discoloration, fading or other alterations to surfaces, light fixtures, power outlets, key sockets, etc.; any injuries or harm to persons, including employees, agents or representatives of the Client or any third parties present where the services are performed; and any damage or harm caused by unforeseen circumstances, acts of nature or other events beyond the control of the Company.</p><p>The Client acknowledges that the services may involve certain risks, including the potential for damage to property or harm to individuals. The Client voluntarily assumes all such risks and releases the Company from any and all claims arising out of or related to such risks.</p><p>The Client is solely responsible for obtaining and maintaining adequate insurance coverage for any potential loss or damage to their property. The Client is responsible for obtaining and paying for any permits required and any law enforcement personnel for the job.</p></div>
+              <div class="terms-box" tabindex="0" role="region" aria-labelledby="terms-h"><p>Cleaning with chemicals: please read the instruction email; if you did not receive it, contact us right away and check your spam folder.</p><p>Water the plants and grass around the areas being cleaned at least 1 hour before our visit and for 3 days afterward; some browning may occur.</p><p>All cars, furniture, rugs, potted plants and hanging baskets must be moved away from the areas being serviced to avoid damage. MOM of Middleton is not liable for property damage or plant damage.</p><p><b>Payment:</b> a 50% deposit is due when you book; the remaining 50% is due when the job is complete. Protection Plan (maintenance) visits are billed automatically.</p><p><b>Cancellation:</b> please give at least 72 hours' notice to cancel or reschedule.</p><p><b>Waiver of liability:</b> The Company (MOM of Middleton) agrees to provide the services described in the estimate. In consideration for the services provided, the Client agrees to release, indemnify and hold harmless the Company, its agents, employees, officers and representatives from any and all liability, claims, demands, actions, causes of action, costs and expenses arising out of or related to the services provided by the Company, including but not limited to: any damage to property, including discoloration, fading or other alterations to surfaces, light fixtures, power outlets, key sockets, etc.; any injuries or harm to persons, including employees, agents or representatives of the Client or any third parties present where the services are performed; and any damage or harm caused by unforeseen circumstances, acts of nature or other events beyond the control of the Company.</p><p>The Client acknowledges that the services may involve certain risks, including the potential for damage to property or harm to individuals. The Client voluntarily assumes all such risks and releases the Company from any and all claims arising out of or related to such risks.</p><p>The Client is solely responsible for obtaining and maintaining adequate insurance coverage for any potential loss or damage to their property. The Client is responsible for obtaining and paying for any permits required and any law enforcement personnel for the job.</p></div>
               <label class="chk" for="f-agree"><input type="checkbox" id="f-agree" name="agree"> I have read and agree to MOM of Middleton's Service Terms.</label>
               <label for="f-sign">Type your full name to sign<input id="f-sign" name="sign" autocomplete="name"></label>
             </div>
           </fieldset>
           <p id="f-err" role="alert" style="color:#B3261E;font-size:.95rem" hidden></p>
           <button class="btn btn-sun" type="submit" id="f-submit" style="justify-self:start">Book this cleaning</button>
-          <p class="fineprint"><b>Fence cleaning and paver sealing</b> are quoted separately: <a href="tel:+13528082082">call</a> or <a href="sms:+13528082082">text</a> 352-808-2082 for a quote.</p>
+          <p class="fineprint"><b>Paver sealing</b> and <b>interior gutter flushing</b> are quoted separately: <a href="tel:+13528082082">call</a> or <a href="sms:+13528082082">text</a> 352-808-2082 for a quote.</p>
           <p class="fineprint">Prices are for standard homes in Middleton and Eastport. Marco confirms your price and date before any work starts.</p>
         </form>
         <div class="done" id="sent" hidden>
@@ -533,13 +543,16 @@ window.momSubmit=function(p){
     if(c==='full'){L.push(['Complete Exterior Package',50]);if(lan)L.push(['Lanai past the roofline',50]);
       total=HOUSE[h]+50+(lan?50:0);summary='House wash + Complete Exterior Package';}
     else{total=HOUSE[h];summary='House wash only';}
-    return {h:h,lan:lan,c:c,lines:L,total:total,summary:summary};
+    var fs=parseInt((document.getElementById('f-fence')||{}).value||'0',10)||0;
+    if(fs){L.push(['Fence cleaning, '+fs+' side'+(fs>1?'s':''),25*fs]);total+=25*fs;summary+=' + fence cleaning ('+fs+' side'+(fs>1?'s':'')+')';}
+    return {h:h,lan:lan,c:c,fs:fs,lines:L,total:total,summary:summary};
   }
   function render(){
     var q=calc(), h=q.h;
     document.getElementById('quote').innerHTML='<span class="qt">Your price</span>'+
       q.lines.map(function(l){return '<div class="row"><span>'+l[0]+'</span><span>'+money(l[1])+'</span></div>';}).join('')+
-      '<div class="row tot"><span>Total</span><span>'+money(q.total)+'</span></div>';
+      '<div class="row tot"><span>Total</span><span>'+money(q.total)+'</span></div>'+
+      (window.wantBook&&wantBook()?'<div class="row"><span>50% deposit to book</span><span>'+money(Math.round(q.total*50)/100)+'</span></div>':'');
     document.getElementById('plans').innerHTML='<span class="qt">Keep it clean all year</span>'+
       '<p>After your first full cleaning, you can join the <b>MOM Home Investment Protection Plan</b>. Each visit includes the house wash and the Complete Exterior Package. For your '+NAMES[h].toLowerCase()+':</p>'+
       '<div class="pl">'+['std','enh','pre'].map(function(k){var p=PLANS[k];return '<div><b>'+p.n.replace(' Protection','')+'</b><span class="pp">'+money(p.r[h])+'/mo</span><small>'+p.f+'</small></div>';}).join('')+'</div>'+
@@ -578,7 +591,7 @@ window.momSubmit=function(p){
     document.getElementById('msg').textContent=msgText;
     document.getElementById('mail').href='mailto:momofmiddleton@gmail.com?subject='+encodeURIComponent('Cleaning request – '+form.name.value.trim())+'&body='+encodeURIComponent(msgText);
     var payload={name:form.name.value.trim(),phone:form.phone.value.trim(),email:form.email.value.trim(),email2:form.email2.value.trim(),address:form.addr.value.trim(),
-      city:(form.city.value.trim()||'The Villages'),zip:form.zip.value.trim(),homeType:q.h,lanai:q.lan,service:q.c,note:form.note.value.trim(),heardFrom:heardFrom(),wantsJob:wantBook()?'book':'estimate',termsAgreed:wantBook()&&document.getElementById('f-agree').checked,signature:wantBook()?document.getElementById('f-sign').value.trim():'',total:q.total,summary:msgText};
+      city:(form.city.value.trim()||'The Villages'),zip:form.zip.value.trim(),homeType:q.h,lanai:q.lan,service:q.c,fenceSides:q.fs,note:form.note.value.trim(),heardFrom:heardFrom(),wantsJob:wantBook()?'book':'estimate',termsAgreed:wantBook()&&document.getElementById('f-agree').checked,signature:wantBook()?document.getElementById('f-sign').value.trim():'',total:q.total,summary:msgText};
     function showManual(){form.hidden=true; done.hidden=false;}
     if(typeof window.momSubmit==='function'){
       var btn=form.querySelector('button[type=submit]'); btn.disabled=true; btn.textContent='Sending…';
@@ -586,7 +599,7 @@ window.momSubmit=function(p){
         form.hidden=true; var ok=document.getElementById('sent'); ok.hidden=false;
         document.getElementById('sent-name').textContent=payload.name.split(' ')[0];
         document.getElementById('sent-total').textContent=money(q.total);
-        if(payload.wantsJob==='book'){document.getElementById('sent-lead').innerHTML='Your cleaning (<b>'+money(q.total)+'</b>) is booked. Marco will call or text you to set the date.';}
+        if(payload.wantsJob==='book'){document.getElementById('sent-lead').innerHTML='Your cleaning (<b>'+money(q.total)+'</b>) is booked. Marco will call or text you to set the date, and we\'ll send you a secure link for your 50% deposit (<b>'+money(Math.round(q.total*50)/100)+'</b>).';}
         if(r&&r.emailed){document.getElementById('sent-email').textContent=(r.emails&&r.emails.length?r.emails:[payload.email]).join(' and ');}else{document.getElementById('sent-mail').textContent='Marco will send your written Exterior Cleaning estimate shortly.';}
       }).catch(function(){btn.disabled=false; btn.textContent=wantBook()?'Book this cleaning':'Email me my estimate'; showManual();});
     } else showManual();
@@ -608,7 +621,7 @@ window.momSubmit=function(p){
   if(!sel)return;
   sel.addEventListener('change',function(){var on=sel.value==='Other';wrap.hidden=!on;if(!on)other.value='';});
   window.wantBook=function(){var r=document.querySelector('input[name=want]:checked');return !r||r.value==='book';};
-  function syncWant(){var b=wantBook();document.getElementById('terms').hidden=!b;var s=document.getElementById('f-submit');if(s&&!s.disabled)s.textContent=b?'Book this cleaning':'Email me my estimate';}
+  function syncWant(){var b=wantBook();var fm=document.getElementById('est');if(fm){try{fm.dispatchEvent(new Event('change'));}catch(e){}}document.getElementById('terms').hidden=!b;var s=document.getElementById('f-submit');if(s&&!s.disabled)s.textContent=b?'Book this cleaning':'Email me my estimate';}
   document.querySelectorAll('input[name=want]').forEach(function(r){r.addEventListener('change',syncWant);});
   syncWant();
   window.heardFrom=function(){var v=sel.value;if(v==='Other'&&other.value.trim())v='Other: '+other.value.trim();return v;};

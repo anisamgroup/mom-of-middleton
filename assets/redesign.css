@@ -175,3 +175,16 @@ footer .flogos img{height:54px;width:auto!important}
   .door .where svg{width:15px;height:15px;margin-top:1px}
   .door .go span{padding:11px 6px;font-size:.92rem;border-radius:8px;line-height:1.15}
 }
+
+/* Nov 8, 2026: Pavers division taken off the site; the home page shows one Exterior Cleaning card, centered */
+.doors.one .wrap{grid-template-columns:minmax(0,640px)!important;justify-content:center}
+@media (max-width:600px){
+  .doors.one .door-art{height:180px}
+  .doors.one .door-logo{top:118px;width:130px}
+  .doors.one .door-body{padding:60px 16px 16px;gap:8px}
+  .doors.one .door h2{font-size:1.4rem}
+  .doors.one .door .tagline{font-size:1rem}
+  .doors.one .door-body>p:not(.tagline):not(.where):not(.go){display:block;font-size:.98rem}
+  .doors.one .door .where{font-size:.95rem}
+  .doors.one .door .go span{font-size:1.1rem;padding:14px 10px}
+}

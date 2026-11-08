@@ -144,7 +144,7 @@ function officeEmail(d, q, no, customerSent) {
     ['Address', `${d.address}, ${d.city}, FL ${d.zip}`],
     ['Home type', HOME_NAMES[d.homeType]], ['Lanai past roofline', d.lanai ? 'Yes' : 'No'],
     ['Service', service], ...q.lines.map((l) => [`  ${l.label}`, money(l.price)]),
-    ['Total quoted', money(q.total)], ['Notes', d.note || '—'],
+    ['Total quoted', money(q.total)], ['How they heard about us', d.heardFrom || '—'], ['Notes', d.note || '—'],
   ];
   const html = shell(`
 <tr><td style="padding:24px;">
@@ -186,6 +186,7 @@ export default async (req) => {
     name: clean(p.name, 100), phone: clean(p.phone, 30), email: clean(p.email, 120), email2: clean(p.email2, 120),
     address: clean(p.address, 150), city: clean(p.city || 'The Villages', 60) || 'The Villages', zip: clean(p.zip, 10),
     homeType: p.homeType, lanai: !!p.lanai, service: p.service === 'full' ? 'full' : 'wash', note: cleanNote(p.note),
+    heardFrom: clean(p.heardFrom, 100),
   };
   const missing = ['name', 'phone', 'email', 'address', 'zip'].filter((k) => !d[k]);
   if (missing.length || !PRICES[d.homeType]) {

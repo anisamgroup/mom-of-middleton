@@ -37,3 +37,29 @@
   to = "/plan/"
   status = 301
   force = true
+
+# Nov 8, 2026: Pavers division taken off the site (code saved in the GitHub branch "pavers-archive").
+# Old links and the Pavers QR codes on business cards / EDDM mailers land on the home page instead of an error page.
+[[redirects]]
+  from = "/pavers/*"
+  to = "/"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/pavers"
+  to = "/"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/tips/*"
+  to = "/"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/tips"
+  to = "/"
+  status = 302
+  force = true

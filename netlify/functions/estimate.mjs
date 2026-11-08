@@ -9,6 +9,7 @@
 // Optional:
 //   EMAIL_FROM (or FROM_EMAIL)   – sender (default "MOM of Middleton <estimates@momofmiddleton.com>")
 //   OFFICE_EMAIL (or OWNER_EMAIL) – where new requests and customer replies go (default momofmiddleton@gmail.com)
+//   COPY_EMAIL – optional hidden copy (BCC) of every office request email, e.g. so CL can enter it in ServiceMonster
 //   DRY_RUN=1       – validate and price only, send nothing
 //
 // ServiceMonster (switched off): if MOM later gets ServiceMonster API access, set SM_ENABLED=1
@@ -144,7 +145,7 @@ function officeEmail(d, q, no, customerSent) {
     ['Address', `${d.address}, ${d.city}, FL ${d.zip}`],
     ['Home type', HOME_NAMES[d.homeType]], ['Lanai past roofline', d.lanai ? 'Yes' : 'No'],
     ['Service', service], ...q.lines.map((l) => [`  ${l.label}`, money(l.price)]),
-    ['Total quoted', money(q.total)], ['Notes', d.note || '—'],
+    ['Total quoted', money(q.total)], ['How they heard about us', d.heardFrom || '—'], ['Notes', d.note || '—'],
   ];
   const html = shell(`
 <tr><td style="padding:24px;">
@@ -160,7 +161,7 @@ function officeEmail(d, q, no, customerSent) {
   return { subject: `New Exterior Cleaning estimate request: ${d.name}, ${HOME_NAMES[d.homeType]}, ${money(q.total)}`, html, text };
 }
 
-async function sendEmail({ to, replyTo, subject, html, text }) {
+async function sendEmail({ to, bcc, replyTo, subject, html, text }) {
   const key = process.env.RESEND_API_KEY || process.env.Resend_API_Key || Object.entries(process.env).find(([k]) => k.toUpperCase().replace(/[^A-Z]/g, '') === 'RESENDAPIKEY')?.[1];
   if (!key) throw new Error('RESEND_API_KEY is not set');
   const res = await fetch('https://api.resend.com/emails', {
@@ -168,7 +169,7 @@ async function sendEmail({ to, replyTo, subject, html, text }) {
     headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
       from: process.env.EMAIL_FROM || process.env.FROM_EMAIL || 'MOM of Middleton <estimates@momofmiddleton.com>',
-      to: Array.isArray(to) ? to : [to], reply_to: replyTo, subject, html, text,
+      to: Array.isArray(to) ? to : [to], ...(bcc?.length ? { bcc } : {}), reply_to: replyTo, subject, html, text,
     }),
   });
   if (!res.ok) throw new Error(`Resend ${res.status}: ${(await res.text()).slice(0, 300)}`);
@@ -186,6 +187,7 @@ export default async (req) => {
     name: clean(p.name, 100), phone: clean(p.phone, 30), email: clean(p.email, 120), email2: clean(p.email2, 120),
     address: clean(p.address, 150), city: clean(p.city || 'The Villages', 60) || 'The Villages', zip: clean(p.zip, 10),
     homeType: p.homeType, lanai: !!p.lanai, service: p.service === 'full' ? 'full' : 'wash', note: cleanNote(p.note),
+    heardFrom: clean(p.heardFrom, 100),
   };
   const missing = ['name', 'phone', 'email', 'address', 'zip'].filter((k) => !d[k]);
   if (missing.length || !PRICES[d.homeType]) {
@@ -220,7 +222,8 @@ export default async (req) => {
 
   let officeSent = false;
   try {
-    await sendEmail({ to: office, replyTo: d.emails.length ? d.emails : undefined, ...officeEmail(d, q, no, customerSent) });
+    const copyTo = String(process.env.COPY_EMAIL || '').split(/[,;\s]+/).filter(Boolean);
+    await sendEmail({ to: office, bcc: copyTo, replyTo: d.emails.length ? d.emails : undefined, ...officeEmail(d, q, no, customerSent) });
     officeSent = true;
   } catch (e) { console.error('Office email failed:', e.message); }
 

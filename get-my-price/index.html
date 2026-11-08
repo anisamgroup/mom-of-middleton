@@ -304,6 +304,7 @@ form{display:grid;gap:16px}
 label{display:grid;gap:6px;font-size:.95rem;font-weight:700}
 input,select,textarea{font:inherit;font-size:1rem;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:12px 12px;width:100%}
 textarea{min-height:96px;resize:vertical}
+.heard{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:12px;padding-bottom:18px;margin-bottom:4px;border-bottom:1px solid var(--line)}
 fieldset{border:0;padding:0;margin:0;display:grid;gap:8px}
 legend{font-size:.95rem;font-weight:700;margin-bottom:8px}
 .checks{display:flex;flex-wrap:wrap;gap:8px}
@@ -352,7 +353,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
 
 
 
-<header class="top cl"><div class="wrap hbar"><a class="brand" href="/" aria-label="MOM of Middleton home"><img src="/img/brand/logo-cleaning.webp" alt="MOM Exterior Cleaning. Dirty House? Call MOM!" width="640" height="479"></a><div class="hright"><a class="btn-call" href="tel:+13528082082"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg><span><small>Call or text</small>352-808-2082</span></a><a class="btn btn-sun btn-div" href="/get-my-price/">Exterior Cleaning Price</a></div></div><nav class="dtabs" aria-label="MOM divisions"><div class="wrap"><a class="dtab clean on" aria-current="true" href="/exterior-cleaning/"><span class="dot"></span><span><b>Exterior Cleaning</b><small>House washing · driveways · lanais</small></span></a><a class="dtab pave" href="/pavers/"><span class="dot"></span><span><b>Pavers</b><small>Supply &amp; installation · driveways · patios</small></span><span class="burst burst-sm"><span>NEW</span></span></a></div></nav><nav class="subnav" aria-label="Exterior Cleaning pages"><div class="wrap"><a href="/exterior-cleaning/">Overview</a><a href="/services/">Cleaning services</a><a href="/pricing/">Cleaning prices</a><a href="/protection-plan/">Protection Plan</a><a href="/service-area/">Service area</a><a href="/faq/">FAQ</a><a href="/get-my-price/" class="on" aria-current="page">Get my price</a></div></nav><script>(function(){var w=document.querySelector(".subnav .wrap"),a=w&&w.querySelector("a.on");if(a)w.scrollLeft=a.offsetLeft-16;})();</script></header>
+<header class="top cl"><div class="wrap hbar"><a class="brand" href="/" aria-label="MOM of Middleton home"><img src="/img/brand/logo-cleaning.webp" alt="MOM Exterior Cleaning. Dirty House? Call MOM!" width="640" height="479"></a><div class="hright"><a class="btn-call" href="tel:+13528082082"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg><span><small>Call or text</small>352-808-2082</span></a><a class="btn btn-sun btn-div" href="/get-my-price/">Exterior Cleaning Price</a></div></div><nav class="subnav" aria-label="Exterior Cleaning pages"><div class="wrap"><a href="/exterior-cleaning/">Overview</a><a href="/services/">Cleaning services</a><a href="/pricing/">Cleaning prices</a><a href="/protection-plan/">Protection Plan</a><a href="/service-area/">Service area</a><a href="/faq/">FAQ</a><a href="/get-my-price/" class="on" aria-current="page">Get my price</a></div></nav><script>(function(){var w=document.querySelector(".subnav .wrap"),a=w&&w.querySelector("a.on");if(a)w.scrollLeft=a.offsetLeft-16;})();</script></header>
 
 <main id="top">
   <section class="block contact area" id="estimate">
@@ -372,6 +373,18 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
       </div>
       <div class="card">
         <form id="est" novalidate>
+          <div class="heard">
+            <label for="f-heard">How did you hear about us? <span style="font-weight:400">(optional)</span><select id="f-heard" name="heard">
+              <option value="">Choose one</option>
+              <option>Facebook</option>
+              <option>Saw your truck around</option>
+              <option>A neighbor</option>
+              <option>My realtor</option>
+              <option>Online (Google or another website)</option>
+              <option>Other</option>
+            </select></label>
+            <label for="f-heard-other" id="heard-other-wrap" hidden>Where did you hear about us?<input id="f-heard-other" name="heardOther" autocomplete="off" maxlength="80"></label>
+          </div>
           <fieldset>
             <legend>1. Your home</legend>
             <div class="seg" role="radiogroup">
@@ -440,20 +453,20 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
 <footer>
   <div class="wrap">
     <span class="flogos"><a href="/exterior-cleaning/"><img src="/img/brand/logo-cleaning.webp" alt="MOM Exterior Cleaning" width="640" height="479" loading="lazy"></a></span>
-    <span><b style="color:var(--ink)">MOM of Middleton</b> · Exterior Cleaning for Middleton &amp; the Eastport villages · Paver Supply &amp; Installation for all of The Villages &amp; Middleton, FL</span>
+    <span><b style="color:var(--ink)">MOM of Middleton</b> · Exterior Cleaning for Middleton &amp; the Eastport villages, The Villages, FL</span>
     <span>352-808-2082 · momofmiddleton@gmail.com · @momofmiddleton · <a href="/accessibility/">Accessibility</a></span>
   </div>
 </footer>
 
 <form name="estimate" data-netlify="true" netlify-honeypot="company" hidden>
 <input name="name"><input name="phone"><input name="email"><input name="address"><input name="city"><input name="zip">
-<input name="homeType"><input name="lanai"><input name="service"><input name="total"><textarea name="summary"></textarea><input name="company">
+<input name="homeType"><input name="lanai"><input name="service"><input name="total"><input name="heardFrom"><textarea name="summary"></textarea><input name="company">
 </form>
 <script>
 window.momSubmit=function(p){
   // 1) Backup copy: Netlify Forms emails Marco every request.
   var fd=new URLSearchParams({'form-name':'estimate',name:p.name,phone:p.phone,email:p.email+(p.email2?', '+p.email2:''),address:p.address,city:p.city,zip:p.zip,
-    homeType:p.homeType,lanai:p.lanai?'yes':'no',service:p.service,total:String(p.total),summary:p.summary});
+    homeType:p.homeType,lanai:p.lanai?'yes':'no',service:p.service,total:String(p.total),heardFrom:p.heardFrom||'',summary:p.summary});
   var backup=fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:fd.toString()});
   // 2) Email the estimate to the customer and the request to MOM (Resend).
   var sm=fetch('/.netlify/functions/estimate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(p)})
@@ -531,11 +544,12 @@ window.momSubmit=function(p){
       '\nHome type: '+NAMES[q.h]+'\nLanai past roofline: '+(q.lan?'Yes':'No')+'\nService: '+q.summary+
       '\n'+q.lines.map(function(l){return '  '+l[0]+': '+money(l[1]);}).join('\n')+
       '\nTotal: '+money(q.total)+
+      '\nHow they heard about us: '+(heardFrom()||'—')+
       '\nNotes: '+(form.note.value.trim()||'—');
     document.getElementById('msg').textContent=msgText;
     document.getElementById('mail').href='mailto:momofmiddleton@gmail.com?subject='+encodeURIComponent('Cleaning request – '+form.name.value.trim())+'&body='+encodeURIComponent(msgText);
     var payload={name:form.name.value.trim(),phone:form.phone.value.trim(),email:form.email.value.trim(),email2:form.email2.value.trim(),address:form.addr.value.trim(),
-      city:(form.city.value.trim()||'The Villages'),zip:form.zip.value.trim(),homeType:q.h,lanai:q.lan,service:q.c,note:form.note.value.trim(),total:q.total,summary:msgText};
+      city:(form.city.value.trim()||'The Villages'),zip:form.zip.value.trim(),homeType:q.h,lanai:q.lan,service:q.c,note:form.note.value.trim(),heardFrom:heardFrom(),total:q.total,summary:msgText};
     function showManual(){form.hidden=true; done.hidden=false;}
     if(typeof window.momSubmit==='function'){
       var btn=form.querySelector('button[type=submit]'); btn.disabled=true; btn.textContent='Sending…';
@@ -558,5 +572,13 @@ window.momSubmit=function(p){
 })();
 </script>
 
+<script>
+(function(){
+  var sel=document.getElementById('f-heard'),wrap=document.getElementById('heard-other-wrap'),other=document.getElementById('f-heard-other');
+  if(!sel)return;
+  sel.addEventListener('change',function(){var on=sel.value==='Other';wrap.hidden=!on;if(!on)other.value='';});
+  window.heardFrom=function(){var v=sel.value;if(v==='Other'&&other.value.trim())v='Other: '+other.value.trim();return v;};
+})();
+</script>
 </body>
 </html>

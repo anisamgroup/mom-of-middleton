@@ -161,6 +161,10 @@ p{margin:0}
 .btn-sun{background:var(--sun);color:var(--sun-ink)}
 .btn-sun:hover{filter:brightness(1.05)}
 .btn-line{border-color:var(--ink);color:var(--ink);background:transparent}
+.price-now{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 20px;background:var(--sun);color:var(--sun-ink);border-radius:10px;padding:16px 20px;margin:0 0 28px}
+.price-now p{margin:0;font-family:var(--display);font-weight:800;font-size:1.15rem;line-height:1.25}
+.price-now p small{display:block;font-family:inherit;font-weight:500;font-size:.95rem;margin-top:2px}
+.price-now .btn{background:#17141C;color:#fff;font-size:1.1rem;padding:14px 22px}
 .phone{font-family:var(--display);font-weight:800;font-stretch:112%;color:var(--ink);text-decoration:none;white-space:nowrap}
 @media (max-width:760px){.top nav a.navlink{display:none}}
 .top nav.mnav{display:none}
@@ -407,6 +411,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
 <main id="top">
   <section class="block pricing" id="pricing">
     <div class="wrap">
+      <div class="price-now">
+        <p>See your exact price in 1 minute<small>Pick your home type and cleaning. No obligation.</small></p>
+        <a class="btn" href="/get-my-price/">Get my price now &rarr;</a>
+      </div>
       <div class="head">
         <p class="eyebrow">Exterior Cleaning · Pricing</p>
         <h1 class="h2">Cleaning prices by home type</h1>

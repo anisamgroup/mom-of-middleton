@@ -37,6 +37,18 @@ const LINE_TEXT = {
 const BEFORE_VISIT = "Water plants and grass near the areas we're cleaning at least 1 hour before we arrive and for 3 days after; some browning may occur. Move cars, furniture, rugs, potted plants and hanging baskets away from the service areas.";
 const WAIVER = 'By approving this estimate, verbally or otherwise, you release and hold harmless MOM of Middleton and its employees and agents from claims arising from the services, including property or plant damage, discoloration or fading of surfaces, damage to light fixtures, outlets or key sockets, personal injury, and events beyond our control. You accept the risks of exterior cleaning, are responsible for insuring your own property, and are responsible for any permits or law-enforcement personnel the job requires.';
 
+// Service terms customers sign when they book on the website (from MOM's ServiceMonster order disclaimer, Nov 8, 2026).
+const TERMS_VERSION = 'MOM-TRM-261108';
+const TERMS = [
+  'Cleaning with chemicals: please read the instruction email; if you did not receive it, contact us right away and check your spam folder.',
+  'Water the plants and grass around the areas being cleaned at least 1 hour before our visit and for 3 days afterward; some browning may occur.',
+  'All cars, furniture, rugs, potted plants and hanging baskets must be moved away from the areas being serviced to avoid damage. MOM of Middleton is not liable for property damage or plant damage.',
+  'Payment is due when the job is complete.',
+  'Waiver of liability: The Company (MOM of Middleton) agrees to provide the services described in the estimate. In consideration for the services provided, the Client agrees to release, indemnify and hold harmless the Company, its agents, employees, officers and representatives from any and all liability, claims, demands, actions, causes of action, costs and expenses arising out of or related to the services provided by the Company, including but not limited to: any damage to property, including discoloration, fading or other alterations to surfaces, light fixtures, power outlets, key sockets, etc.; any injuries or harm to persons, including employees, agents or representatives of the Client or any third parties present where the services are performed; and any damage or harm caused by unforeseen circumstances, acts of nature or other events beyond the control of the Company.',
+  'The Client acknowledges that the services may involve certain risks, including the potential for damage to property or harm to individuals. The Client voluntarily assumes all such risks and releases the Company from any and all claims arising out of or related to such risks.',
+  'The Client is solely responsible for obtaining and maintaining adequate insurance coverage for any potential loss or damage to their property. The Client is responsible for obtaining and paying for any permits required and any law enforcement personnel for the job.',
+];
+
 const json = (status, body) => new Response(JSON.stringify(body), {
   status, headers: { 'Content-Type': 'application/json' },
 });
@@ -82,6 +94,8 @@ ${inner}
 </table></td></tr></table></body></html>`;
 }
 
+const signedLine = (d) => d.book ? `Signed electronically by ${d.signature} on ${d.signedAt.toLocaleString('en-US', { timeZone: 'America/New_York', dateStyle: 'long', timeStyle: 'short' })} ET (terms ${d.termsVersion}, IP ${d.signedIp}).` : '';
+
 function customerEmail(d, q, no) {
   const first = d.name.split(' ')[0];
   const rows = q.lines.map((l) => `<tr><td style="padding:10px 12px 10px 0;border-bottom:1px solid ${C.line};"><b>${esc(l.label)}</b><br><span style="font-size:13px;line-height:1.45;color:${C.soft};">${LINE_TEXT[l.key]}</span></td><td align="right" valign="top" style="padding:10px 0;border-bottom:1px solid ${C.line};white-space:nowrap;">${money(l.price)}</td></tr>`).join('');
@@ -92,7 +106,7 @@ function customerEmail(d, q, no) {
 
   const html = shell(`
 <tr><td style="padding:28px 24px 8px;">
-  <div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:${C.spray};font-weight:700;">Your Exterior Cleaning estimate</div>
+  <div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:${C.spray};font-weight:700;">${d.book ? 'Your Exterior Cleaning booking' : 'Your Exterior Cleaning estimate'}</div>
   <h1 style="margin:6px 0 12px;font-size:24px;line-height:1.25;">Thank you, ${esc(first)}!</h1>
   <p style="margin:0 0 8px;font-size:15px;line-height:1.5;">Here is the price for your ${HOME_NAMES[d.homeType].toLowerCase()} at ${esc(d.address)}, ${esc(d.city)}. Marco will call or text you at ${esc(d.phone)} to set a date.</p>
 </td></tr>
@@ -103,7 +117,7 @@ function customerEmail(d, q, no) {
   </table>
 </td></tr>
 <tr><td style="padding:12px 24px 4px;">
-  <p style="margin:0;font-size:15px;line-height:1.5;"><b>To book, just reply to this email or call or text ${PHONE}.</b> Payment is due when the job is complete.</p>
+  <p style="margin:0;font-size:15px;line-height:1.5;">${d.book ? `<b>You asked us to do this cleaning. Marco will call or text you at ${esc(d.phone)} to set your date.</b> Payment is due when the job is complete.` : `<b>To book, just reply to this email or call or text ${PHONE}.</b> Payment is due when the job is complete.`}</p>
 </td></tr>
 <tr><td style="padding:12px 24px 4px;">
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:2px dashed ${C.spray};border-radius:10px;"><tr><td style="padding:16px;">
@@ -118,7 +132,7 @@ function customerEmail(d, q, no) {
   <p style="margin:0 0 10px;font-size:14px;line-height:1.5;">Questions? Reply to this email, or call or text Marco at <a href="tel:+13528082082" style="color:${C.spray};font-weight:700;">${PHONE}</a>.</p>
   <p style="margin:0 0 8px;font-size:12px;line-height:1.5;color:${C.soft};">Prices are for standard homes in Middleton and Eastport. Marco confirms your price and date before any work starts. Fence cleaning and paver sealing are quoted separately: <a href="tel:+13528082082" style="color:${C.spray};">call</a> or <a href="sms:+13528082082" style="color:${C.spray};">text</a> ${PHONE} for a quote.</p>
   <p style="margin:0 0 8px;font-size:12px;line-height:1.5;color:${C.soft};"><b>Before your visit:</b> ${esc(BEFORE_VISIT)} Watch for our instruction email (check spam).</p>
-  <p style="margin:0;font-size:12px;line-height:1.5;color:${C.soft};"><b>Waiver of liability:</b> ${WAIVER}</p>
+  ${d.book ? `<p style="margin:0 0 6px;font-size:12px;line-height:1.5;color:${C.soft};"><b>Service terms you agreed to:</b></p>${TERMS.map((t) => `<p style="margin:0 0 6px;font-size:12px;line-height:1.5;color:${C.soft};">${esc(t)}</p>`).join('')}<p style="margin:0;font-size:12px;line-height:1.5;color:${C.soft};"><i>${esc(signedLine(d))}</i></p>` : `<p style="margin:0;font-size:12px;line-height:1.5;color:${C.soft};"><b>Waiver of liability:</b> ${WAIVER}</p>`}
 </td></tr>`, `${no} · ${longDate()}`);
 
   const text = [
@@ -126,16 +140,16 @@ function customerEmail(d, q, no) {
     `Your MOM of Middleton Exterior Cleaning estimate (${no}) for your ${HOME_NAMES[d.homeType].toLowerCase()} at ${d.address}, ${d.city}:`, '',
     ...q.lines.map((l) => `  ${l.label}: ${money(l.price)}\n    ${LINE_TEXT[l.key]}`),
     `  Total: ${money(q.total)}`, '',
-    `To book, just reply to this email or call or text ${PHONE}. Payment is due when the job is complete.`, '',
+    d.book ? `You asked us to do this cleaning. Marco will call or text you at ${d.phone} to set your date. Payment is due when the job is complete.` : `To book, just reply to this email or call or text ${PHONE}. Payment is due when the job is complete.`, '',
     `Keep it clean all year: after your first full cleaning (${money(FULL[d.homeType])} for your home), you can join the MOM Home Investment Protection Plan. Every visit includes the house wash and the Complete Exterior Package.`,
     ...PLANS.map((p) => `  ${p.name}: ${money(p.rate[d.homeType])}/mo (${p.freq})`),
     d.lanai ? 'On a protection plan, there is no extra charge for your lanai.' : '',
     '', `Marco will call or text you at ${d.phone} to set a date. Questions? Reply to this email or call/text ${PHONE}.`,
     'Prices are for standard homes in Middleton and Eastport. Marco confirms your price and date before any work starts.', '',
-    `Before your visit: ${BEFORE_VISIT}`, '', `Waiver of liability: ${WAIVER}`,
+    `Before your visit: ${BEFORE_VISIT}`, '', ...(d.book ? ['Service terms you agreed to:', ...TERMS, signedLine(d)] : [`Waiver of liability: ${WAIVER}`]),
   ].filter((l, i, a) => l !== '' || a[i - 1] !== '').join('\n');
 
-  return { subject: `Your MOM of Middleton Exterior Cleaning estimate: ${money(q.total)}`, html, text };
+  return { subject: d.book ? `Your MOM of Middleton cleaning is booked: ${money(q.total)} (we'll call to set the date)` : `Your MOM of Middleton Exterior Cleaning estimate: ${money(q.total)}`, html, text };
 }
 
 function officeEmail(d, q, no, customerSent) {
@@ -145,11 +159,11 @@ function officeEmail(d, q, no, customerSent) {
     ['Address', `${d.address}, ${d.city}, FL ${d.zip}`],
     ['Home type', HOME_NAMES[d.homeType]], ['Lanai past roofline', d.lanai ? 'Yes' : 'No'],
     ['Service', service], ...q.lines.map((l) => [`  ${l.label}`, money(l.price)]),
-    ['Total quoted', money(q.total)], ['How they heard about us', d.heardFrom || '—'], ['Notes', d.note || '—'],
+    ['Total quoted', money(q.total)], ['Customer wants', d.book ? 'BOOK THE JOB – pending schedule' : 'Estimate only (follow up)'], ...(d.book ? [['Service terms', signedLine(d)]] : []), ['How they heard about us', d.heardFrom || '—'], ['Notes', d.note || '—'],
   ];
   const html = shell(`
 <tr><td style="padding:24px;">
-  <div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:${C.spray};font-weight:700;">New website Exterior Cleaning estimate request</div>
+  <div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:${C.spray};font-weight:700;">${d.book ? 'BOOKED – pending schedule' : 'Estimate only'} · New website Exterior Cleaning estimate request</div>
   <h1 style="margin:6px 0 12px;font-size:22px;">${esc(d.name)} · ${money(q.total)}</h1>
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="font-size:14px;">
     ${fields.map(([k, v]) => `<tr><td valign="top" style="padding:6px 12px 6px 0;color:${C.soft};white-space:nowrap;border-bottom:1px solid ${C.line};">${esc(k.trim())}</td><td style="padding:6px 0;border-bottom:1px solid ${C.line};">${esc(v).replace(/\n/g, '<br>')}</td></tr>`).join('')}
@@ -158,7 +172,7 @@ function officeEmail(d, q, no, customerSent) {
 </td></tr>`, `${no} · ${longDate()}`);
   const text = [`New website Exterior Cleaning estimate request (${no})`, '', ...fields.map(([k, v]) => `${k}: ${v}`), '',
     customerSent ? `The customer was emailed their estimate at ${d.email}.` : 'The estimate email to the customer did NOT go through. Please call or text them.'].join('\n');
-  return { subject: `New Exterior Cleaning estimate request: ${d.name}, ${HOME_NAMES[d.homeType]}, ${money(q.total)}`, html, text };
+  return { subject: `New Exterior Cleaning estimate request (${d.book ? 'BOOK – pending schedule' : 'estimate only'}): ${d.name}, ${HOME_NAMES[d.homeType]}, ${money(q.total)}`, html, text };
 }
 
 async function sendEmail({ to, bcc, replyTo, subject, html, text }) {
@@ -188,7 +202,15 @@ export default async (req) => {
     address: clean(p.address, 150), city: clean(p.city || 'The Villages', 60) || 'The Villages', zip: clean(p.zip, 10),
     homeType: p.homeType, lanai: !!p.lanai, service: p.service === 'full' ? 'full' : 'wash', note: cleanNote(p.note),
     heardFrom: clean(p.heardFrom, 100),
+    book: p.wantsJob === 'book',
+    signature: clean(p.signature, 100),
   };
+  if (d.book) {
+    if (p.termsAgreed !== true || d.signature.length < 3) return json(400, { error: 'Please agree to the service terms and type your name to sign.', missing: ['terms'] });
+    d.signedAt = new Date();
+    d.signedIp = req.headers.get('x-nf-client-connection-ip') || (req.headers.get('x-forwarded-for') || '').split(',')[0].trim() || 'unknown';
+    d.termsVersion = TERMS_VERSION;
+  }
   const missing = ['name', 'phone', 'email', 'address', 'zip'].filter((k) => !d[k]);
   if (missing.length || !PRICES[d.homeType]) {
     return json(400, { error: 'Missing or invalid fields', missing });
@@ -232,5 +254,5 @@ export default async (req) => {
   }
 
   if (!customerSent && !officeSent) return json(502, { ok: false, error: 'Could not send estimate' });
-  return json(200, { ok: true, total: q.total, estimateNo: no, emailed: customerSent, emails: d.emails });
+  return json(200, { ok: true, total: q.total, estimateNo: no, emailed: customerSent, emails: d.emails, booked: d.book });
 };

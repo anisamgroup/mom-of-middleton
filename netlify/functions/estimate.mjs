@@ -186,16 +186,16 @@ function officeEmail(d, q, no, customerSent) {
   ];
   const html = shell(`
 <tr><td style="padding:24px;">
-  <div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:${C.spray};font-weight:700;">${d.book ? 'BOOKED – pending schedule' : 'Estimate only'} · New website Exterior Cleaning estimate request</div>
+  <div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:${C.spray};font-weight:700;">${d.book ? '✅ NEW BOOKING – needs a date' : '📝 ESTIMATE ONLY – not booked'} · Website Exterior Cleaning</div>
   <h1 style="margin:6px 0 12px;font-size:22px;">${esc(d.name)} · ${money(q.total)}</h1>
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="font-size:14px;">
     ${fields.map(([k, v]) => `<tr><td valign="top" style="padding:6px 12px 6px 0;color:${C.soft};white-space:nowrap;border-bottom:1px solid ${C.line};">${esc(k.trim())}</td><td style="padding:6px 0;border-bottom:1px solid ${C.line};">${esc(v).replace(/\n/g, '<br>')}</td></tr>`).join('')}
   </table>
-  <p style="margin:14px 0 0;font-size:13px;color:${C.soft};">${customerSent ? `The customer was emailed their estimate at ${esc(d.email)}.` : `<b style="color:${C.crimson};">The estimate email to the customer did not go through.</b> Please call or text them.`} Reply to this email to answer the customer directly. When they book, copy these details into ServiceMonster.</p>
+  <p style="margin:14px 0 0;font-size:13px;color:${C.soft};">${customerSent ? `The customer was emailed their estimate at ${esc(d.email)}.` : `<b style="color:${C.crimson};">The estimate email to the customer did not go through.</b> Please call or text them.`} Reply to this email to answer the customer directly. ${d.book ? 'They signed the Service Terms and booked: call or text them to set the date.' : 'Not booked yet: follow up to book the job.'}</p>
 </td></tr>`, `${no} · ${longDate()}`);
-  const text = [`New website Exterior Cleaning estimate request (${no})`, '', ...fields.map(([k, v]) => `${k}: ${v}`), '',
+  const text = [`${d.book ? '✅ NEW BOOKING – needs a date' : '📝 ESTIMATE ONLY – not booked'} · Website Exterior Cleaning (${no})`, '', ...fields.map(([k, v]) => `${k}: ${v}`), '',
     customerSent ? `The customer was emailed their estimate at ${d.email}.` : 'The estimate email to the customer did NOT go through. Please call or text them.'].join('\n');
-  return { subject: `New Exterior Cleaning estimate request (${d.book ? 'BOOK – pending schedule' : 'estimate only'}): ${d.name}, ${HOME_NAMES[d.homeType]}, ${money(q.total)}`, html, text };
+  return { subject: `${d.book ? '✅ NEW BOOKING – needs a date' : '📝 ESTIMATE ONLY – not booked'}: ${d.name}, ${HOME_NAMES[d.homeType]}, ${money(q.total)}`, html, text };
 }
 
 function prepEmail(d) {

@@ -21,7 +21,9 @@ import { createServiceMonsterEstimate } from '../lib/servicemonster.mjs';
 const PRICES = { pv: 248, s1: 298, s2: 398 };
 const FULL = { pv: 298, s1: 348, s2: 448 };
 const PKG = 50, LANAI = 50, FENCE_SIDE = 25; // fence cleaning: $25 per side of the yard, up to 3 sides
-const HOME_NAMES = { pv: 'Patio villa', s1: '1-story home', s2: '2-story home' };
+const HOME_NAMES = { pv: 'Patio villa / Middleton 2-bedroom under 1,200 sq ft', s1: '1-story home', s2: '2-story home' };
+// Wording used inside sentences in the customer email
+const HOME_WORDS = { pv: 'home', s1: '1-story home', s2: '2-story home' };
 const PLANS = [
   { name: 'Standard Protection', freq: '3 cleanings a year, every 4 months', rate: { pv: 62.5, s1: 79, s2: 99 } },
   { name: 'Enhanced Protection', freq: '4 cleanings a year, every 3 months', rate: { pv: 79, s1: 99, s2: 125 } },
@@ -129,9 +131,9 @@ function customerEmail(d, q, no) {
   <div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:${C.spray};font-weight:700;">${d.book ? 'Your Exterior Cleaning booking' : 'Your Exterior Cleaning estimate'}</div>
   <h1 style="margin:6px 0 12px;font-size:24px;line-height:1.25;">${d.book ? `Thank you for booking, ${esc(first)}!` : `Thank you, ${esc(first)}!`}</h1>
   ${d.book
-    ? `<p style="margin:0 0 8px;font-size:15px;line-height:1.5;">We're glad you chose MOM of Middleton to clean your ${HOME_NAMES[d.homeType].toLowerCase()} at ${esc(d.address)}, ${esc(d.city)}. <b>You're all set: there's nothing else you need to do.</b> We'll call or text you at ${esc(d.phone)} to set your date.</p>
+    ? `<p style="margin:0 0 8px;font-size:15px;line-height:1.5;">We're glad you chose MOM of Middleton to clean your ${HOME_WORDS[d.homeType]} at ${esc(d.address)}, ${esc(d.city)}. <b>You're all set: there's nothing else you need to do.</b> We'll call or text you at ${esc(d.phone)} to set your date.</p>
   <p style="margin:0 0 8px;font-size:15px;line-height:1.5;">Need us sooner, or have a question? Call or text <a href="tel:+13528082082" style="color:${C.spray};font-weight:700;">${PHONE}</a>.</p>`
-    : `<p style="margin:0 0 8px;font-size:15px;line-height:1.5;">Here is the price for your ${HOME_NAMES[d.homeType].toLowerCase()} at ${esc(d.address)}, ${esc(d.city)}. We'll call or text you at ${esc(d.phone)} to set a date.</p>`}
+    : `<p style="margin:0 0 8px;font-size:15px;line-height:1.5;">Here is the price for your ${HOME_WORDS[d.homeType]} at ${esc(d.address)}, ${esc(d.city)}. We'll call or text you at ${esc(d.phone)} to set a date.</p>`}
 </td></tr>
 <tr><td style="padding:8px 24px;">
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="font-size:15px;">
@@ -160,7 +162,7 @@ function customerEmail(d, q, no) {
 
   const text = [
     d.book ? `Thank you for booking, ${first}!` : `Thank you, ${first}!`, '',
-    ...(d.book ? [`We're glad you chose MOM of Middleton to clean your ${HOME_NAMES[d.homeType].toLowerCase()} at ${d.address}, ${d.city}. You're all set: there's nothing else you need to do. We'll call or text you at ${d.phone} to set your date.`, `Need us sooner, or have a question? Call or text ${PHONE}.`, '', `Your booking (${no}):`] : [`Your MOM of Middleton Exterior Cleaning estimate (${no}) for your ${HOME_NAMES[d.homeType].toLowerCase()} at ${d.address}, ${d.city}:`]), '',
+    ...(d.book ? [`We're glad you chose MOM of Middleton to clean your ${HOME_WORDS[d.homeType]} at ${d.address}, ${d.city}. You're all set: there's nothing else you need to do. We'll call or text you at ${d.phone} to set your date.`, `Need us sooner, or have a question? Call or text ${PHONE}.`, '', `Your booking (${no}):`] : [`Your MOM of Middleton Exterior Cleaning estimate (${no}) for your ${HOME_WORDS[d.homeType]} at ${d.address}, ${d.city}:`]), '',
     ...q.lines.map((l) => `  ${l.label}: ${money(l.price)}\n    ${LINE_TEXT[l.key]}`),
     `  Total: ${money(q.total)}`, '',
     d.book ? `Payment is due when the job is complete.` : `To book, just reply to this email or call or text ${PHONE}. Payment is due when the job is complete.`, '',
@@ -182,7 +184,7 @@ function officeEmail(d, q, no, customerSent) {
     ['Address', `${d.address}, ${d.city}, FL ${d.zip}`],
     ['Home type', HOME_NAMES[d.homeType]], ['Lanai past roofline', d.lanai ? 'Yes' : 'No'],
     ['Service', service], ...q.lines.map((l) => [`  ${l.label}`, money(l.price)]),
-    ['Total quoted', money(q.total)], ['Customer wants', d.book ? 'BOOK THE JOB – pending schedule' : 'Estimate only (follow up)'], ...(d.book ? [['Deposit (optional)', `Terms allow asking for up to 50% (${money(deposit(q))}); not requested from the customer`]] : []), ...(d.book ? [['Service terms', signedLine(d)]] : []), ['How they heard about us', d.heardFrom || '—'], ['Notes', d.note || '—'],
+    ['Total quoted', money(q.total)], ['Customer wants', d.book ? 'BOOK THE JOB – pending schedule' : 'Estimate only (follow up)'], ...(d.book ? [['Deposit (optional)', `Terms allow asking for up to 50% (${money(deposit(q))}); not requested from the customer`]] : []), ...(d.book ? [['Service terms', signedLine(d)]] : []), ['How they heard about us', d.heardFrom || 'not answered'], ['Notes', d.note || '—'],
   ];
   const html = shell(`
 <tr><td style="padding:24px;">

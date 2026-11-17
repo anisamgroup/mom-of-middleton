@@ -29,6 +29,13 @@
 .gv input,.gv select,.gv textarea{font-size:1.1rem;padding:14px;background:var(--surface);border:2px solid var(--line)}
 .gv .seg label,.gv .opt{font-size:1.1rem;padding:14px 16px}
 .gv .opt small{font-size:.95rem}
+.gv-follow{display:grid;gap:10px;justify-items:center;background:#fff;color:#1A1400;border:4px solid #1877F2;border-radius:16px;padding:18px 22px;max-width:560px;margin:6px auto 0;text-align:center}
+.gv-follow .gv-step{font-family:var(--display);font-weight:900;font-size:1.35rem;margin:0;color:#1A1400}
+.gv-follow p{margin:0;font-size:1.05rem}
+.gv-fbbtn{display:inline-flex;align-items:center;gap:10px;background:#1877F2;color:#fff!important;font-weight:800;font-size:1.2rem;text-decoration:none;border-radius:999px;padding:12px 26px}
+.gv-fbbtn:hover{background:#0F5FCC}
+.gv-fbbox{display:grid;gap:12px;background:#EEF4FF;border:3px solid #1877F2;border-radius:12px;padding:16px}
+.gv-fbbox legend{font-size:1.05rem}
 .gv-check{display:flex!important;align-items:flex-start;gap:12px;font-weight:700}
 .gv-check input{width:26px;height:26px;flex:none;margin-top:2px;accent-color:var(--spray)}
 .gv-btn{justify-content:center;font-size:1.35rem;padding:18px 22px;border:3px solid var(--band);width:100%}
@@ -389,6 +396,12 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
       <h1>Win a FREE driveway cleaning!</h1>
       <p class="gv-lede">Enter for your own home, or nominate a neighbor who deserves a little holiday sparkle. One winner is picked at random on <b>Monday, December 14</b>.</p>
       <p class="gv-only">📍 Open to homes in the <b>Middleton</b>, <b>Eastport</b> &amp; <b>Brownwood</b> area</p>
+      <div class="gv-follow">
+        <p class="gv-step">Step 1: Follow us on Facebook 👍</p>
+        <p>You must follow <b>MOM of Middleton</b> on Facebook to win. We're a small local business, and every follow helps neighbors find us. We check before we announce the winner.</p>
+        <a class="gv-fbbtn" href="https://www.facebook.com/profile.php?id=61573810495118" target="_blank" rel="noopener">Follow MOM of Middleton on Facebook</a>
+        <p style="font-size:.95rem">Step 2: fill in the form below.</p>
+      </div>
     </div>
   </section>
 
@@ -402,7 +415,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
         </div>
         <div id="gv-soon" class="gv-msg" hidden>
           <h2 class="gv-h">Entries open Monday, November 16</h2>
-          <p>Come back on Nov 16 to enter. Follow us on Facebook or Instagram (@momofmiddleton) so you don't miss it!</p>
+          <p>Come back on Nov 16 to enter. Follow us on Facebook so you don't miss it (you'll need to follow us to win)!</p>
         </div>
 
         <form id="gv-form" novalidate>
@@ -461,6 +474,13 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
               </div>
             </fieldset>
 
+            <fieldset class="gv-fbbox">
+              <legend>4. Follow us on Facebook (required to win)</legend>
+              <p style="margin:0">Not following yet? <a href="https://www.facebook.com/profile.php?id=61573810495118" target="_blank" rel="noopener"><b>Tap here to follow MOM of Middleton</b></a>, then come back to finish.</p>
+              <label>Your name as it shows on Facebook <input name="fbName" autocomplete="off" required placeholder="e.g. Mary Smith"></label>
+              <label class="gv-check"><input type="checkbox" name="fbFollow" required> I follow MOM of Middleton on Facebook.</label>
+            </fieldset>
+
             <label class="gv-check"><input type="checkbox" name="agree" required> I'm 18 or older and I agree to the giveaway rules.</label>
 
             <p id="gv-err" class="gv-stop" role="alert" hidden></p>
@@ -477,6 +497,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
         <div id="gv-done" class="gv-msg" hidden tabindex="-1">
           <h2 class="gv-h">You're entered! 🎉</h2>
           <p id="gv-done-text">Good luck! We'll pick the winner at random on Monday, December 14 and announce it on our Facebook and Instagram pages. If you win, we'll call you to confirm the address and set up a day.</p>
+          <p><b>Remember: be sure you're following <a href="https://www.facebook.com/profile.php?id=61573810495118" target="_blank" rel="noopener">MOM of Middleton on Facebook</a>. You must be following us to win.</b></p>
           <p>Know another neighbor in Middleton, Eastport or Brownwood who deserves it? <a href="/giveaway/">Nominate them too</a>.</p>
         </div>
       </div>
@@ -487,7 +508,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
           <li><b>Prize:</b> one free driveway cleaning from MOM of Middleton.</li>
           <li><b>Villages that count:</b><br><b>Eastport area:</b> Dabney, Edenfield, LaGrange, Lake Denham, Lakeview, Moultrie Creek, Newell, Oak Hollow, Shady Brook, Waters Edge, Well Point.<br><b>Brownwood area:</b> Bradford, Cason Hammock, Charlotte, Chitty Chatty, Citrus Grove, Collier, DeLuna, DeSoto, Dunedin, Fenney, Fernandina, Gilchrist, Hammock at Fenney, Hawkins, Hillsborough, LaBelle, Lake Deaton, Linden, Marsh Bend, McClure, Monarch Grove, Osceola Hills, Pinellas, Richmond, Sanibel, St. Catherine, St. Johns.<br><b>Plus all of Middleton.</b></li>
           <li><b>Who can win:</b> only homes in Middleton or the Eastport or Brownwood areas of The Villages, FL. We confirm the address before anything is scheduled. An entry for a home outside these areas can't win, and we'll draw again.</li>
-          <li><b>How to enter:</b> follow MOM of Middleton on Facebook or Instagram (@momofmiddleton), then fill in this form for your own home or a neighbor's. Entrants must be 18 or older. No purchase needed.</li>
+          <li><b>How to enter:</b> 1) follow <a href="https://www.facebook.com/profile.php?id=61573810495118" target="_blank" rel="noopener">MOM of Middleton on Facebook</a>, then 2) fill in this form for your own home or a neighbor's, including your name as it shows on Facebook. <b>You must be following us on Facebook to win</b>; we check our followers list before we announce the winner. Entrants must be 18 or older. No purchase needed.</li>
           <li><b>One entry per home.</b> Extra entries for the same home don't add chances.</li>
           <li><b>Dates:</b> entries close Sunday, December 13 at 11:59 PM. The winner is picked at random on Monday, December 14 and announced on our Facebook and Instagram pages.</li>
           <li><b>Gifting:</b> if you win, you can keep the cleaning or give it to another home in Middleton, Eastport or Brownwood.</li>
@@ -535,12 +556,13 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
     var area=f.area.value, zip=(f.zip.value||'').trim(), msg='';
     if(!area) msg='Please choose where the home is.';
     else if(area==='other') msg='Sorry, this giveaway is only for homes in Middleton, Eastport or Brownwood.';
+    else if(!f.fbName.value.trim()||!f.fbFollow.checked) msg='Please follow MOM of Middleton on Facebook, type your name as it shows on Facebook, and tick the box. You must follow us to win.';
     else if(!f.checkValidity()) msg='Please fill in every box (address, village, ZIP, name, phone and email) and tick the 18+ box.';
     else if(!f.village.value) msg='Please choose your village. If it isn\'t on the list, choose "Somewhere else" above to get $50 off your first cleaning instead.';
     else if(!/^\d{5}$/.test(zip)) msg='Please enter a 5-digit ZIP code.';
     if(msg){err.textContent=msg;err.hidden=false;err.scrollIntoView({block:'center'});return;}
     var b=f.querySelector('button[type=submit]'); b.disabled=true; b.textContent='Sending…';
-    var p={forWho:f.forWho.value,area:area,nomName:f.nomName.value,why:f.why.value,address:f.address.value,village:f.village.value,zip:zip,name:f.name.value,phone:f.phone.value,email:f.email.value,agree:f.agree.checked,test:test};
+    var p={forWho:f.forWho.value,area:area,nomName:f.nomName.value,why:f.why.value,address:f.address.value,village:f.village.value,zip:zip,name:f.name.value,phone:f.phone.value,email:f.email.value,fbName:f.fbName.value,fbFollow:f.fbFollow.checked,agree:f.agree.checked,test:test};
     fetch('/.netlify/functions/giveaway',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(p)})
       .then(function(r){return r.json().then(function(j){return {ok:r.ok,j:j};});})
       .then(function(x){

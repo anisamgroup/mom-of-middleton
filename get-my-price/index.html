@@ -316,7 +316,9 @@ textarea{min-height:96px;resize:vertical}
 .terms-box p{margin:0 0 8px}
 .chk{display:flex;gap:10px;align-items:flex-start;font-weight:600}
 .chk input{width:auto;margin-top:4px}
-.heard{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:12px;padding-bottom:18px;margin-bottom:4px;border-bottom:1px solid var(--line)}
+.heard{display:grid;gap:10px}
+.hnote{color:var(--ink-soft);font-size:.9rem}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 fieldset{border:0;padding:0;margin:0;display:grid;gap:8px}
 legend{font-size:.95rem;font-weight:700;margin-bottom:8px}
 .checks{display:flex;flex-wrap:wrap;gap:8px}
@@ -385,27 +387,14 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
       </div>
       <div class="card">
         <form id="est" novalidate>
-          <div class="heard">
-            <label for="f-heard">How did you hear about us? <span style="font-weight:400">(optional)</span><select id="f-heard" name="heard">
-              <option value="">Choose one</option>
-              <option>Facebook</option>
-              <option>Instagram</option>
-              <option>Saw your truck around</option>
-              <option>A mailer in my mailbox</option>
-              <option>A neighbor</option>
-              <option>My realtor</option>
-              <option>Online (Google or another website)</option>
-              <option>Other</option>
-            </select></label>
-            <label for="f-heard-other" id="heard-other-wrap" hidden>Where did you hear about us?<input id="f-heard-other" name="heardOther" autocomplete="off" maxlength="80"></label>
-          </div>
           <fieldset>
             <legend>1. Your home</legend>
             <div class="seg" role="radiogroup">
-              <label><input type="radio" name="htype" id="h-pv" value="pv"> Patio villa</label>
+              <label><input type="radio" name="htype" id="h-pv" value="pv"> Patio villa, or a Middleton 2-bedroom home under 1,200 sq ft</label>
               <label><input type="radio" name="htype" id="h-1" value="s1" checked> 1-story home</label>
               <label><input type="radio" name="htype" id="h-2" value="s2"> 2-story home</label>
             </div>
+            <small class="hnote">Larger 2-bedroom homes are priced as a 1-story home.</small>
           </fieldset>
           <fieldset>
             <legend>2. Does your back patio or lanai extend past the roofline?</legend>
@@ -446,8 +435,24 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
             </div>
             <label for="f-note">Anything else? (optional)<textarea id="f-note" name="note" placeholder="Gate code, best time to reach you, interest in paver sealing…"></textarea></label>
           </fieldset>
+          <fieldset class="heard">
+            <legend>5. How did you hear about us?</legend>
+            <label for="f-heard" class="sr-only">How did you hear about us?</label>
+            <select id="f-heard" name="heard">
+              <option value="">Choose one</option>
+              <option>Facebook</option>
+              <option>Instagram</option>
+              <option>Saw your truck around</option>
+              <option>A mailer in my mailbox</option>
+              <option>A neighbor</option>
+              <option>My realtor</option>
+              <option>Online (Google or another website)</option>
+              <option>Other</option>
+            </select>
+            <label for="f-heard-other" id="heard-other-wrap" hidden>Please tell us where<input id="f-heard-other" name="heardOther" autocomplete="off" maxlength="80"></label>
+          </fieldset>
           <fieldset>
-            <legend>5. What would you like to do?</legend>
+            <legend>6. What would you like to do?</legend>
             <div class="want">
               <label><input type="radio" name="want" value="book" checked> <span><b>Book this cleaning</b><small>We'll call or text you to set the date</small></span></label>
               <label><input type="radio" name="want" value="estimate"> <span><b>Just email me the estimate</b><small>No commitment</small></span></label>
@@ -523,7 +528,7 @@ window.momSubmit=function(p){
 
   if(!document.getElementById('est'))return;
   var form=document.getElementById('est'), done=document.getElementById('done'), err=document.getElementById('f-err');
-  var NAMES={pv:'Patio villa',s1:'1-story home',s2:'2-story home'};
+  var NAMES={pv:'Patio villa / Middleton 2-bedroom under 1,200 sq ft',s1:'1-story home',s2:'2-story home'};
   var HOUSE={pv:248,s1:298,s2:398}, FULL={pv:298,s1:348,s2:448};
   var PLANS={std:{n:'Standard Protection',f:'3 cleanings a year, every 4 months',r:{pv:62.5,s1:79,s2:99}},
              enh:{n:'Enhanced Protection',f:'4 cleanings a year, every 3 months',r:{pv:79,s1:99,s2:125}},
@@ -585,7 +590,7 @@ window.momSubmit=function(p){
       '\n'+q.lines.map(function(l){return '  '+l[0]+': '+money(l[1]);}).join('\n')+
       '\nTotal: '+money(q.total)+
       '\nCustomer wants: '+(wantBook()?'BOOK the job (signed terms as '+document.getElementById('f-sign').value.trim()+')':'Estimate only')+
-      '\nHow they heard about us: '+(heardFrom()||'—')+
+      '\nHow they heard about us: '+(heardFrom()||'not answered')+
       '\nNotes: '+(form.note.value.trim()||'—');
     document.getElementById('msg').textContent=msgText;
     document.getElementById('mail').href='mailto:momofmiddleton@gmail.com?subject='+encodeURIComponent('Cleaning request – '+form.name.value.trim())+'&body='+encodeURIComponent(msgText);

@@ -13,6 +13,7 @@
 // Entries whose request has test=true and a name starting with "TEST" are accepted before the
 // giveaway opens and are marked TEST in the subject line.
 
+const FB = 'https://www.facebook.com/profile.php?id=61573810495118';
 const OPEN = Date.UTC(2026, 10, 16, 5, 0, 0);   // Mon Nov 16, 2026, 00:00 Florida time
 const CLOSE = Date.UTC(2026, 11, 14, 5, 0, 0);  // Mon Dec 14, 2026, 00:00 Florida time (= Dec 13, 11:59 PM)
 const ZIPS = ['34785', '34762', '32162', '32163']; // usual ZIPs for these areas; others are flagged for the office, not refused
@@ -95,6 +96,7 @@ export default async (req) => {
     nomName: clean(p.nomName, 100), why: clean(p.why, 600),
     address: clean(p.address, 150), village: clean(p.village, 80), zip: clean(p.zip, 10),
     name: clean(p.name, 100), phone: clean(p.phone, 30), email: clean(p.email, 120).toLowerCase(), agree: p.agree === true,
+    fbName: clean(p.fbName, 100), fbFollow: p.fbFollow === true,
   };
   const isTest = p.test === true && /^test/i.test(d.name);
   const now = Date.now();
@@ -109,6 +111,7 @@ export default async (req) => {
   const missing = ['address', 'village', 'name', 'phone', 'email'].filter((k) => !d[k]);
   if (d.forWho === 'neighbor' && !d.nomName) missing.push('nomName');
   if (missing.length || !d.agree) return json(400, { message: 'Please fill in every box and tick the 18+ box.', missing });
+  if (!d.fbName || !d.fbFollow) return json(400, { message: 'Please follow MOM of Middleton on Facebook, type your name as it shows on Facebook, and tick the box. You must follow us to win.' });
   if (!/^[^\s@,;]+@[^\s@,;]+\.[^\s@,;]+$/.test(d.email)) return json(400, { message: 'Please check your email address.' });
 
   const no = entryNo();
@@ -117,19 +120,20 @@ export default async (req) => {
   const rows = [
     ['Entry number', no], ['Entry for', forLine], ['Area', AREAS[d.area]], ['Village', d.village],
     ['Home address', `${d.address}, ${d.zip}${ZIPS.includes(d.zip) ? '' : '  ⚠️ unusual ZIP, check the address'}`], ['Entered by', d.name], ['Phone', d.phone], ['Email', d.email],
-    ...(d.why ? [['Why they deserve it', d.why]] : []), ['18+ and agreed to rules', 'Yes'],
+    ...(d.why ? [['Why they deserve it', d.why]] : []), ['Name on Facebook', d.fbName + '  (check they follow MOM of Middleton)'], ['18+ and agreed to rules', 'Yes'],
   ];
-  const officeText = rows.map(([k, v]) => `${k}: ${v}`).join('\n') + '\n\nBefore announcing a winner: confirm the home really is in Middleton, Eastport or Brownwood (check the village and address).';
+  const officeText = rows.map(([k, v]) => `${k}: ${v}`).join('\n') + '\n\nBefore announcing a winner: confirm the home really is in Middleton, Eastport or Brownwood (check the village and address), and that the entrant follows MOM of Middleton on Facebook (search their Facebook name in the page\'s followers list).';
   const officeHtml = wrap(`<h2 style="margin:0 0 12px;font-size:20px;">🎁 New giveaway entry${isTest ? ' (TEST)' : ''}</h2>
 <table role="presentation" cellpadding="6" cellspacing="0" style="border-collapse:collapse;font-size:15px;">${rows.map(([k, v]) => `<tr><td style="color:#57525E;vertical-align:top;white-space:nowrap;">${esc(k)}</td><td><b>${esc(v)}</b></td></tr>`).join('')}</table>
-<p style="margin-top:14px;font-size:14px;color:#9A0000;">Before announcing a winner, confirm the home really is in Middleton, Eastport or Brownwood (check the village and address).</p>`);
+<p style="margin-top:14px;font-size:14px;color:#9A0000;">Before announcing a winner, confirm the home really is in Middleton, Eastport or Brownwood (check the village and address), and that the entrant follows MOM of Middleton on Facebook (search their Facebook name in the page's followers list).</p>`);
 
   const who = d.forWho === 'neighbor' ? `${d.nomName}'s home` : 'your home';
-  const custText = `Hi ${d.name},\n\nYou're entered in MOM's Holiday Giveaway for ${who} at ${d.address} (${d.village}). Your entry number is ${no}.\n\nWe pick one winner at random on Monday, December 14 and announce it on our Facebook and Instagram pages. If you win, we'll call you to confirm the address and set up a day.\n\nRemember: only homes in Middleton or the Eastport and Brownwood areas of The Villages can win.\n\nGood luck!\nMOM of Middleton · Dirty House? Call MOM! · 352-808-2082`;
+  const custText = `Hi ${d.name},\n\nYou're entered in MOM's Holiday Giveaway for ${who} at ${d.address} (${d.village}). Your entry number is ${no}.\n\nWe pick one winner at random on Monday, December 14 and announce it on our Facebook and Instagram pages. If you win, we'll call you to confirm the address and set up a day.\n\nBe sure you're following MOM of Middleton on Facebook (${FB}). You must be following us to be eligible to win. We're a small Middleton business, and every Facebook follow helps neighbors find us. Thank you for your support!\n\nAlso remember: only homes in Middleton or the Eastport and Brownwood areas of The Villages can win.\n\nGood luck!\nMOM of Middleton · Dirty House? Call MOM! · 352-808-2082`;
   const custHtml = wrap(`<h2 style="margin:0 0 12px;font-size:22px;">You're entered! 🎉</h2>
 <p>Hi ${esc(d.name)},</p>
 <p>You're entered in <b>MOM's Holiday Giveaway</b> for ${esc(who)} at ${esc(d.address)} (${esc(d.village)}). Your entry number is <b>${no}</b>.</p>
 <p>We pick one winner at random on <b>Monday, December 14</b> and announce it on our Facebook and Instagram pages. If you win, we'll call you to confirm the address and set up a day.</p>
+<p style="background:#EEF4FF;border:2px solid #1877F2;border-radius:8px;padding:12px;"><b>Be sure you're following <a href="${FB}">MOM of Middleton on Facebook</a>. You must be following us to be eligible to win.</b><br>We're a small Middleton business, and every Facebook follow helps neighbors find us. Thank you for your support!</p>
 <p style="font-size:14px;color:#57525E;">Only homes in Middleton or the Eastport and Brownwood areas of The Villages can win.</p>
 <p>Good luck!<br><b>MOM of Middleton</b> · Dirty House? Call MOM!</p>`);
 
